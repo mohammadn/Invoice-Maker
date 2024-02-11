@@ -10,12 +10,24 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        NavigationStack {
-            Text("Hello, world!")
+        TabView {
+            Text("فاکتورها")
+                .tabItem {
+                    Label("فاکتورها", systemImage: "doc.text")
+                }
+            Text("محصولات")
+                .tabItem {
+                    Label("محصولات", systemImage: "list.dash")
+                }
+            Text("تنظیمات")
+                .tabItem {
+                    Label("تنظیمات", systemImage: "gearshape")
+                }
         }
     }
 }
 
 #Preview {
     ContentView()
+        .environment(\.layoutDirection, .rightToLeft)
 }
