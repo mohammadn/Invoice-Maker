@@ -13,7 +13,7 @@ struct SettingsView: View {
             List {
                 Section {
                     NavigationLink("اطلاعات کسب و کار") {
-                        Text("اطلاعات")
+                        SettingsBusinessDetailsView()
                     }
                 }
 
