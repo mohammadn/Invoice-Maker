@@ -11,6 +11,7 @@
 		A6ACF5762B7945B100D4727B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5752B7945B100D4727B /* ContentView.swift */; };
 		A6ACF57A2B7945B200D4727B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6ACF5792B7945B200D4727B /* Assets.xcassets */; };
 		A6ACF57D2B7945B200D4727B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6ACF57C2B7945B200D4727B /* Preview Assets.xcassets */; };
+		A6ACF5852B79486800D4727B /* TPPDF in Frameworks */ = {isa = PBXBuildFile; productRef = A6ACF5842B79486800D4727B /* TPPDF */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6ACF5852B79486800D4727B /* TPPDF in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +85,9 @@
 			dependencies = (
 			);
 			name = "Invoice Maker";
+			packageProductDependencies = (
+				A6ACF5842B79486800D4727B /* TPPDF */,
+			);
 			productName = "Invoice Maker";
 			productReference = A6ACF5702B7945B100D4727B /* Invoice Maker.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +116,9 @@
 				Base,
 			);
 			mainGroup = A6ACF5672B7945B100D4727B;
+			packageReferences = (
+				A6ACF5832B79486800D4727B /* XCRemoteSwiftPackageReference "tppdf" */,
+			);
 			productRefGroup = A6ACF5712B7945B100D4727B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -358,6 +366,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A6ACF5832B79486800D4727B /* XCRemoteSwiftPackageReference "tppdf" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/techprimate/tppdf.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A6ACF5842B79486800D4727B /* TPPDF */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A6ACF5832B79486800D4727B /* XCRemoteSwiftPackageReference "tppdf" */;
+			productName = TPPDF;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A6ACF5682B7945B100D4727B /* Project object */;
 }
