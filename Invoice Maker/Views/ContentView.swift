@@ -21,9 +21,13 @@ struct ContentView: View {
                 .tabItem {
                     Label("تنظیمات", systemImage: "gearshape")
                 }
-            Text("محصولات")
+            ProductsView()
                 .tabItem {
                     Label("محصولات", systemImage: "list.dash")
+                }
+            Text("مشتریان")
+                .tabItem {
+                    Label("مشتریان", systemImage: "person.2")
                 }
             Text("فاکتورها")
                 .tabItem {
