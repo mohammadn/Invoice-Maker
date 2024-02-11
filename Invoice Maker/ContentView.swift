@@ -8,20 +8,26 @@
 import SwiftData
 import SwiftUI
 
+enum TabItems {
+    case settings, products, invoices
+}
+
 struct ContentView: View {
+    @State private var selectedTab: TabItems = .settings
+
     var body: some View {
-        TabView {
-            Text("فاکتورها")
+        TabView(selection: $selectedTab) {
+            SettingsView()
                 .tabItem {
-                    Label("فاکتورها", systemImage: "doc.text")
+                    Label("تنظیمات", systemImage: "gearshape")
                 }
             Text("محصولات")
                 .tabItem {
                     Label("محصولات", systemImage: "list.dash")
                 }
-            Text("تنظیمات")
+            Text("فاکتورها")
                 .tabItem {
-                    Label("تنظیمات", systemImage: "gearshape")
+                    Label("فاکتورها", systemImage: "doc.text")
                 }
         }
     }

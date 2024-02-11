@@ -12,6 +12,7 @@
 		A6ACF57A2B7945B200D4727B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6ACF5792B7945B200D4727B /* Assets.xcassets */; };
 		A6ACF57D2B7945B200D4727B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6ACF57C2B7945B200D4727B /* Preview Assets.xcassets */; };
 		A6ACF5852B79486800D4727B /* TPPDF in Frameworks */ = {isa = PBXBuildFile; productRef = A6ACF5842B79486800D4727B /* TPPDF */; };
+		A6ACF5872B794F4400D4727B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5862B794F4400D4727B /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		A6ACF5752B7945B100D4727B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A6ACF5792B7945B200D4727B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A6ACF57C2B7945B200D4727B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A6ACF5862B794F4400D4727B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 			children = (
 				A6ACF5732B7945B100D4727B /* Invoice_MakerApp.swift */,
 				A6ACF5752B7945B100D4727B /* ContentView.swift */,
+				A6ACF5882B7974EA00D4727B /* Settings */,
 				A6ACF5792B7945B200D4727B /* Assets.xcassets */,
 				A6ACF57B2B7945B200D4727B /* Preview Content */,
 			);
@@ -67,6 +70,14 @@
 				A6ACF57C2B7945B200D4727B /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A6ACF5882B7974EA00D4727B /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				A6ACF5862B794F4400D4727B /* SettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6ACF5872B794F4400D4727B /* SettingsView.swift in Sources */,
 				A6ACF5762B7945B100D4727B /* ContentView.swift in Sources */,
 				A6ACF5742B7945B100D4727B /* Invoice_MakerApp.swift in Sources */,
 			);
@@ -284,7 +296,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Invoice Maker | فاکتور ساز";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -320,7 +332,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Invoice Maker | فاکتور ساز";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
