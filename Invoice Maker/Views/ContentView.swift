@@ -8,8 +8,8 @@
 import SwiftData
 import SwiftUI
 
-enum TabItems {
-    case settings, products, invoices
+enum TabItems: Hashable {
+    case settings, products, customers, invoices
 }
 
 struct ContentView: View {
@@ -21,23 +21,28 @@ struct ContentView: View {
                 .tabItem {
                     Label("تنظیمات", systemImage: "gearshape")
                 }
+                .tag(TabItems.settings)
             ProductsView()
                 .tabItem {
                     Label("محصولات", systemImage: "list.dash")
                 }
+                .tag(TabItems.products)
             Text("مشتریان")
                 .tabItem {
                     Label("مشتریان", systemImage: "person.2")
                 }
+                .tag(TabItems.customers)
             Text("فاکتورها")
                 .tabItem {
                     Label("فاکتورها", systemImage: "doc.text")
                 }
+                .tag(TabItems.invoices)
         }
     }
 }
 
 #Preview {
     ContentView()
+        .modelContainer(previewContainer)
         .environment(\.layoutDirection, .rightToLeft)
 }
