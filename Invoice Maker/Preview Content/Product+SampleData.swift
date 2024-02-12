@@ -9,10 +9,10 @@ import Foundation
 
 extension Product {
     static let sampleData: [Product] = [
-        Product(code: 1, name: "سیب", price: 1.00, details: "یک سیب تازه."),
-        Product(code: 2, name: "موز", price: 1.50, details: "یک خوشه موز."),
-        Product(code: 3, name: "پرتقال", price: 2.00, details: "یک پرتقال."),
-        Product(code: 4, name: "آناناس", price: 3.00, details: "یک آناناس."),
-        Product(code: 5, name: "توت فرنگی", price: 4.00, details: "یک کیلو توت فرنگی."),
+        Product(code: 1, name: "سیب", details: "یک سیب تازه.", price: 1.00),
+        Product(code: 2, name: "موز", details: "یک خوشه موز.", price: 1.50),
+        Product(code: 3, name: "پرتقال", details: "یک پرتقال.", price: 2.00),
+        Product(code: 4, name: "آناناس", details: "یک آناناس.", price: 3.00),
+        Product(code: 5, name: "توت فرنگی", details: "یک کیلو توت فرنگی.", price: 4.00),
     ]
 }

@@ -12,14 +12,14 @@ import SwiftData
 class Product {
     @Attribute(.unique) var code: Int
     var name: String
-    var price: Double
     var details: String
+    var price: Double
     var createdDate: Date = Date.now
 
-    init(code: Int, name: String, price: Double, details: String) {
+    init(code: Int, name: String, details: String, price: Double) {
         self.code = code
         self.name = name
-        self.price = price
         self.details = details
+        self.price = price
     }
 }

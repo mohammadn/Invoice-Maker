@@ -9,12 +9,12 @@ import SwiftUI
 
 struct SettingsBusinessDetailsView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var name = ""
-    @State private var address = ""
-    @State private var phoneNumber = ""
-    @State private var email = ""
-    @State private var website = ""
-    @State private var logo = ""
+    @State private var name: String = ""
+    @State private var address: String = ""
+    @State private var phoneNumber: String = ""
+    @State private var email: String = ""
+    @State private var website: String = ""
+    @State private var logo: String = ""
 
     var body: some View {
         Form {
