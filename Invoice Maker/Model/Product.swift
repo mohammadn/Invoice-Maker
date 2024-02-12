@@ -22,4 +22,26 @@ class Product {
         self.details = details
         self.price = price
     }
+
+    convenience init?(from productDetails: ProductDetails) {
+        if let code = productDetails.code,
+           let price = productDetails.price {
+            self.init(code: code, name: productDetails.name, details: productDetails.details, price: Double(price))
+        } else {
+            return nil
+        }
+    }
+}
+
+extension Product {
+    func update(with productDetails: ProductDetails) {
+        if let code = productDetails.code,
+           let price = productDetails.price {
+            self.code = code
+            self.price = Double(price)
+        }
+
+        name = productDetails.name
+        details = productDetails.details
+    }
 }
