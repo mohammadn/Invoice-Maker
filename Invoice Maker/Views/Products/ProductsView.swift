@@ -11,8 +11,7 @@ import SwiftUI
 struct ProductsView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Product.createdDate) private var products: [Product]
-    @State private var isProductsAddViewPresented: Bool = false
-    @State private var isProductsEditViewPresented: Bool = false
+    @State private var isProductFormViewPresented: Bool = false
     @State private var selectedProduct: Product?
 
     var body: some View {
@@ -21,7 +20,7 @@ struct ProductsView: View {
                 ForEach(products) { product in
                     VStack(alignment: .leading) {
                         LabeledContent {
-                            Text("\(product.price, specifier: "%.2f")")
+                            Text("\(product.price)")
 
                             Button {
                                 selectedProduct = product
@@ -45,11 +44,11 @@ struct ProductsView: View {
             .toolbar {
                 ToolbarItemGroup {
                     Button("اضافه", systemImage: "plus") {
-                        isProductsAddViewPresented.toggle()
+                        isProductFormViewPresented.toggle()
                     }
                 }
             }
-            .sheet(isPresented: $isProductsAddViewPresented) {
+            .sheet(isPresented: $isProductFormViewPresented) {
                 ProductFormView(onSave: addProduct)
                     .environment(\.layoutDirection, .rightToLeft)
             }

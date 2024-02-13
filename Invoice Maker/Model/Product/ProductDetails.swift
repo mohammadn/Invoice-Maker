@@ -12,13 +12,13 @@ class ProductDetails {
     var code: Int?
     var name: String
     var details: String
-    var price: Double?
+    var price: Int?
 
     var isInvalid: Bool {
         code == nil || name.isEmpty || price == nil
     }
 
-    init(code: Int? = nil, name: String = "", details: String = "", price: Double? = nil) {
+    init(code: Int? = nil, name: String = "", details: String = "", price: Int? = nil) {
         self.code = code
         self.name = name
         self.details = details

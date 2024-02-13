@@ -27,7 +27,7 @@ struct ContentView: View {
                     Label("محصولات", systemImage: "list.dash")
                 }
                 .tag(TabItems.products)
-            Text("مشتریان")
+            CustomersView()
                 .tabItem {
                     Label("مشتریان", systemImage: "person.2")
                 }

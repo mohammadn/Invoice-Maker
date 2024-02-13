@@ -13,7 +13,7 @@ struct Invoice_MakerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .modelContainer(for: [Product.self, Business.self])
+                .modelContainer(for: [Product.self, Business.self, Customer.self])
                 .environment(\.layoutDirection, .rightToLeft)
         }
     }

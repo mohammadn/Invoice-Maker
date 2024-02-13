@@ -13,10 +13,10 @@ class Product {
     @Attribute(.unique) var code: Int
     var name: String
     var details: String
-    var price: Double
+    var price: Int
     var createdDate: Date = Date.now
 
-    init(code: Int, name: String, details: String, price: Double) {
+    init(code: Int, name: String, details: String, price: Int) {
         self.code = code
         self.name = name
         self.details = details
@@ -26,7 +26,10 @@ class Product {
     convenience init?(from productDetails: ProductDetails) {
         if let code = productDetails.code,
            let price = productDetails.price {
-            self.init(code: code, name: productDetails.name, details: productDetails.details, price: Double(price))
+            self.init(code: code,
+                      name: productDetails.name,
+                      details: productDetails.details,
+                      price: price)
         } else {
             return nil
         }
@@ -38,7 +41,7 @@ extension Product {
         if let code = productDetails.code,
            let price = productDetails.price {
             self.code = code
-            self.price = Double(price)
+            self.price = price
         }
 
         name = productDetails.name
