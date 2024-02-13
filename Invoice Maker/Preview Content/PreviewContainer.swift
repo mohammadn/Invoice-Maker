@@ -11,12 +11,18 @@ import SwiftData
 @MainActor
 let previewContainer: ModelContainer = {
     do {
-        let container = try ModelContainer(for: Product.self,
-                                           configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        let schema = Schema([Product.self, Business.self])
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+
+        let container = try ModelContainer(for: schema, configurations: modelConfiguration)
 
         let modelContext = container.mainContext
         if try modelContext.fetch(FetchDescriptor<Product>()).isEmpty {
             Product.sampleData.forEach { modelContext.insert($0) }
+        }
+
+        if try modelContext.fetch(FetchDescriptor<Business>()).isEmpty {
+            modelContext.insert(Business.sampleData)
         }
 
         return container

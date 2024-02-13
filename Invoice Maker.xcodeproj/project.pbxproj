@@ -20,6 +20,9 @@
 		A6ACF5952B798E1900D4727B /* Product+SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5942B798E1900D4727B /* Product+SampleData.swift */; };
 		A6ACF5992B799E2500D4727B /* ProductFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5982B799E2500D4727B /* ProductFormView.swift */; };
 		A6ACF59B2B7AB4DB00D4727B /* ProductDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF59A2B7AB4DB00D4727B /* ProductDetails.swift */; };
+		A6ACF59E2B7AC79000D4727B /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF59D2B7AC79000D4727B /* Business.swift */; };
+		A6ACF5A12B7ACB9000D4727B /* Business+SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5A02B7ACB9000D4727B /* Business+SampleData.swift */; };
+		A6ACF5BF2B7ADA9600D4727B /* BusinessDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5BE2B7ADA9600D4727B /* BusinessDetails.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +39,9 @@
 		A6ACF5942B798E1900D4727B /* Product+SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Product+SampleData.swift"; sourceTree = "<group>"; };
 		A6ACF5982B799E2500D4727B /* ProductFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductFormView.swift; sourceTree = "<group>"; };
 		A6ACF59A2B7AB4DB00D4727B /* ProductDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetails.swift; sourceTree = "<group>"; };
+		A6ACF59D2B7AC79000D4727B /* Business.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
+		A6ACF5A02B7ACB9000D4727B /* Business+SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Business+SampleData.swift"; sourceTree = "<group>"; };
+		A6ACF5BE2B7ADA9600D4727B /* BusinessDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +90,7 @@
 				A6ACF57C2B7945B200D4727B /* Preview Assets.xcassets */,
 				A6ACF5922B798DF000D4727B /* PreviewContainer.swift */,
 				A6ACF5942B798E1900D4727B /* Product+SampleData.swift */,
+				A6ACF5A02B7ACB9000D4727B /* Business+SampleData.swift */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -119,10 +126,28 @@
 		A6ACF5912B798B3B00D4727B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A6ACF59C2B7AC77800D4727B /* Product */,
+				A6ACF59F2B7AC79900D4727B /* Business */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A6ACF59C2B7AC77800D4727B /* Product */ = {
+			isa = PBXGroup;
+			children = (
 				A6ACF58F2B7984DC00D4727B /* Product.swift */,
 				A6ACF59A2B7AB4DB00D4727B /* ProductDetails.swift */,
 			);
-			path = Model;
+			path = Product;
+			sourceTree = "<group>";
+		};
+		A6ACF59F2B7AC79900D4727B /* Business */ = {
+			isa = PBXGroup;
+			children = (
+				A6ACF59D2B7AC79000D4727B /* Business.swift */,
+				A6ACF5BE2B7ADA9600D4727B /* BusinessDetails.swift */,
+			);
+			path = Business;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,13 +226,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6ACF5A12B7ACB9000D4727B /* Business+SampleData.swift in Sources */,
 				A6ACF5872B794F4400D4727B /* SettingsView.swift in Sources */,
 				A6ACF5762B7945B100D4727B /* ContentView.swift in Sources */,
 				A6ACF59B2B7AB4DB00D4727B /* ProductDetails.swift in Sources */,
 				A6ACF58A2B7975AD00D4727B /* SettingsBusinessDetailsView.swift in Sources */,
+				A6ACF59E2B7AC79000D4727B /* Business.swift in Sources */,
 				A6ACF5952B798E1900D4727B /* Product+SampleData.swift in Sources */,
 				A6ACF5742B7945B100D4727B /* Invoice_MakerApp.swift in Sources */,
 				A6ACF58C2B79841C00D4727B /* ProductsView.swift in Sources */,
+				A6ACF5BF2B7ADA9600D4727B /* BusinessDetails.swift in Sources */,
 				A6ACF5932B798DF000D4727B /* PreviewContainer.swift in Sources */,
 				A6ACF5902B7984DC00D4727B /* Product.swift in Sources */,
 				A6ACF5992B799E2500D4727B /* ProductFormView.swift in Sources */,

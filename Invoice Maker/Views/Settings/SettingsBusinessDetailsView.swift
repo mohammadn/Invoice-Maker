@@ -5,32 +5,36 @@
 //  Created by Mohammad Najafzadeh on 11/02/2024.
 //
 
+import SwiftData
 import SwiftUI
 
 struct SettingsBusinessDetailsView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var name: String = ""
-    @State private var address: String = ""
-    @State private var phoneNumber: String = ""
-    @State private var email: String = ""
-    @State private var website: String = ""
+    @State private var businessDetails: BusinessDetails
     @State private var logo: String = ""
+
+    var business: Business
+
+    init(business: Business) {
+        self.business = business
+        _businessDetails = State(initialValue: BusinessDetails(from: business))
+    }
 
     var body: some View {
         Form {
             Section {
-                TextField("نام کسب و کار", text: $name)
+                TextField("نام کسب و کار", text: $businessDetails.name)
             }
 
             Section {
-                TextField("شماره تماس", text: $phoneNumber)
-                TextField("آدرس", text: $address, axis: .vertical)
-                    .lineLimit(3 ... 4)
+                TextField("شماره تماس", text: $businessDetails.phone)
+                TextField("آدرس", text: $businessDetails.address, axis: .vertical)
+                    .lineLimit(2 ... 4)
             }
 
             Section {
-                TextField("ایمیل", text: $email)
-                TextField("وبسایت", text: $website)
+                TextField("ایمیل", text: $businessDetails.email)
+                TextField("وبسایت", text: $businessDetails.website)
             }
 
             Section {
@@ -40,8 +44,9 @@ struct SettingsBusinessDetailsView: View {
         .navigationTitle("اطلاعات کسب و کار")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
+            ToolbarItem {
                 Button("ذخیره") {
+                    business.update(with: businessDetails)
                     dismiss()
                 }
             }
@@ -50,8 +55,13 @@ struct SettingsBusinessDetailsView: View {
 }
 
 #Preview {
-    NavigationStack {
-        SettingsBusinessDetailsView()
-            .environment(\.layoutDirection, .rightToLeft)
+    let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+
+    let container = try! ModelContainer(for: Business.self,
+                                        configurations: configuration)
+    return NavigationStack {
+        SettingsBusinessDetailsView(business: Business.sampleData)
     }
+    .modelContainer(container)
+    .environment(\.layoutDirection, .rightToLeft)
 }
