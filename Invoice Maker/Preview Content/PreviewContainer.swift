@@ -11,7 +11,7 @@ import SwiftData
 @MainActor
 let previewContainer: ModelContainer = {
     do {
-        let schema = Schema([Product.self, Business.self, Customer.self])
+        let schema = Schema([Invoice.self, Business.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
         let container = try ModelContainer(for: schema, configurations: modelConfiguration)

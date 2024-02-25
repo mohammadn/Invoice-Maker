@@ -28,6 +28,11 @@
 		A6ACF5C92B7C157700D4727B /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5C82B7C157700D4727B /* Customer.swift */; };
 		A6ACF5CB2B7C15DD00D4727B /* CustomerDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5CA2B7C15DD00D4727B /* CustomerDetails.swift */; };
 		A6ACF5CD2B7C1C1700D4727B /* Customer+SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5CC2B7C1C1700D4727B /* Customer+SampleData.swift */; };
+		A6ACF5CF2B7D6BF800D4727B /* InvoicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5CE2B7D6BF800D4727B /* InvoicesView.swift */; };
+		A6ACF5D22B7D6C4A00D4727B /* Invoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5D12B7D6C4A00D4727B /* Invoice.swift */; };
+		A6ACF5D52B7EC42600D4727B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5D42B7EC42600D4727B /* Item.swift */; };
+		A6ACF5D72B7ECC9900D4727B /* InvoiceFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5D62B7ECC9900D4727B /* InvoiceFormView.swift */; };
+		A6ACF5D92B8117D500D4727B /* InvoiceProductSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5D82B8117D500D4727B /* InvoiceProductSelection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +57,11 @@
 		A6ACF5C82B7C157700D4727B /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		A6ACF5CA2B7C15DD00D4727B /* CustomerDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerDetails.swift; sourceTree = "<group>"; };
 		A6ACF5CC2B7C1C1700D4727B /* Customer+SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Customer+SampleData.swift"; sourceTree = "<group>"; };
+		A6ACF5CE2B7D6BF800D4727B /* InvoicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoicesView.swift; sourceTree = "<group>"; };
+		A6ACF5D12B7D6C4A00D4727B /* Invoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invoice.swift; sourceTree = "<group>"; };
+		A6ACF5D42B7EC42600D4727B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		A6ACF5D62B7ECC9900D4727B /* InvoiceFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceFormView.swift; sourceTree = "<group>"; };
+		A6ACF5D82B8117D500D4727B /* InvoiceProductSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceProductSelection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +139,7 @@
 			children = (
 				A6ACF5752B7945B100D4727B /* ContentView.swift */,
 				A6ACF5C02B7C13F300D4727B /* Customers */,
+				A6ACF5D02B7D6C0000D4727B /* Invoices */,
 				A6ACF58D2B79842400D4727B /* Products */,
 				A6ACF5882B7974EA00D4727B /* Settings */,
 			);
@@ -138,9 +149,10 @@
 		A6ACF5912B798B3B00D4727B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A6ACF5C72B7C156C00D4727B /* Customer */,
-				A6ACF59C2B7AC77800D4727B /* Product */,
 				A6ACF59F2B7AC79900D4727B /* Business */,
+				A6ACF5C72B7C156C00D4727B /* Customer */,
+				A6ACF5D32B7D6C5700D4727B /* Invoice */,
+				A6ACF59C2B7AC77800D4727B /* Product */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -179,6 +191,25 @@
 				A6ACF5CA2B7C15DD00D4727B /* CustomerDetails.swift */,
 			);
 			path = Customer;
+			sourceTree = "<group>";
+		};
+		A6ACF5D02B7D6C0000D4727B /* Invoices */ = {
+			isa = PBXGroup;
+			children = (
+				A6ACF5D62B7ECC9900D4727B /* InvoiceFormView.swift */,
+				A6ACF5D82B8117D500D4727B /* InvoiceProductSelection.swift */,
+				A6ACF5CE2B7D6BF800D4727B /* InvoicesView.swift */,
+			);
+			path = Invoices;
+			sourceTree = "<group>";
+		};
+		A6ACF5D32B7D6C5700D4727B /* Invoice */ = {
+			isa = PBXGroup;
+			children = (
+				A6ACF5D12B7D6C4A00D4727B /* Invoice.swift */,
+				A6ACF5D42B7EC42600D4727B /* Item.swift */,
+			);
+			path = Invoice;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,6 +292,7 @@
 				A6ACF5CB2B7C15DD00D4727B /* CustomerDetails.swift in Sources */,
 				A6ACF5872B794F4400D4727B /* SettingsView.swift in Sources */,
 				A6ACF5762B7945B100D4727B /* ContentView.swift in Sources */,
+				A6ACF5D52B7EC42600D4727B /* Item.swift in Sources */,
 				A6ACF59B2B7AB4DB00D4727B /* ProductDetails.swift in Sources */,
 				A6ACF5C62B7C151800D4727B /* CustomerFormView.swift in Sources */,
 				A6ACF58A2B7975AD00D4727B /* SettingsBusinessDetailsView.swift in Sources */,
@@ -270,9 +302,13 @@
 				A6ACF5742B7945B100D4727B /* Invoice_MakerApp.swift in Sources */,
 				A6ACF58C2B79841C00D4727B /* ProductsView.swift in Sources */,
 				A6ACF5BF2B7ADA9600D4727B /* BusinessDetails.swift in Sources */,
+				A6ACF5D72B7ECC9900D4727B /* InvoiceFormView.swift in Sources */,
+				A6ACF5CF2B7D6BF800D4727B /* InvoicesView.swift in Sources */,
 				A6ACF5C92B7C157700D4727B /* Customer.swift in Sources */,
 				A6ACF5932B798DF000D4727B /* PreviewContainer.swift in Sources */,
 				A6ACF5902B7984DC00D4727B /* Product.swift in Sources */,
+				A6ACF5D92B8117D500D4727B /* InvoiceProductSelection.swift in Sources */,
+				A6ACF5D22B7D6C4A00D4727B /* Invoice.swift in Sources */,
 				A6ACF5C42B7C141C00D4727B /* CustomersView.swift in Sources */,
 				A6ACF5992B799E2500D4727B /* ProductFormView.swift in Sources */,
 			);

@@ -13,7 +13,7 @@ enum TabItems: Hashable {
 }
 
 struct ContentView: View {
-    @State private var selectedTab: TabItems = .settings
+    @State private var selectedTab: TabItems = .invoices
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -32,7 +32,7 @@ struct ContentView: View {
                     Label("مشتریان", systemImage: "person.2")
                 }
                 .tag(TabItems.customers)
-            Text("فاکتورها")
+            InvoicesView()
                 .tabItem {
                     Label("فاکتورها", systemImage: "doc.text")
                 }

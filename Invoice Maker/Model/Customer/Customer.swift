@@ -15,6 +15,7 @@ class Customer {
     var details: String
     var phone: String
     var email: String
+    var invoices: [Invoice] = []
     var createdDate: Date = Date.now
 
     init(name: String, address: String, details: String, phone: String, email: String) {

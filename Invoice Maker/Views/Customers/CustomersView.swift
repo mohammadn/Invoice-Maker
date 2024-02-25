@@ -33,7 +33,7 @@ struct CustomersView: View {
                             Text(customer.name)
                                 .lineLimit(1)
                         }
-                        
+
                         Text(customer.email.isEmpty ? "-" : customer.email)
                             .font(.subheadline)
                             .foregroundStyle(.gray)
