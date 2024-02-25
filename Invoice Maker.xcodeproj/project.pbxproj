@@ -33,6 +33,7 @@
 		A6ACF5D52B7EC42600D4727B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5D42B7EC42600D4727B /* Item.swift */; };
 		A6ACF5D72B7ECC9900D4727B /* InvoiceFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5D62B7ECC9900D4727B /* InvoiceFormView.swift */; };
 		A6ACF5D92B8117D500D4727B /* InvoiceProductSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5D82B8117D500D4727B /* InvoiceProductSelection.swift */; };
+		A6D4F6F02B8B93CF0089B653 /* InvoiceDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D4F6EF2B8B93CF0089B653 /* InvoiceDetails.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		A6ACF5D42B7EC42600D4727B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		A6ACF5D62B7ECC9900D4727B /* InvoiceFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceFormView.swift; sourceTree = "<group>"; };
 		A6ACF5D82B8117D500D4727B /* InvoiceProductSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceProductSelection.swift; sourceTree = "<group>"; };
+		A6D4F6EF2B8B93CF0089B653 /* InvoiceDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceDetails.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				A6ACF5D12B7D6C4A00D4727B /* Invoice.swift */,
+				A6D4F6EF2B8B93CF0089B653 /* InvoiceDetails.swift */,
 				A6ACF5D42B7EC42600D4727B /* Item.swift */,
 			);
 			path = Invoice;
@@ -298,6 +301,7 @@
 				A6ACF58A2B7975AD00D4727B /* SettingsBusinessDetailsView.swift in Sources */,
 				A6ACF5CD2B7C1C1700D4727B /* Customer+SampleData.swift in Sources */,
 				A6ACF59E2B7AC79000D4727B /* Business.swift in Sources */,
+				A6D4F6F02B8B93CF0089B653 /* InvoiceDetails.swift in Sources */,
 				A6ACF5952B798E1900D4727B /* Product+SampleData.swift in Sources */,
 				A6ACF5742B7945B100D4727B /* Invoice_MakerApp.swift in Sources */,
 				A6ACF58C2B79841C00D4727B /* ProductsView.swift in Sources */,

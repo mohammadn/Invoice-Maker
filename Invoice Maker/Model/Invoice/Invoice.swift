@@ -13,17 +13,30 @@ class Invoice {
     var number: String
     var customer: Customer
     var date: Date
-    var items: [Item] = []
     var note: String
     var type: InvoiceType
+    var items: [Item]
     var createdDate: Date = Date.now
 
-    init(number: String = "", customer: Customer, date: Date = .now, note: String = "", type: InvoiceType = .sale) {
+    init(number: String = "", customer: Customer, date: Date = .now, note: String = "", type: InvoiceType = .sale, items: [Item] = []) {
         self.number = number
         self.customer = customer
         self.date = date
         self.note = note
         self.type = type
+        self.items = items
+    }
+
+    convenience init?(from invoiceDetails: InvoiceDetails) {
+        guard let customer = invoiceDetails.customer else { return nil }
+
+        self.init(number: invoiceDetails.number,
+                  customer: customer,
+                  date: invoiceDetails.date,
+                  note: invoiceDetails.note,
+                  type: invoiceDetails.type)
+
+        items = invoiceDetails.items.map { Item(product: $0.product, quantity: $0.quantity) }
     }
 }
 
@@ -38,5 +51,18 @@ extension Invoice {
             case .proforma: "پیش فاکتور"
             }
         }
+    }
+}
+
+extension Invoice {
+    func update(with invoiceDetails: InvoiceDetails) {
+        guard let customer = invoiceDetails.customer else { return }
+
+        number = invoiceDetails.number
+        self.customer = customer
+        date = invoiceDetails.date
+        note = invoiceDetails.note
+        type = invoiceDetails.type
+        items = invoiceDetails.items.map { Item(product: $0.product, quantity: $0.quantity) }
     }
 }

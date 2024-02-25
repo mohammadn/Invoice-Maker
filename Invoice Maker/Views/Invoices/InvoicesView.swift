@@ -9,15 +9,37 @@ import SwiftData
 import SwiftUI
 
 struct InvoicesView: View {
-    @Query(sort: \Invoice.createdDate) private var invoices: [Invoice]
+    @Environment(\.modelContext) private var context
+    @Query(sort: \Invoice.createdDate, order: .reverse) private var invoices: [Invoice]
     @State private var showInvoiceFormView: Bool = false
+    @State private var selectedInvoice: Invoice?
 
     var body: some View {
         NavigationStack {
             List {
                 ForEach(invoices) { invoice in
-                    Text(invoice.number)
+                    VStack(alignment: .leading) {
+                        LabeledContent {
+                            Text(invoice.date.formatted(date: .abbreviated, time: .omitted))
+
+                            Button {
+                                selectedInvoice = invoice
+                            } label: {
+                                Image(systemName: "info.circle")
+                                    .font(.title3)
+                            }
+                        } label: {
+                            Text(invoice.number)
+                                .lineLimit(1)
+                        }
+
+                        Text(invoice.customer.name)
+                            .font(.subheadline)
+                            .foregroundStyle(.gray)
+                            .lineLimit(1)
+                    }
                 }
+                .onDelete(perform: delete)
             }
             .navigationBarTitle("فاکتورها")
             .toolbar {
@@ -28,9 +50,31 @@ struct InvoicesView: View {
                 }
             }
             .sheet(isPresented: $showInvoiceFormView) {
-                InvoiceFormView()
+                InvoiceFormView(onSave: save)
                     .environment(\.layoutDirection, .rightToLeft)
             }
+            .sheet(item: $selectedInvoice) { invoice in
+                InvoiceFormView(invoice: invoice, onSave: update)
+                    .environment(\.layoutDirection, .rightToLeft)
+            }
+        }
+    }
+
+    private func save(invoiceDetails: InvoiceDetails) {
+        let invoice = Invoice(from: invoiceDetails)
+
+        if let invoice {
+            context.insert(invoice)
+        }
+    }
+
+    private func update(invoiceDetails: InvoiceDetails) {
+        selectedInvoice?.update(with: invoiceDetails)
+    }
+
+    private func delete(at offsets: IndexSet) {
+        for index in offsets {
+            context.delete(invoices[index])
         }
     }
 }

@@ -10,27 +10,30 @@ import SwiftUI
 
 struct InvoiceFormView: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.modelContext) private var context
     @Query(sort: \Customer.name) private var customers: [Customer]
     @State private var showInvoiceProductSelection: Bool = false
-    @State private var number: String = ""
-    @State private var selectedCustomer: Customer?
-    @State private var date: Date = .now
-    @State private var note: String = ""
-    @State private var type: Invoice.InvoiceType = .sale
-    @State private var items: [(product: Product, quantity: Int)] = []
-    private var isSaveDisabled: Bool {
-        number.isEmpty || selectedCustomer == nil || items.isEmpty
+    @State private var invoiceDetails: InvoiceDetails
+
+    var onSave: (InvoiceDetails) -> Void
+
+    init(invoice: Invoice? = nil, onSave: @escaping (InvoiceDetails) -> Void) {
+        if let invoice {
+            _invoiceDetails = State(initialValue: InvoiceDetails(from: invoice))
+        } else {
+            _invoiceDetails = State(initialValue: InvoiceDetails())
+        }
+
+        self.onSave = onSave
     }
 
     var body: some View {
         NavigationStack {
             Form {
                 Section {
-                    TextField("شماره فاکتور*", text: $number)
+                    TextField("شماره فاکتور*", text: $invoiceDetails.number)
                         .keyboardType(.numberPad)
-                    
-                    Picker("نوع فاکتور", selection: $type) {
+
+                    Picker("نوع فاکتور", selection: $invoiceDetails.type) {
                         ForEach(Invoice.InvoiceType.allCases, id: \.self) { type in
                             Text(type.label)
                                 .tag(type)
@@ -39,7 +42,7 @@ struct InvoiceFormView: View {
                 }
 
                 Section {
-                    Picker("مشتری", selection: $selectedCustomer) {
+                    Picker("مشتری", selection: $invoiceDetails.customer) {
                         Text("انتخاب کنید")
                             .tag(nil as Customer?)
                         ForEach(customers) { customer in
@@ -52,19 +55,19 @@ struct InvoiceFormView: View {
                 }
 
                 Section {
-                    DatePicker("تاریخ", selection: $date)
+                    DatePicker("تاریخ", selection: $invoiceDetails.date)
                 }
 
                 Section {
-                    TextField("توضیحات", text: $note, axis: .vertical)
+                    TextField("توضیحات", text: $invoiceDetails.note, axis: .vertical)
                         .lineLimit(2 ... 4)
                 }
 
                 Section {
-                    ForEach(items, id: \.product) { item in
+                    ForEach(invoiceDetails.items, id: \.product) { item in
                         let quantity = Binding(
                             get: { item.quantity },
-                            set: { items[items.firstIndex(where: { $0.product == item.product })!].quantity = $0 }
+                            set: { invoiceDetails.items[invoiceDetails.items.firstIndex(where: { $0.product == item.product })!].quantity = $0 }
                         )
 
                         Stepper(value: quantity, step: 1) {
@@ -91,34 +94,22 @@ struct InvoiceFormView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("ذخیره") {
-                        save()
+                        onSave(invoiceDetails)
                         dismiss()
                     }
-                    .disabled(isSaveDisabled)
+                    .disabled(invoiceDetails.isInvalid)
                 }
             }
             .sheet(isPresented: $showInvoiceProductSelection) {
-                InvoiceProductSelection(items: $items)
+                InvoiceProductSelection(items: $invoiceDetails.items)
                     .environment(\.layoutDirection, .rightToLeft)
             }
         }
     }
-
-    private func save() {
-        guard let selectedCustomer else { return }
-
-        let invoice = Invoice(number: number, customer: selectedCustomer, date: date, note: note, type: type)
-
-        items.forEach { item in
-            invoice.items.append(Item(product: item.product, quantity: item.quantity))
-        }
-
-        context.insert(invoice)
-    }
 }
 
 #Preview {
-    InvoiceFormView()
+    InvoiceFormView { _ in }
         .modelContainer(previewContainer)
         .environment(\.layoutDirection, .rightToLeft)
 }
