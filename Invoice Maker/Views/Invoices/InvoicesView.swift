@@ -54,7 +54,7 @@ struct InvoicesView: View {
                     .environment(\.layoutDirection, .rightToLeft)
             }
             .sheet(item: $selectedInvoice) { invoice in
-                InvoiceFormView(invoice: invoice, onSave: update)
+                InvoiceFormView(invoice: invoice, onSave: update, viewer: true)
                     .environment(\.layoutDirection, .rightToLeft)
             }
         }

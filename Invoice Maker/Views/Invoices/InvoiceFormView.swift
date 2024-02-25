@@ -15,8 +15,9 @@ struct InvoiceFormView: View {
     @State private var invoiceDetails: InvoiceDetails
 
     var onSave: (InvoiceDetails) -> Void
+    var viewer: Bool
 
-    init(invoice: Invoice? = nil, onSave: @escaping (InvoiceDetails) -> Void) {
+    init(invoice: Invoice? = nil, onSave: @escaping (InvoiceDetails) -> Void, viewer: Bool = false) {
         if let invoice {
             _invoiceDetails = State(initialValue: InvoiceDetails(from: invoice))
         } else {
@@ -24,6 +25,7 @@ struct InvoiceFormView: View {
         }
 
         self.onSave = onSave
+        self.viewer = viewer
     }
 
     var body: some View {
@@ -81,6 +83,13 @@ struct InvoiceFormView: View {
                         Spacer()
                         Button("اضافه", systemImage: "plus") {
                             showInvoiceProductSelection.toggle()
+                        }
+                    }
+                }
+
+                if viewer {
+                    Section {
+                        Button("پرینت") {
                         }
                     }
                 }
