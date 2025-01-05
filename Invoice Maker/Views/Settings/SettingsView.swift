@@ -8,8 +8,18 @@
 import SwiftData
 import SwiftUI
 
+struct NavigationLazyView<Content: View>: View {
+    let build: () -> Content
+    init(_ build: @autoclosure @escaping () -> Content) {
+        self.build = build
+    }
+
+    var body: Content {
+        build()
+    }
+}
+
 struct SettingsView: View {
-    @Environment(\.modelContext) private var modelContext
     @Query private var business: [Business]
 
     var body: some View {
@@ -17,40 +27,36 @@ struct SettingsView: View {
             List {
                 Section {
                     NavigationLink("اطلاعات کسب و کار") {
-                        if let business = business.first {
-                            SettingsBusinessDetailsView(business: business)
-                        }
+                        NavigationLazyView(SettingsBusinessDetailsView(business: business.first))
                     }
-                    .onAppear {
-                        if business.isEmpty {
-                            let business = Business(name: "",
-                                                    address: "",
-                                                    phone: "",
-                                                    email: "",
-                                                    website: "")
-                            modelContext.insert(business)
+                } footer: {
+                    if business.isEmpty {
+                        HStack {
+                            Image(systemName: "exclamationmark.triangle")
+                                .foregroundStyle(.yellow)
+                            Text("لطفا اطلاعات کسب و کار خود را وارد نمایید.")
                         }
                     }
                 }
 
-                Section {
-                    Button("امتیاز به ما", systemImage: "star") {
-                    }
-
-                    Button("اشتراک گذاری برنامه", systemImage: "square.and.arrow.up") {
-                    }
-
-                    Button("تماس با ما", systemImage: "envelope") {
-                    }
-                }
+//                Section {
+//                    Button("امتیاز به ما", systemImage: "star") {
+//                    }
+//
+//                    Button("اشتراک گذاری برنامه", systemImage: "square.and.arrow.up") {
+//                    }
+//
+//                    Button("تماس با ما", systemImage: "envelope") {
+//                    }
+//                }
             }
             .navigationTitle("تنظیمات")
         }
     }
 }
 
-#Preview {
-    SettingsView()
-        .modelContainer(previewContainer)
-        .environment(\.layoutDirection, .rightToLeft)
-}
+// #Preview {
+//    SettingsView()
+//        .modelContainer(previewContainer)
+//        .environment(\.layoutDirection, .rightToLeft)
+// }

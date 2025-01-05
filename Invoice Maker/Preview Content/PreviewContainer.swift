@@ -9,10 +9,10 @@ import Foundation
 import SwiftData
 
 @MainActor
-let previewContainer: ModelContainer = {
+public let previewContainer: ModelContainer = {
     do {
         let schema = Schema([Invoice.self, Business.self])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
 
         let container = try ModelContainer(for: schema, configurations: modelConfiguration)
 

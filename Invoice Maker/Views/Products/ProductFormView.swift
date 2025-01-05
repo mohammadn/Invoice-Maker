@@ -64,8 +64,8 @@ struct ProductFormView: View {
     }
 }
 
-#Preview {
-    ProductFormView { _ in }
-        .modelContainer(previewContainer)
-        .environment(\.layoutDirection, .rightToLeft)
-}
+//#Preview {
+//    ProductFormView { _ in }
+//        .modelContainer(previewContainer)
+//        .environment(\.layoutDirection, .rightToLeft)
+//}

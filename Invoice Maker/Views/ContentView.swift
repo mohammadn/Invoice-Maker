@@ -13,6 +13,7 @@ enum TabItems: Hashable {
 }
 
 struct ContentView: View {
+    @Query private var business: [Business]
     @State private var selectedTab: TabItems = .invoices
 
     var body: some View {
@@ -38,11 +39,16 @@ struct ContentView: View {
                 }
                 .tag(TabItems.invoices)
         }
+        .onChange(of: selectedTab,initial: true) { _, _ in
+            if business.isEmpty {
+                selectedTab = .settings
+            }
+        }
     }
 }
 
-#Preview {
-    ContentView()
-        .modelContainer(previewContainer)
-        .environment(\.layoutDirection, .rightToLeft)
-}
+// #Preview {
+//    ContentView()
+//        .modelContainer(previewContainer)
+//        .environment(\.layoutDirection, .rightToLeft)
+// }

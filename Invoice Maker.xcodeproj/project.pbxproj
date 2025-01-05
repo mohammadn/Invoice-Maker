@@ -34,6 +34,8 @@
 		A6ACF5D72B7ECC9900D4727B /* InvoiceFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5D62B7ECC9900D4727B /* InvoiceFormView.swift */; };
 		A6ACF5D92B8117D500D4727B /* InvoiceProductSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5D82B8117D500D4727B /* InvoiceProductSelection.swift */; };
 		A6D4F6F02B8B93CF0089B653 /* InvoiceDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D4F6EF2B8B93CF0089B653 /* InvoiceDetails.swift */; };
+		A6DAE5002D240BBD00205A54 /* String+ToPersian.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DAE4FF2D240BBD00205A54 /* String+ToPersian.swift */; };
+		A6E4DFE52B8BBCEF0088BCFC /* PDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E4DFE42B8BBCEF0088BCFC /* PDF.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +66,8 @@
 		A6ACF5D62B7ECC9900D4727B /* InvoiceFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceFormView.swift; sourceTree = "<group>"; };
 		A6ACF5D82B8117D500D4727B /* InvoiceProductSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceProductSelection.swift; sourceTree = "<group>"; };
 		A6D4F6EF2B8B93CF0089B653 /* InvoiceDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceDetails.swift; sourceTree = "<group>"; };
+		A6DAE4FF2D240BBD00205A54 /* String+ToPersian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ToPersian.swift"; sourceTree = "<group>"; };
+		A6E4DFE42B8BBCEF0088BCFC /* PDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDF.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +159,8 @@
 				A6ACF5C72B7C156C00D4727B /* Customer */,
 				A6ACF5D32B7D6C5700D4727B /* Invoice */,
 				A6ACF59C2B7AC77800D4727B /* Product */,
+				A6E4DFE62B8BBCF70088BCFC /* PDF */,
+				A6DAE4FF2D240BBD00205A54 /* String+ToPersian.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -213,6 +219,14 @@
 				A6ACF5D42B7EC42600D4727B /* Item.swift */,
 			);
 			path = Invoice;
+			sourceTree = "<group>";
+		};
+		A6E4DFE62B8BBCF70088BCFC /* PDF */ = {
+			isa = PBXGroup;
+			children = (
+				A6E4DFE42B8BBCEF0088BCFC /* PDF.swift */,
+			);
+			path = PDF;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,6 +306,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6ACF5A12B7ACB9000D4727B /* Business+SampleData.swift in Sources */,
+				A6E4DFE52B8BBCEF0088BCFC /* PDF.swift in Sources */,
 				A6ACF5CB2B7C15DD00D4727B /* CustomerDetails.swift in Sources */,
 				A6ACF5872B794F4400D4727B /* SettingsView.swift in Sources */,
 				A6ACF5762B7945B100D4727B /* ContentView.swift in Sources */,
@@ -310,6 +325,7 @@
 				A6ACF5CF2B7D6BF800D4727B /* InvoicesView.swift in Sources */,
 				A6ACF5C92B7C157700D4727B /* Customer.swift in Sources */,
 				A6ACF5932B798DF000D4727B /* PreviewContainer.swift in Sources */,
+				A6DAE5002D240BBD00205A54 /* String+ToPersian.swift in Sources */,
 				A6ACF5902B7984DC00D4727B /* Product.swift in Sources */,
 				A6ACF5D92B8117D500D4727B /* InvoiceProductSelection.swift in Sources */,
 				A6ACF5D22B7D6C4A00D4727B /* Invoice.swift in Sources */,
@@ -463,7 +479,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "MN.Invoice-Maker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -472,7 +488,7 @@
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -499,7 +515,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "MN.Invoice-Maker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -508,7 +524,7 @@
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

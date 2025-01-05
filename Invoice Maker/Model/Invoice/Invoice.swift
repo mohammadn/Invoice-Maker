@@ -18,6 +18,10 @@ class Invoice {
     var items: [Item]
     var createdDate: Date = Date.now
 
+    var total: Int {
+        items.reduce(0) { $0 + ($1.quantity * $1.product.price) }
+    }
+
     init(number: String = "", customer: Customer, date: Date = .now, note: String = "", type: InvoiceType = .sale, items: [Item] = []) {
         self.number = number
         self.customer = customer
@@ -42,13 +46,12 @@ class Invoice {
 
 extension Invoice {
     enum InvoiceType: Codable, CaseIterable {
-        case sale, purchase, proforma
+        case sale, proforma
 
         var label: String {
             switch self {
-            case .sale: "فروش"
-            case .purchase: "خرید"
-            case .proforma: "پیش فاکتور"
+            case .sale: "فاکتور فروش"
+            case .proforma: "پیش فاکتور فروش"
             }
         }
     }

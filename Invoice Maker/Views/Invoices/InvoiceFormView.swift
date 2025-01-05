@@ -11,13 +11,17 @@ import SwiftUI
 struct InvoiceFormView: View {
     @Environment(\.dismiss) private var dismiss
     @Query(sort: \Customer.name) private var customers: [Customer]
+    @Query private var business: [Business]
     @State private var showInvoiceProductSelection: Bool = false
     @State private var invoiceDetails: InvoiceDetails
+    @State private var generatedPDF: URL?
 
+    let invoice: Invoice?
     var onSave: (InvoiceDetails) -> Void
-    var viewer: Bool
 
-    init(invoice: Invoice? = nil, onSave: @escaping (InvoiceDetails) -> Void, viewer: Bool = false) {
+    init(invoice: Invoice? = nil, onSave: @escaping (InvoiceDetails) -> Void) {
+        self.invoice = invoice
+
         if let invoice {
             _invoiceDetails = State(initialValue: InvoiceDetails(from: invoice))
         } else {
@@ -25,7 +29,6 @@ struct InvoiceFormView: View {
         }
 
         self.onSave = onSave
-        self.viewer = viewer
     }
 
     var body: some View {
@@ -66,17 +69,30 @@ struct InvoiceFormView: View {
                 }
 
                 Section {
-                    ForEach(invoiceDetails.items, id: \.product) { item in
-                        let quantity = Binding(
-                            get: { item.quantity },
-                            set: { invoiceDetails.items[invoiceDetails.items.firstIndex(where: { $0.product == item.product })!].quantity = $0 }
-                        )
+                    ForEach(invoiceDetails.items.indices, id: \.self) { index in
+//                        let quantity = Binding(
+//                            get: { item.quantity },
+//                            set: { invoiceDetails.items[invoiceDetails.items.firstIndex(where: { $0.product == item.product })!].quantity = $0 }
+//                        )
+//
+//                        Stepper(value: quantity, step: 1) {
+//                            Text(item.product.name)
+//                            Text(quantity.wrappedValue.description)
+//                        }
 
-                        Stepper(value: quantity, step: 1) {
-                            Text(item.product.name)
-                            Text(quantity.wrappedValue.description)
+                        Stepper {
+//                            Text("محصول")
+                            Text(invoiceDetails.items[index].product.name)
+                            Text(invoiceDetails.items[index].quantity.description)
+                        } onIncrement: {
+                            invoiceDetails.items[index].quantity += 1
+                        } onDecrement: {
+                            if invoiceDetails.items[index].quantity > 0 {
+                                invoiceDetails.items[index].quantity -= 1
+                            }
                         }
                     }
+                    .onDelete(perform: deleteProduct)
                 } header: {
                     HStack {
                         Text("محصولات")
@@ -87,10 +103,9 @@ struct InvoiceFormView: View {
                     }
                 }
 
-                if viewer {
+                if let generatedPDF {
                     Section {
-                        Button("پرینت") {
-                        }
+                        ShareLink("پرینت", item: generatedPDF)
                     }
                 }
             }
@@ -113,12 +128,26 @@ struct InvoiceFormView: View {
                 InvoiceProductSelection(items: $invoiceDetails.items)
                     .environment(\.layoutDirection, .rightToLeft)
             }
+            .onAppear {
+                if let invoice,
+                   let business = business.first {
+                    let pdf = PDF(invoice: invoice, business: business)
+
+                    generatedPDF = pdf.generatePDF()
+                }
+            }
+        }
+    }
+
+    private func deleteProduct(at indexSet: IndexSet) {
+        indexSet.forEach { index in
+            invoiceDetails.items.remove(at: index)
         }
     }
 }
 
-#Preview {
-    InvoiceFormView { _ in }
-        .modelContainer(previewContainer)
-        .environment(\.layoutDirection, .rightToLeft)
-}
+//#Preview {
+//    InvoiceFormView { _ in }
+//        .modelContainer(previewContainer)
+//        .environment(\.layoutDirection, .rightToLeft)
+//}

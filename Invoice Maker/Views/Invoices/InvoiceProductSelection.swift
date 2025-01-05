@@ -57,8 +57,8 @@ struct InvoiceProductSelection: View {
     }
 }
 
-#Preview {
-    InvoiceProductSelection(items: .constant([]))
-        .modelContainer(previewContainer)
-        .environment(\.layoutDirection, .rightToLeft)
-}
+//#Preview {
+//    InvoiceProductSelection(items: .constant([]))
+//        .modelContainer(previewContainer)
+//        .environment(\.layoutDirection, .rightToLeft)
+//}

@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct CustomersView: View {
-    @Environment(\.modelContext) private var modelContext
+    @Environment(\.modelContext) private var context
     @Query(sort: \Customer.createdDate) private var customers: [Customer]
     @State private var isCustomerFormViewPresented: Bool = false
     @State private var selectedCustomer: Customer?
@@ -20,14 +20,16 @@ struct CustomersView: View {
                 ForEach(customers) { customer in
                     VStack(alignment: .leading) {
                         LabeledContent {
-                            Text(customer.phone.isEmpty ? "-" : customer.phone)
-                                .lineLimit(1)
+                            HStack {
+                                Text(customer.phone.isEmpty ? "-" : customer.phone)
+                                    .lineLimit(1)
 
-                            Button {
-                                selectedCustomer = customer
-                            } label: {
-                                Image(systemName: "info.circle")
-                                    .font(.title3)
+                                Button {
+                                    selectedCustomer = customer
+                                } label: {
+                                    Image(systemName: "info.circle")
+                                        .font(.title3)
+                                }
                             }
                         } label: {
                             Text(customer.name)
@@ -64,7 +66,7 @@ struct CustomersView: View {
     private func add(_ customerDetails: CustomerDetails) {
         let customer = Customer(from: customerDetails)
 
-        modelContext.insert(customer)
+        context.insert(customer)
     }
 
     private func update(_ customerDetails: CustomerDetails) {
@@ -73,13 +75,13 @@ struct CustomersView: View {
 
     private func delete(at indexSet: IndexSet) {
         indexSet.forEach { index in
-            modelContext.delete(customers[index])
+            context.delete(customers[index])
         }
     }
 }
 
-#Preview {
-    CustomersView()
-        .modelContainer(previewContainer)
-        .environment(\.layoutDirection, .rightToLeft)
-}
+// #Preview {
+//    CustomersView()
+//        .modelContainer(previewContainer)
+//        .environment(\.layoutDirection, .rightToLeft)
+// }

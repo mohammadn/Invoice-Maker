@@ -9,7 +9,6 @@ import SwiftUI
 
 struct CustomerFormView: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.modelContext) private var modelContext
     @State private var customerDetails: CustomerDetails
 
     var onSave: (CustomerDetails) -> Void
@@ -66,8 +65,9 @@ struct CustomerFormView: View {
     }
 }
 
-#Preview {
-    CustomerFormView { _ in }
-        .modelContainer(previewContainer)
-        .environment(\.layoutDirection, .rightToLeft)
-}
+//
+// #Preview {
+//    CustomerFormView { _ in }
+//        .modelContainer(previewContainer)
+//        .environment(\.layoutDirection, .rightToLeft)
+// }

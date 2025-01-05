@@ -20,13 +20,15 @@ struct ProductsView: View {
                 ForEach(products) { product in
                     VStack(alignment: .leading) {
                         LabeledContent {
-                            Text("\(product.price)")
+                            HStack {
+                                Text("\(product.price)")
 
-                            Button {
-                                selectedProduct = product
-                            } label: {
-                                Image(systemName: "info.circle")
-                                    .font(.title3)
+                                Button {
+                                    selectedProduct = product
+                                } label: {
+                                    Image(systemName: "info.circle")
+                                        .font(.title3)
+                                }
                             }
                         } label: {
                             Text(product.name)
@@ -78,8 +80,8 @@ struct ProductsView: View {
     }
 }
 
-#Preview {
-    ProductsView()
-        .modelContainer(previewContainer)
-        .environment(\.layoutDirection, .rightToLeft)
-}
+//#Preview {
+//    ProductsView()
+//        .modelContainer(previewContainer)
+//        .environment(\.layoutDirection, .rightToLeft)
+//}

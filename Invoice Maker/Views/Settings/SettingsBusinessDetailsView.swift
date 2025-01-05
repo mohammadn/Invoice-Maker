@@ -10,20 +10,26 @@ import SwiftUI
 
 struct SettingsBusinessDetailsView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var context
     @State private var businessDetails: BusinessDetails
-    @State private var logo: String = ""
+//    @State private var logo: String = ""
 
-    var business: Business
+    var business: Business?
 
-    init(business: Business) {
+    init(business: Business? = nil) {
         self.business = business
-        _businessDetails = State(initialValue: BusinessDetails(from: business))
+
+        if let business {
+            _businessDetails = State(initialValue: BusinessDetails(from: business))
+        } else {
+            _businessDetails = State(initialValue: BusinessDetails())
+        }
     }
 
     var body: some View {
         Form {
             Section {
-                TextField("نام کسب و کار", text: $businessDetails.name)
+                TextField("نام کسب و کار*", text: $businessDetails.name)
             }
 
             Section {
@@ -37,31 +43,48 @@ struct SettingsBusinessDetailsView: View {
                 TextField("وبسایت", text: $businessDetails.website)
             }
 
-            Section {
-                TextField("لوگو", text: $logo)
-            }
+//            Section {
+//                TextField("لوگو", text: $logo)
+//            }
         }
         .navigationTitle("اطلاعات کسب و کار")
         .navigationBarTitleDisplayMode(.inline)
+//        .navigationBarBackButtonHidden()
         .toolbar {
+//            ToolbarItem(placement: .navigationBarLeading) {
+//                Button {
+//                    dismiss()
+//                } label: {
+//                    Image(systemName: "chevron.right")
+//                    Text("تنظیمات")
+//                }
+//            }
             ToolbarItem {
                 Button("ذخیره") {
-                    business.update(with: businessDetails)
+                    if let business {
+                        business.update(with: businessDetails)
+                    } else {
+                        let business = Business(from: businessDetails)
+
+                        context.insert(business)
+                    }
+
                     dismiss()
                 }
+                .disabled(businessDetails.isInvalid)
             }
         }
     }
 }
 
-#Preview {
-    let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
-
-    let container = try! ModelContainer(for: Business.self,
-                                        configurations: configuration)
-    return NavigationStack {
-        SettingsBusinessDetailsView(business: Business.sampleData)
-    }
-    .modelContainer(container)
-    .environment(\.layoutDirection, .rightToLeft)
-}
+// #Preview {
+//    let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
+//
+//    let container = try! ModelContainer(for: Business.self,
+//                                        configurations: configuration)
+//    NavigationStack {
+//        SettingsBusinessDetailsView(business: Business.sampleData)
+//    }
+//    .modelContainer(container)
+//    .environment(\.layoutDirection, .rightToLeft)
+// }

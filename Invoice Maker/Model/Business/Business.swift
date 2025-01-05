@@ -23,6 +23,14 @@ class Business {
         self.email = email
         self.website = website
     }
+
+    convenience init(from businessDetails: BusinessDetails) {
+        self.init(name: businessDetails.name,
+                  address: businessDetails.address,
+                  phone: businessDetails.phone,
+                  email: businessDetails.email,
+                  website: businessDetails.website)
+    }
 }
 
 extension Business {

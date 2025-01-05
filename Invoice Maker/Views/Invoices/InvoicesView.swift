@@ -20,13 +20,15 @@ struct InvoicesView: View {
                 ForEach(invoices) { invoice in
                     VStack(alignment: .leading) {
                         LabeledContent {
-                            Text(invoice.date.formatted(date: .abbreviated, time: .omitted))
+                            HStack {
+                                Text(invoice.date.formatted(date: .abbreviated, time: .omitted))
 
-                            Button {
-                                selectedInvoice = invoice
-                            } label: {
-                                Image(systemName: "info.circle")
-                                    .font(.title3)
+                                Button {
+                                    selectedInvoice = invoice
+                                } label: {
+                                    Image(systemName: "info.circle")
+                                        .font(.title3)
+                                }
                             }
                         } label: {
                             Text(invoice.number)
@@ -54,7 +56,7 @@ struct InvoicesView: View {
                     .environment(\.layoutDirection, .rightToLeft)
             }
             .sheet(item: $selectedInvoice) { invoice in
-                InvoiceFormView(invoice: invoice, onSave: update, viewer: true)
+                InvoiceFormView(invoice: invoice, onSave: update)
                     .environment(\.layoutDirection, .rightToLeft)
             }
         }
@@ -79,8 +81,8 @@ struct InvoicesView: View {
     }
 }
 
-#Preview {
-    InvoicesView()
-        .modelContainer(previewContainer)
-        .environment(\.layoutDirection, .rightToLeft)
-}
+//#Preview {
+//    InvoicesView()
+//        .modelContainer(previewContainer)
+//        .environment(\.layoutDirection, .rightToLeft)
+//}
