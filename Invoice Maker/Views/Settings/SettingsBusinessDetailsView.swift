@@ -49,16 +49,16 @@ struct SettingsBusinessDetailsView: View {
         }
         .navigationTitle("اطلاعات کسب و کار")
         .navigationBarTitleDisplayMode(.inline)
-//        .navigationBarBackButtonHidden()
+        .navigationBarBackButtonHidden()
         .toolbar {
-//            ToolbarItem(placement: .navigationBarLeading) {
-//                Button {
-//                    dismiss()
-//                } label: {
-//                    Image(systemName: "chevron.right")
-//                    Text("تنظیمات")
-//                }
-//            }
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.right")
+                    Text("تنظیمات")
+                }
+            }
             ToolbarItem {
                 Button("ذخیره") {
                     if let business {
