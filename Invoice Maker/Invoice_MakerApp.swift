@@ -10,11 +10,18 @@ import SwiftUI
 
 @main
 struct Invoice_MakerApp: App {
+    var persianCalendar: Calendar {
+        var calendar = Calendar(identifier: .persian)
+        calendar.firstWeekday = 7
+        return calendar
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .modelContainer(for: [Business.self, Invoice.self])
-                .environment(\.layoutDirection, .rightToLeft)
+                .environment(\.calendar, persianCalendar)
+                .environment(\.locale, Locale(identifier: "fa-IR"))
         }
     }
 }

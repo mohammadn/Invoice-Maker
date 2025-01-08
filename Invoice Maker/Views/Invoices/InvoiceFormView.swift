@@ -36,7 +36,6 @@ struct InvoiceFormView: View {
             Form {
                 Section {
                     TextField("شماره فاکتور*", text: $invoiceDetails.number)
-                        .keyboardType(.numberPad)
 
                     Picker("نوع فاکتور", selection: $invoiceDetails.type) {
                         ForEach(Invoice.InvoiceType.allCases, id: \.self) { type in
@@ -70,18 +69,7 @@ struct InvoiceFormView: View {
 
                 Section {
                     ForEach(invoiceDetails.items.indices, id: \.self) { index in
-//                        let quantity = Binding(
-//                            get: { item.quantity },
-//                            set: { invoiceDetails.items[invoiceDetails.items.firstIndex(where: { $0.product == item.product })!].quantity = $0 }
-//                        )
-//
-//                        Stepper(value: quantity, step: 1) {
-//                            Text(item.product.name)
-//                            Text(quantity.wrappedValue.description)
-//                        }
-
                         Stepper {
-//                            Text("محصول")
                             Text(invoiceDetails.items[index].product.name)
                             Text(invoiceDetails.items[index].quantity.description)
                         } onIncrement: {
@@ -146,8 +134,8 @@ struct InvoiceFormView: View {
     }
 }
 
-//#Preview {
+// #Preview {
 //    InvoiceFormView { _ in }
 //        .modelContainer(previewContainer)
 //        .environment(\.layoutDirection, .rightToLeft)
-//}
+// }

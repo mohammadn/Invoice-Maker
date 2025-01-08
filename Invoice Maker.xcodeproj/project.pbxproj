@@ -269,11 +269,11 @@
 			};
 			buildConfigurationList = A6ACF56B2B7945B100D4727B /* Build configuration list for PBXProject "Invoice Maker" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = fa;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				fa,
 				en,
-				Base,
 			);
 			mainGroup = A6ACF5672B7945B100D4727B;
 			packageReferences = (

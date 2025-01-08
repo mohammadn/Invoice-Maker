@@ -21,7 +21,7 @@ struct InvoicesView: View {
                     VStack(alignment: .leading) {
                         LabeledContent {
                             HStack {
-                                Text(invoice.date.formatted(date: .abbreviated, time: .omitted))
+                                Text(invoice.date, style: .date)
 
                                 Button {
                                     selectedInvoice = invoice
@@ -81,8 +81,8 @@ struct InvoicesView: View {
     }
 }
 
-//#Preview {
+// #Preview {
 //    InvoicesView()
 //        .modelContainer(previewContainer)
 //        .environment(\.layoutDirection, .rightToLeft)
-//}
+// }
