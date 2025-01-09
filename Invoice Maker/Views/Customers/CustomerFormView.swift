@@ -28,19 +28,19 @@ struct CustomerFormView: View {
             Form {
                 Section {
                     TextField("نام*", text: $customerDetails.name)
-                    TextField("جزئیات", text: $customerDetails.details, axis: .vertical)
+                    TextField("جزئیات", text: $customerDetails.details ?? "", axis: .vertical)
                         .lineLimit(2 ... 4)
                 }
 
                 Section {
-                    TextField("تلفن", text: $customerDetails.phone)
+                    TextField("تلفن", text: $customerDetails.phone ?? "")
                         .keyboardType(.phonePad)
-                    TextField("آدرس", text: $customerDetails.address, axis: .vertical)
+                    TextField("آدرس", text: $customerDetails.address ?? "", axis: .vertical)
                         .lineLimit(3 ... 5)
                 }
 
                 Section {
-                    TextField("ایمیل", text: $customerDetails.email)
+                    TextField("ایمیل", text: $customerDetails.email ?? "")
                         .keyboardType(.emailAddress)
                 }
             }

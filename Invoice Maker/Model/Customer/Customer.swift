@@ -11,14 +11,14 @@ import SwiftData
 @Model
 class Customer {
     var name: String
-    var address: String
-    var details: String
-    var phone: String
-    var email: String
+    var address: String?
+    var details: String?
+    var phone: String?
+    var email: String?
     var invoices: [Invoice] = []
     var createdDate: Date = Date.now
 
-    init(name: String, address: String, details: String, phone: String, email: String) {
+    init(name: String, address: String?, details: String?, phone: String?, email: String?) {
         self.name = name
         self.address = address
         self.details = details

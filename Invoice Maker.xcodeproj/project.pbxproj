@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A68456062D30577400FBD1E1 /* NullishCoalescingBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68456052D30577400FBD1E1 /* NullishCoalescingBinding.swift */; };
 		A6ACF5742B7945B100D4727B /* Invoice_MakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5732B7945B100D4727B /* Invoice_MakerApp.swift */; };
 		A6ACF5762B7945B100D4727B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5752B7945B100D4727B /* ContentView.swift */; };
 		A6ACF57A2B7945B200D4727B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6ACF5792B7945B200D4727B /* Assets.xcassets */; };
@@ -39,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A68456052D30577400FBD1E1 /* NullishCoalescingBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NullishCoalescingBinding.swift; sourceTree = "<group>"; };
 		A6ACF5702B7945B100D4727B /* Invoice Maker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Invoice Maker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6ACF5732B7945B100D4727B /* Invoice_MakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invoice_MakerApp.swift; sourceTree = "<group>"; };
 		A6ACF5752B7945B100D4727B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -155,12 +157,13 @@
 		A6ACF5912B798B3B00D4727B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A68456052D30577400FBD1E1 /* NullishCoalescingBinding.swift */,
+				A6DAE4FF2D240BBD00205A54 /* String+ToPersian.swift */,
 				A6ACF59F2B7AC79900D4727B /* Business */,
 				A6ACF5C72B7C156C00D4727B /* Customer */,
 				A6ACF5D32B7D6C5700D4727B /* Invoice */,
-				A6ACF59C2B7AC77800D4727B /* Product */,
 				A6E4DFE62B8BBCF70088BCFC /* PDF */,
-				A6DAE4FF2D240BBD00205A54 /* String+ToPersian.swift */,
+				A6ACF59C2B7AC77800D4727B /* Product */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				A6ACF5CD2B7C1C1700D4727B /* Customer+SampleData.swift in Sources */,
 				A6ACF59E2B7AC79000D4727B /* Business.swift in Sources */,
 				A6D4F6F02B8B93CF0089B653 /* InvoiceDetails.swift in Sources */,
+				A68456062D30577400FBD1E1 /* NullishCoalescingBinding.swift in Sources */,
 				A6ACF5952B798E1900D4727B /* Product+SampleData.swift in Sources */,
 				A6ACF5742B7945B100D4727B /* Invoice_MakerApp.swift in Sources */,
 				A6ACF58C2B79841C00D4727B /* ProductsView.swift in Sources */,

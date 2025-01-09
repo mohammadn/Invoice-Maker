@@ -21,7 +21,7 @@ struct CustomersView: View {
                     VStack(alignment: .leading) {
                         LabeledContent {
                             HStack {
-                                Text(customer.phone.isEmpty ? "-" : customer.phone)
+                                Text(customer.phone ?? "-")
                                     .lineLimit(1)
 
                                 Button {
@@ -36,7 +36,7 @@ struct CustomersView: View {
                                 .lineLimit(1)
                         }
 
-                        Text(customer.email.isEmpty ? "-" : customer.email)
+                        Text(customer.email ?? "-")
                             .font(.subheadline)
                             .foregroundStyle(.gray)
                             .lineLimit(1)

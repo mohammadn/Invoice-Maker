@@ -10,16 +10,16 @@ import Foundation
 @Observable
 class BusinessDetails {
     var name: String
-    var address: String
-    var phone: String
-    var email: String
-    var website: String
+    var address: String?
+    var phone: String?
+    var email: String?
+    var website: String?
 
     var isInvalid: Bool {
         name.isEmpty
     }
 
-    init(name: String = "", address: String = "", phone: String = "", email: String = "", website: String = "") {
+    init(name: String = "", address: String? = nil, phone: String? = nil, email: String? = nil, website: String? = nil) {
         self.name = name
         self.address = address
         self.phone = phone
