@@ -5,6 +5,7 @@
 //  Created by Mohammad Najafzadeh on 11/02/2024.
 //
 
+import StoreKit
 import SwiftData
 import SwiftUI
 
@@ -20,6 +21,8 @@ struct NavigationLazyView<Content: View>: View {
 }
 
 struct SettingsView: View {
+    @Environment(\.requestReview) private var requestReview
+    @Environment(\.openURL) var openURL
     @Query private var business: [Business]
 
     var body: some View {
@@ -39,16 +42,23 @@ struct SettingsView: View {
                     }
                 }
 
-//                Section {
-//                    Button("امتیاز به ما", systemImage: "star") {
-//                    }
-//
-//                    Button("اشتراک گذاری برنامه", systemImage: "square.and.arrow.up") {
-//                    }
-//
-//                    Button("تماس با ما", systemImage: "envelope") {
-//                    }
-//                }
+                Section {
+                    Button("امتیاز به ما", systemImage: "star") {
+                        requestReview()
+                    }
+
+                    ShareLink(item: URL(string: "https://apple.co/4j6DlPl")!) {
+                        Label("اشتراک گذاری برنامه", systemImage: "square.and.arrow.up")
+                    }
+
+                    Button("تماس با ما", systemImage: "envelope") {
+                        openURL(URL(string: "mailto:mohammadnajafzade@yahoo.com?subject=Invoice Maker")!)
+                    }
+
+                    Button("تلگرام", systemImage: "paperplane") {
+                        openURL(URL(string: "tg://resolve?domain=invoicemaker")!)
+                    }
+                }
             }
             .navigationTitle("تنظیمات")
         }
