@@ -53,14 +53,14 @@ struct PDF {
             customerDetails.append(createAttributedString(label: "تلفن", value: phone))
         }
 
-        if let address = invoice.customer.address, !address.isEmpty {
-            customerDetails.append(comma)
-            customerDetails.append(createAttributedString(label: "آدرس", value: address))
-        }
-
         if let email = invoice.customer.email, !email.isEmpty {
             customerDetails.append(comma)
             customerDetails.append(createAttributedString(label: "ایمیل", value: email))
+        }
+
+        if let address = invoice.customer.address, !address.isEmpty {
+            customerDetails.append(comma)
+            customerDetails.append(createAttributedString(label: "آدرس", value: address))
         }
 
         customerDetailsTable[0, 0].content = try? PDFTableContent(content: "خریدار:")
@@ -97,9 +97,9 @@ struct PDF {
             businessDetails.append(createAttributedString(label: "تلفن", value: phone))
         }
 
-        if let address = business.address, !address.isEmpty {
+        if let website = business.website, !website.isEmpty {
             businessDetails.append(comma)
-            businessDetails.append(createAttributedString(label: "آدرس", value: address))
+            businessDetails.append(createAttributedString(label: "وبسایت", value: website))
         }
 
         if let email = business.email, !email.isEmpty {
@@ -107,16 +107,16 @@ struct PDF {
             businessDetails.append(createAttributedString(label: "ایمیل", value: email))
         }
 
-        if let website = business.website, !website.isEmpty {
+        if let address = business.address, !address.isEmpty {
             businessDetails.append(comma)
-            businessDetails.append(createAttributedString(label: "وبسایت", value: website))
+            businessDetails.append(createAttributedString(label: "آدرس", value: address))
         }
 
         document.add(.footerCenter, attributedText: businessDetails)
 
         // Generate PDF
         let generator = TPPDF.PDFGenerator(document: document)
-        let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(invoice.type.label)-\(invoice.number).pdf")
+        let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(invoice.number).pdf")
         do {
             try generator.generate(to: tempURL)
             return tempURL
