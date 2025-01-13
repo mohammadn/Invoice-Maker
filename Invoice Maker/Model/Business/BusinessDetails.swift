@@ -11,15 +11,15 @@ import Foundation
 class BusinessDetails {
     var name: String
     var address: String?
-    var phone: String?
+    var phone: String
     var email: String?
     var website: String?
 
     var isInvalid: Bool {
-        name.isEmpty
+        name.isEmpty || phone.isEmpty
     }
 
-    init(name: String = "", address: String? = nil, phone: String? = nil, email: String? = nil, website: String? = nil) {
+    init(name: String = "", address: String? = nil, phone: String = "", email: String? = nil, website: String? = nil) {
         self.name = name
         self.address = address
         self.phone = phone

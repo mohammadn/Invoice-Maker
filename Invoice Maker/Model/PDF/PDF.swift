@@ -92,10 +92,8 @@ struct PDF {
         let businessDetails = NSMutableAttributedString()
         businessDetails.append(createAttributedString(label: "نام", value: business.name))
 
-        if let phone = business.phone, !phone.isEmpty {
-            businessDetails.append(comma)
-            businessDetails.append(createAttributedString(label: "تلفن", value: phone))
-        }
+        businessDetails.append(comma)
+        businessDetails.append(createAttributedString(label: "تلفن", value: business.phone))
 
         if let website = business.website, !website.isEmpty {
             businessDetails.append(comma)

@@ -32,14 +32,6 @@ struct SettingsView: View {
                     NavigationLink("اطلاعات کسب و کار") {
                         NavigationLazyView(SettingsBusinessDetailsView(business: business.first))
                     }
-                } footer: {
-                    if business.isEmpty {
-                        HStack {
-                            Image(systemName: "exclamationmark.triangle")
-                                .foregroundStyle(.yellow)
-                            Text("لطفا اطلاعات کسب و کار خود را وارد نمایید.")
-                        }
-                    }
                 }
 
                 Section {

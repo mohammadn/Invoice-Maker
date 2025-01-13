@@ -21,7 +21,7 @@ struct Invoice_MakerApp: App {
             ContentView()
                 .modelContainer(for: [Business.self, Invoice.self])
                 .environment(\.calendar, persianCalendar)
-                .environment(\.locale, Locale(identifier: "fa-IR"))
+                .environment(\.locale, Locale(identifier: "fa"))
         }
     }
 }

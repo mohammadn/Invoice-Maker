@@ -13,8 +13,9 @@ enum TabItems: Hashable {
 }
 
 struct ContentView: View {
-    @Query private var business: [Business]
+    @AppStorage("isWelcomeSheetShowing") var isWelcomeSheetShowing = true
     @State private var selectedTab: TabItems = .invoices
+    @Query private var business: [Business]
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -39,10 +40,8 @@ struct ContentView: View {
                 }
                 .tag(TabItems.invoices)
         }
-        .onChange(of: selectedTab,initial: true) { _, _ in
-            if business.isEmpty {
-                selectedTab = .settings
-            }
+        .sheet(isPresented: $isWelcomeSheetShowing) {
+            OnboardingSheetView(business: business.first)
         }
     }
 }

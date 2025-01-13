@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A68456062D30577400FBD1E1 /* NullishCoalescingBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68456052D30577400FBD1E1 /* NullishCoalescingBinding.swift */; };
+		A68456082D31F23900FBD1E1 /* OnboardingSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68456072D31F23900FBD1E1 /* OnboardingSheetView.swift */; };
 		A6ACF5742B7945B100D4727B /* Invoice_MakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5732B7945B100D4727B /* Invoice_MakerApp.swift */; };
 		A6ACF5762B7945B100D4727B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5752B7945B100D4727B /* ContentView.swift */; };
 		A6ACF57A2B7945B200D4727B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6ACF5792B7945B200D4727B /* Assets.xcassets */; };
@@ -41,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		A68456052D30577400FBD1E1 /* NullishCoalescingBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NullishCoalescingBinding.swift; sourceTree = "<group>"; };
+		A68456072D31F23900FBD1E1 /* OnboardingSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSheetView.swift; sourceTree = "<group>"; };
 		A6ACF5702B7945B100D4727B /* Invoice Maker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Invoice Maker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6ACF5732B7945B100D4727B /* Invoice_MakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invoice_MakerApp.swift; sourceTree = "<group>"; };
 		A6ACF5752B7945B100D4727B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				A6ACF5752B7945B100D4727B /* ContentView.swift */,
+				A68456072D31F23900FBD1E1 /* OnboardingSheetView.swift */,
 				A6ACF5C02B7C13F300D4727B /* Customers */,
 				A6ACF5D02B7D6C0000D4727B /* Invoices */,
 				A6ACF58D2B79842400D4727B /* Products */,
@@ -328,6 +331,7 @@
 				A6ACF5BF2B7ADA9600D4727B /* BusinessDetails.swift in Sources */,
 				A6ACF5D72B7ECC9900D4727B /* InvoiceFormView.swift in Sources */,
 				A6ACF5CF2B7D6BF800D4727B /* InvoicesView.swift in Sources */,
+				A68456082D31F23900FBD1E1 /* OnboardingSheetView.swift in Sources */,
 				A6ACF5C92B7C157700D4727B /* Customer.swift in Sources */,
 				A6ACF5932B798DF000D4727B /* PreviewContainer.swift in Sources */,
 				A6DAE5002D240BBD00205A54 /* String+ToPersian.swift in Sources */,

@@ -12,11 +12,11 @@ import SwiftData
 class Business {
     var name: String
     var address: String?
-    var phone: String?
+    var phone: String
     var email: String?
     var website: String?
 
-    init(name: String, address: String?, phone: String?, email: String?, website: String?) {
+    init(name: String, address: String?, phone: String, email: String?, website: String?) {
         self.name = name
         self.address = address
         self.phone = phone

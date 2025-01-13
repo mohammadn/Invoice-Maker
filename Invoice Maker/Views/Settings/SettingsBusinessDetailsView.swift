@@ -30,10 +30,10 @@ struct SettingsBusinessDetailsView: View {
         Form {
             Section {
                 TextField("نام کسب و کار*", text: $businessDetails.name)
+                TextField("شماره تماس*", text: $businessDetails.phone)
             }
 
             Section {
-                TextField("شماره تماس", text: $businessDetails.phone ?? "")
                 TextField("آدرس", text: $businessDetails.address ?? "", axis: .vertical)
                     .lineLimit(3 ... 5)
             }
