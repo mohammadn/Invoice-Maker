@@ -128,19 +128,11 @@ struct PDF {
 
     // Helper Functions
     private func formattedDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .short
-        formatter.locale = Locale(identifier: "fa_IR")
-        return formatter.string(from: date)
+        return date.formatted(.dateTime.locale(.init(identifier: "fa")))
     }
 
-    private func formattedNumber(_ inputStr: Int) -> String {
-        let format = NumberFormatter()
-        format.locale = Locale(identifier: "fa_IR")
-        let number = format.number(from: String(inputStr))
-        let faNumber = format.string(from: number!)
-        return faNumber!
+    private func formattedNumber(_ input: Int) -> String {
+        return input.formatted(.number.grouping(.automatic).locale(Locale(identifier: "fa")))
     }
 
     private func createItemsTable() -> PDFTable {
@@ -159,11 +151,11 @@ struct PDF {
         // **Table Content**
         for (index, item) in invoice.items.enumerated() {
             let row = index + 1
-            table[row, 0].content = try? PDFTableContent(content: String(item.product.price * item.quantity).toPersian())
-            table[row, 1].content = try? PDFTableContent(content: item.product.price.description.toPersian())
-            table[row, 2].content = try? PDFTableContent(content: item.quantity.description)
+            table[row, 0].content = try? PDFTableContent(content: formattedNumber(item.product.price * item.quantity))
+            table[row, 1].content = try? PDFTableContent(content: formattedNumber(item.product.price))
+            table[row, 2].content = try? PDFTableContent(content: formattedNumber(item.quantity))
             table[row, 3].content = try? PDFTableContent(content: item.product.name)
-            table[row, 4].content = try? PDFTableContent(content: row)
+            table[row, 4].content = try? PDFTableContent(content: formattedNumber(row))
         }
 
         return table
