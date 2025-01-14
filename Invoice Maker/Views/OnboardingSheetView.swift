@@ -44,13 +44,32 @@ struct OnboardingSheetView: View {
 
                     Text("فاکتور ساز")
                         .font(.largeTitle.bold())
+
+                    Text("با فاکتور ساز به آسانی کسب و کار خود را مدیریت کنید.")
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
                 }
 
-                Text("در سریعترین زمان ممکن و فقط با در دست داشتن گوشی خود، کسب و کار خودتون رو مدیریت کنید.")
-                    .font(.headline)
-                    .foregroundStyle(.secondary)
+                HStack {
+                    VStack(spacing: 10) {
+                        FeatureView(label: "مدیریت مشتریان و محصولات",
+                                    description: "افزودن، ویرایش و مدیریت محصولات و مشتریان برای دسترسی آسان وهمیشگی.",
+                                    icon: "person.2.fill",
+                                    color: .blue)
+                        FeatureView(label: "صدور و مدیریت فاکتورها",
+                                    description: "ساخت، ویرایش و مدیریت فاکتورها برای کنترل بهتر و دقیق امور مالی.",
+                                    icon: "doc.text.fill",
+                                    color: .orange)
+                        FeatureView(label: "ذخیره فاکتورها با فرمت PDF",
+                                    description: "ذخیره فاکتورها با فرمت PDF برای دسترسی، اشتراک‌گذاری و چاپ آسان.",
+                                    icon: "square.and.arrow.down.fill",
+                                    color: .green)
+                    }
 
-                Spacer()
+                    Spacer()
+                }
+                .padding(10)
+
                 Spacer()
 
                 Button {
@@ -64,11 +83,12 @@ struct OnboardingSheetView: View {
                         .padding(.vertical, 10)
                 }
                 .buttonStyle(.borderedProminent)
+                .padding(10)
 
                 Spacer()
             }
             .tag(OnboardingTabItems.introduction)
-            .padding(30)
+            .padding(20)
 
             VStack(spacing: 30) {
                 HStack {
@@ -88,8 +108,8 @@ struct OnboardingSheetView: View {
                 Text("اطلاعات کسب و کار")
                     .font(.largeTitle)
 
-                Text("لطفا اطلاعات کسب و کار خود را وارد کنید. این اطلاعات بر روی فاکتورهای شما نمایش داده خواهد شد.")
-                    .font(.subheadline)
+                Text("برای شروع اطلاعات خود را وارد کنید. این اطلاعات بر روی فاکتورهای شما نمایش داده خواهد شد.")
+                    .font(.headline)
                     .foregroundStyle(.secondary)
 
                 VStack(spacing: 10) {
@@ -121,11 +141,12 @@ struct OnboardingSheetView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .disabled(businessDetails.isInvalid)
+                .padding(10)
 
                 Spacer()
             }
             .tag(OnboardingTabItems.businessInfo)
-            .padding(30)
+            .padding(20)
         }
         .interactiveDismissDisabled()
         .tabViewStyle(.page(indexDisplayMode: .always))
@@ -135,4 +156,29 @@ struct OnboardingSheetView: View {
 
 #Preview {
     OnboardingSheetView()
+}
+
+struct FeatureView: View {
+    let label: String
+    let description: String
+    let icon: String
+    let color: Color
+
+    var body: some View {
+        HStack {
+            Image(systemName: icon)
+                .foregroundStyle(color)
+                .font(.largeTitle.bold())
+                .frame(width: 60, alignment: .center)
+
+            VStack(alignment: .leading) {
+                Text(label)
+                    .font(.subheadline.bold())
+                Text(description)
+                    .font(.caption)
+            }
+
+            Spacer()
+        }
+    }
 }
