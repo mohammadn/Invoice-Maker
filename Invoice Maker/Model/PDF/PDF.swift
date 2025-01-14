@@ -111,6 +111,8 @@ struct PDF {
         }
 
         document.add(.footerCenter, attributedText: businessDetails)
+        document.add(.footerCenter, space: 10)
+        document.addLineSeparator(.footerCenter, style: PDFLineStyle(type: .full, color: UIColor.lightGray, width: 1))
 
         // Generate PDF
         let generator = TPPDF.PDFGenerator(document: document)
