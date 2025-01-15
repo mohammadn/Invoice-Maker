@@ -151,6 +151,7 @@ struct OnboardingSheetView: View {
         .interactiveDismissDisabled()
         .tabViewStyle(.page(indexDisplayMode: .always))
         .indexViewStyle(.page(backgroundDisplayMode: .always))
+        .ignoresSafeArea(.keyboard)
     }
 }
 

@@ -17,11 +17,11 @@ struct PDF {
         let document = PDFDocument(format: .a4)
         document.layout.margin = EdgeInsets(top: 72, left: 36, bottom: 72, right: 36)
 
-        // **Document Info**
+        // Document Info
         document.info.title = "Invoice \(invoice.number)"
         document.info.author = business.name
 
-        // **Title Section**
+        // Title Section
         let attributedTitle = NSMutableAttributedString(string: invoice.type.label, attributes: [.font: UIFont.systemFont(ofSize: .init(30), weight: .bold)])
         let attributedNumber = NSMutableAttributedString(string: "شماره فاکتور:  " + invoice.number.toPersian(),
                                                          attributes: [
@@ -140,7 +140,7 @@ struct PDF {
         table.widths = [0.2, 0.3, 0.1, 0.3, 0.1]
         table.padding = 5
 
-        // **Table Headers**
+        // Table Headers
         table[0, 0].content = try? PDFTableContent(content: "قیمت کل (ریال)")
         table[0, 1].content = try? PDFTableContent(content: "قیمت واحد (ریال)")
         table[0, 2].content = try? PDFTableContent(content: "تعداد")
@@ -148,7 +148,7 @@ struct PDF {
         table[0, 4].content = try? PDFTableContent(content: "ردیف")
         table[row: 0].allCellsStyle = PDFTableCellStyle(colors: (fill: UIColor.lightGray, text: UIColor.white), font: Font.systemFont(ofSize: 14))
 
-        // **Table Content**
+        // Table Content
         for (index, item) in invoice.items.enumerated() {
             let row = index + 1
             table[row, 0].content = try? PDFTableContent(content: formattedNumber(item.product.price * item.quantity))

@@ -5,7 +5,6 @@
 //  Created by Mohammad Najafzadeh on 11/02/2024.
 //
 
-import StoreKit
 import SwiftData
 import SwiftUI
 
@@ -21,7 +20,6 @@ struct NavigationLazyView<Content: View>: View {
 }
 
 struct SettingsView: View {
-    @Environment(\.requestReview) private var requestReview
     @Environment(\.openURL) var openURL
     @Query private var business: [Business]
 
@@ -36,7 +34,7 @@ struct SettingsView: View {
 
                 Section {
                     Button("امتیاز به ما", systemImage: "star") {
-                        requestReview()
+                        openURL(URL(string: "itms-apps://apps.apple.com/gb/app/id6738891697?action=write-review")!)
                     }
 
                     ShareLink(item: URL(string: "https://apple.co/4j6DlPl")!) {
