@@ -43,6 +43,7 @@
 /* Begin PBXFileReference section */
 		A68456052D30577400FBD1E1 /* NullishCoalescingBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NullishCoalescingBinding.swift; sourceTree = "<group>"; };
 		A68456072D31F23900FBD1E1 /* OnboardingSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSheetView.swift; sourceTree = "<group>"; };
+		A68456092D38622600FBD1E1 /* Invoice-Maker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Invoice-Maker-Info.plist"; sourceTree = SOURCE_ROOT; };
 		A6ACF5702B7945B100D4727B /* Invoice Maker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Invoice Maker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6ACF5732B7945B100D4727B /* Invoice_MakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invoice_MakerApp.swift; sourceTree = "<group>"; };
 		A6ACF5752B7945B100D4727B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -105,6 +106,7 @@
 		A6ACF5722B7945B100D4727B /* Invoice Maker */ = {
 			isa = PBXGroup;
 			children = (
+				A68456092D38622600FBD1E1 /* Invoice-Maker-Info.plist */,
 				A6ACF5732B7945B100D4727B /* Invoice_MakerApp.swift */,
 				A6ACF5792B7945B200D4727B /* Assets.xcassets */,
 				A6ACF5912B798B3B00D4727B /* Model */,
@@ -478,6 +480,7 @@
 				DEVELOPMENT_TEAM = LB6Z49AQCL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Invoice-Maker-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Invoice Maker | فاکتور ساز";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -514,6 +517,7 @@
 				DEVELOPMENT_TEAM = LB6Z49AQCL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Invoice-Maker-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Invoice Maker | فاکتور ساز";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
