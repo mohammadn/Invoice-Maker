@@ -97,7 +97,7 @@ struct PDF {
 
         if let website = business.website, !website.isEmpty {
             businessDetails.append(comma)
-            businessDetails.append(createAttributedString(label: "وبسایت", value: website))
+            businessDetails.append(createAttributedString(label: "وب سایت", value: website))
         }
 
         if let email = business.email, !email.isEmpty {
