@@ -15,6 +15,7 @@ struct InvoiceFormView: View {
     @State private var showInvoiceProductSelection: Bool = false
     @State private var invoiceDetails: InvoiceDetails
     @State private var generatedPDF: URL?
+    @State private var showDismissAlert: Bool = false
 
     let invoice: Invoice?
     var onSave: (InvoiceDetails) -> Void
@@ -99,17 +100,29 @@ struct InvoiceFormView: View {
             }
             .navigationBarTitle("فاکتور جدید")
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("انصراف") {
-                        dismiss()
-                    }
-                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("ذخیره") {
                         onSave(invoiceDetails)
+
                         dismiss()
                     }
                     .disabled(invoiceDetails.isInvalid)
+                }
+
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("انصراف") {
+                        showDismissAlert.toggle()
+                    }
+                    .alert("آیا مطمئن هستید؟", isPresented: $showDismissAlert) {
+                        Button("انصراف", role: .cancel) {
+                            showDismissAlert.toggle()
+                        }
+                        Button("حذف فاکتور", role: .destructive) {
+                            dismiss()
+                        }
+                    } message: {
+                        Text("فاکتور ذخیره نشده است. در صورت ادامه دادن حذف خواهد شد.")
+                    }
                 }
             }
             .sheet(isPresented: $showInvoiceProductSelection) {

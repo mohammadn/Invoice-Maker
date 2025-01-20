@@ -10,6 +10,7 @@ import SwiftUI
 struct CustomerFormView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var customerDetails: CustomerDetails
+    @State private var showDismissAlert: Bool = false
 
     var onSave: (CustomerDetails) -> Void
 
@@ -57,7 +58,17 @@ struct CustomerFormView: View {
 
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("انصراف") {
-                        dismiss()
+                        showDismissAlert.toggle()
+                    }
+                    .alert("آیا مطمئن هستید؟", isPresented: $showDismissAlert) {
+                        Button("انصراف", role: .cancel) {
+                            showDismissAlert.toggle()
+                        }
+                        Button("حذف مشتری", role: .destructive) {
+                            dismiss()
+                        }
+                    } message: {
+                        Text("اطلاعات مشتری ذخیره نشده است. در صورت ادامه دادن حذف خواهد شد.")
                     }
                 }
             }

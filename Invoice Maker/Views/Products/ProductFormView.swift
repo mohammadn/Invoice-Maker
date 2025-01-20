@@ -11,6 +11,7 @@ struct ProductFormView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @State private var productDetails: ProductDetails
+    @State private var showDismissAlert: Bool = false
 
     var onSave: (ProductDetails) -> Void
 
@@ -56,7 +57,17 @@ struct ProductFormView: View {
 
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("انصراف") {
-                        dismiss()
+                        showDismissAlert.toggle()
+                    }
+                    .alert("آیا مطمئن هستید؟", isPresented: $showDismissAlert) {
+                        Button("انصراف", role: .cancel) {
+                            showDismissAlert.toggle()
+                        }
+                        Button("حذف محصول", role: .destructive) {
+                            dismiss()
+                        }
+                    } message: {
+                        Text("اطلاعات محصول ذخیره نشده است. در صورت ادامه دادن حذف خواهد شد.")
                     }
                 }
             }
