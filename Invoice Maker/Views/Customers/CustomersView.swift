@@ -13,7 +13,7 @@ struct CustomersView: View {
     @Query(sort: \Customer.createdDate) private var customers: [Customer]
     @State private var isCustomerFormViewPresented: Bool = false
     @State private var selectedCustomer: Customer?
-
+    
     var body: some View {
         NavigationStack {
             List {
@@ -23,7 +23,7 @@ struct CustomersView: View {
                             HStack {
                                 Text(customer.phone ?? "-")
                                     .lineLimit(1)
-
+                                
                                 Button {
                                     selectedCustomer = customer
                                 } label: {
@@ -35,7 +35,7 @@ struct CustomersView: View {
                             Text(customer.name)
                                 .lineLimit(1)
                         }
-
+                        
                         Text(customer.email ?? "-")
                             .font(.subheadline)
                             .foregroundStyle(.gray)
@@ -60,19 +60,28 @@ struct CustomersView: View {
                 CustomerFormView(customer: customer, onSave: update)
                     .environment(\.layoutDirection, .rightToLeft)
             }
+            .overlay {
+                if customers.isEmpty {
+                    ContentUnavailableView {
+                        Label("مشتری یافت نشد", systemImage: "person.2")
+                    } description: {
+                        Text("برای افزودن مشتری جدید روی دکمه + کلیک کنید")
+                    }
+                }
+            }
         }
     }
-
+    
     private func add(_ customerDetails: CustomerDetails) {
         let customer = Customer(from: customerDetails)
-
+        
         context.insert(customer)
     }
-
+    
     private func update(_ customerDetails: CustomerDetails) {
         selectedCustomer?.update(with: customerDetails)
     }
-
+    
     private func delete(at indexSet: IndexSet) {
         indexSet.forEach { index in
             context.delete(customers[index])

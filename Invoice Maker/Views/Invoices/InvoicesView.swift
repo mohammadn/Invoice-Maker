@@ -59,6 +59,15 @@ struct InvoicesView: View {
                 InvoiceFormView(invoice: invoice, onSave: update)
                     .environment(\.layoutDirection, .rightToLeft)
             }
+            .overlay {
+                if invoices.isEmpty {
+                    ContentUnavailableView {
+                        Label("فاکتوری یافت نشد", systemImage: "doc.text")
+                    } description: {
+                        Text("برای افزودن فاکتور جدید روی دکمه + کلیک کنید")
+                    }
+                }
+            }
         }
     }
 

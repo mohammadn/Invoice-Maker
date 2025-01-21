@@ -13,7 +13,7 @@ struct ProductsView: View {
     @Query(sort: \Product.createdDate) private var products: [Product]
     @State private var isProductFormViewPresented: Bool = false
     @State private var selectedProduct: Product?
-
+    
     var body: some View {
         NavigationStack {
             List {
@@ -22,7 +22,7 @@ struct ProductsView: View {
                         LabeledContent {
                             HStack {
                                 Text("\(product.price)")
-
+                                
                                 Button {
                                     selectedProduct = product
                                 } label: {
@@ -33,7 +33,7 @@ struct ProductsView: View {
                         } label: {
                             Text(product.name)
                         }
-
+                        
                         Text(product.details ?? "-")
                             .font(.subheadline)
                             .foregroundStyle(.gray)
@@ -58,11 +58,20 @@ struct ProductsView: View {
                 ProductFormView(product: product)
                     .environment(\.layoutDirection, .rightToLeft)
             }
+            .overlay {
+                if products.isEmpty {
+                    ContentUnavailableView {
+                        Label("محصولی یافت نشد", systemImage: "list.dash")
+                    } description: {
+                        Text("برای افزودن محصول جدید روی دکمه + کلیک کنید")
+                    }
+                }
+            }
         }
     }
-
-   
-
+    
+    
+    
     private func deleteProduct(at indexSet: IndexSet) {
         indexSet.forEach { index in
             modelContext.delete(products[index])
