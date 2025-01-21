@@ -34,7 +34,7 @@ struct ProductsView: View {
                             Text(product.name)
                         }
 
-                        Text(product.details)
+                        Text(product.details ?? "-")
                             .font(.subheadline)
                             .foregroundStyle(.gray)
                             .lineLimit(1)
@@ -51,27 +51,17 @@ struct ProductsView: View {
                 }
             }
             .sheet(isPresented: $isProductFormViewPresented) {
-                ProductFormView(onSave: addProduct)
+                ProductFormView()
                     .environment(\.layoutDirection, .rightToLeft)
             }
             .sheet(item: $selectedProduct) { product in
-                ProductFormView(product: product, onSave: updateProduct)
+                ProductFormView(product: product)
                     .environment(\.layoutDirection, .rightToLeft)
             }
         }
     }
 
-    private func addProduct(_ productDetails: ProductDetails) {
-        let product = Product(from: productDetails)
-
-        if let product {
-            modelContext.insert(product)
-        }
-    }
-
-    private func updateProduct(_ productDetails: ProductDetails) {
-        selectedProduct?.update(with: productDetails)
-    }
+   
 
     private func deleteProduct(at indexSet: IndexSet) {
         indexSet.forEach { index in

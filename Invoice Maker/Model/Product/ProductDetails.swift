@@ -11,14 +11,14 @@ import Foundation
 class ProductDetails {
     var code: Int?
     var name: String
-    var details: String
+    var details: String?
     var price: Int?
 
     var isInvalid: Bool {
         code == nil || name.isEmpty || price == nil
     }
 
-    init(code: Int? = nil, name: String = "", details: String = "", price: Int? = nil) {
+    init(code: Int? = nil, name: String = "", details: String? = nil, price: Int? = nil) {
         self.code = code
         self.name = name
         self.details = details

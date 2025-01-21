@@ -11,15 +11,26 @@ import SwiftUI
 struct InvoiceProductSelection: View {
     @Environment(\.dismiss) private var dismiss
     @Query(sort: \Product.name) private var products: [Product]
+    @State private var isProductFormViewPresented: Bool = false
     @State private var selectedProducts: Set<Product> = []
 
     @Binding var items: [(product: Product, quantity: Int)]
 
     var body: some View {
         NavigationStack {
-            List(products, selection: $selectedProducts) { product in
-                Text(product.name)
-                    .tag(product)
+            List(selection: $selectedProducts) {
+                Section {
+                    Button("محصول جدید", systemImage: "plus") {
+                        isProductFormViewPresented.toggle()
+                    }
+                }
+
+                Section {
+                    ForEach(products) { product in
+                        Text(product.name)
+                            .tag(product)
+                    }
+                }
             }
             .navigationBarTitle("انتخاب محصول")
             .toolbar {
@@ -41,6 +52,10 @@ struct InvoiceProductSelection: View {
         .onAppear {
             selectedProducts = Set(items.map { $0.product })
         }
+        .sheet(isPresented: $isProductFormViewPresented) {
+            ProductFormView()
+                .environment(\.layoutDirection, .rightToLeft)
+        }
     }
 
     func updateItems(with selectedProducts: Set<Product>) {
@@ -57,8 +72,8 @@ struct InvoiceProductSelection: View {
     }
 }
 
-//#Preview {
+// #Preview {
 //    InvoiceProductSelection(items: .constant([]))
 //        .modelContainer(previewContainer)
 //        .environment(\.layoutDirection, .rightToLeft)
-//}
+// }

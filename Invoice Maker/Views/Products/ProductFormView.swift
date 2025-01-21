@@ -13,16 +13,17 @@ struct ProductFormView: View {
     @State private var productDetails: ProductDetails
     @State private var showDismissAlert: Bool = false
 
-    var onSave: (ProductDetails) -> Void
+    var product: Product?
+    //    var onSave: (ProductDetails) -> Void
 
-    init(product: Product? = nil, onSave: @escaping (ProductDetails) -> Void) {
+    init(product: Product? = nil) {
+        self.product = product
+
         if let product {
             _productDetails = State(initialValue: ProductDetails(from: product))
         } else {
             _productDetails = State(initialValue: ProductDetails())
         }
-
-        self.onSave = onSave
     }
 
     var body: some View {
@@ -35,7 +36,7 @@ struct ProductFormView: View {
 
                 Section {
                     TextField("نام کالا*", text: $productDetails.name)
-                    TextField("جزئیات", text: $productDetails.details, axis: .vertical)
+                    TextField("جزئیات", text: $productDetails.details ?? "", axis: .vertical)
                         .lineLimit(2 ... 4)
                 }
 
@@ -49,7 +50,13 @@ struct ProductFormView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("ذخیره") {
-                        onSave(productDetails)
+                        if let product {
+                            product.update(with: productDetails)
+                        } else {
+                            let product = Product(from: productDetails)
+
+                            modelContext.insert(product)
+                        }
                         dismiss()
                     }
                     .disabled(productDetails.isInvalid)
@@ -63,11 +70,11 @@ struct ProductFormView: View {
                         Button("انصراف", role: .cancel) {
                             showDismissAlert.toggle()
                         }
-                        Button("حذف محصول", role: .destructive) {
+                        Button("بازگشت") {
                             dismiss()
                         }
                     } message: {
-                        Text("اطلاعات محصول ذخیره نشده است. در صورت ادامه دادن حذف خواهد شد.")
+                        Text("در صورت بازگشت به صفحه قبل اطلاعات محصول ذخیره نخواهد شد.")
                     }
                 }
             }

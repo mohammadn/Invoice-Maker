@@ -117,11 +117,11 @@ struct InvoiceFormView: View {
                         Button("انصراف", role: .cancel) {
                             showDismissAlert.toggle()
                         }
-                        Button("حذف فاکتور", role: .destructive) {
+                        Button("بازگشت") {
                             dismiss()
                         }
                     } message: {
-                        Text("فاکتور ذخیره نشده است. در صورت ادامه دادن حذف خواهد شد.")
+                        Text("در صورت بازگشت به صفحه قبل اطلاعات فاکتور ذخیره نخواهد شد.")
                     }
                 }
             }

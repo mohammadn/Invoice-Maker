@@ -11,19 +11,19 @@ struct CustomerFormView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var customerDetails: CustomerDetails
     @State private var showDismissAlert: Bool = false
-
+    
     var onSave: (CustomerDetails) -> Void
-
+    
     init(customer: Customer? = nil, onSave: @escaping (CustomerDetails) -> Void) {
         if let customer {
             _customerDetails = State(initialValue: CustomerDetails(from: customer))
         } else {
             _customerDetails = State(initialValue: CustomerDetails())
         }
-
+        
         self.onSave = onSave
     }
-
+    
     var body: some View {
         NavigationStack {
             Form {
@@ -32,14 +32,14 @@ struct CustomerFormView: View {
                     TextField("جزئیات", text: $customerDetails.details ?? "", axis: .vertical)
                         .lineLimit(2 ... 4)
                 }
-
+                
                 Section {
                     TextField("تلفن", text: $customerDetails.phone ?? "")
                         .keyboardType(.phonePad)
                     TextField("آدرس", text: $customerDetails.address ?? "", axis: .vertical)
                         .lineLimit(3 ... 5)
                 }
-
+                
                 Section {
                     TextField("ایمیل", text: $customerDetails.email ?? "")
                         .keyboardType(.emailAddress)
@@ -55,7 +55,7 @@ struct CustomerFormView: View {
                     }
                     .disabled(customerDetails.isInvalid)
                 }
-
+                
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("انصراف") {
                         showDismissAlert.toggle()
@@ -64,11 +64,11 @@ struct CustomerFormView: View {
                         Button("انصراف", role: .cancel) {
                             showDismissAlert.toggle()
                         }
-                        Button("حذف مشتری", role: .destructive) {
+                        Button("بازگشت") {
                             dismiss()
                         }
                     } message: {
-                        Text("اطلاعات مشتری ذخیره نشده است. در صورت ادامه دادن حذف خواهد شد.")
+                        Text("در صورت بازگشت به صفحه قبل اطلاعات مشتری ذخیره نخواهد شد.")
                     }
                 }
             }

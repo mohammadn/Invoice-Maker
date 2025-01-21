@@ -12,39 +12,30 @@ import SwiftData
 class Product {
     @Attribute(.unique) var code: Int
     var name: String
-    var details: String
+    var details: String?
     var price: Int
     var createdDate: Date = Date.now
 
-    init(code: Int, name: String, details: String, price: Int) {
+    init(code: Int, name: String, details: String?, price: Int) {
         self.code = code
         self.name = name
         self.details = details
         self.price = price
     }
 
-    convenience init?(from productDetails: ProductDetails) {
-        if let code = productDetails.code,
-           let price = productDetails.price {
-            self.init(code: code,
-                      name: productDetails.name,
-                      details: productDetails.details,
-                      price: price)
-        } else {
-            return nil
-        }
+    convenience init(from productDetails: ProductDetails) {
+        self.init(code: productDetails.code ?? 0,
+                  name: productDetails.name,
+                  details: productDetails.details,
+                  price: productDetails.price ?? 0)
     }
 }
 
 extension Product {
     func update(with productDetails: ProductDetails) {
-        if let code = productDetails.code,
-           let price = productDetails.price {
-            self.code = code
-            self.price = price
-        }
-
+        code = productDetails.code ?? 0
         name = productDetails.name
         details = productDetails.details
+        price = productDetails.price ?? 0
     }
 }

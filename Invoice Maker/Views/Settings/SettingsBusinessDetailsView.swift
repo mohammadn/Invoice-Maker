@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SettingsBusinessDetailsView: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.modelContext) private var context
+    @Environment(\.modelContext) private var modelContext
     @State private var businessDetails: BusinessDetails
 //    @State private var logo: String = ""
 
@@ -57,7 +57,7 @@ struct SettingsBusinessDetailsView: View {
                     } else {
                         let business = Business(from: businessDetails)
 
-                        context.insert(business)
+                        modelContext.insert(business)
                     }
 
                     dismiss()
