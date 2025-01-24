@@ -9,11 +9,11 @@ import SwiftData
 import SwiftUI
 
 struct CustomersView: View {
-    @Environment(\.modelContext) private var context
+    @Environment(\.modelContext) private var modelContext
     @Query(sort: \Customer.createdDate) private var customers: [Customer]
-    @State private var isCustomerFormViewPresented: Bool = false
+    @State private var showCustomerFormView: Bool = false
     @State private var selectedCustomer: Customer?
-    
+
     var body: some View {
         NavigationStack {
             List {
@@ -23,7 +23,7 @@ struct CustomersView: View {
                             HStack {
                                 Text(customer.phone ?? "-")
                                     .lineLimit(1)
-                                
+
                                 Button {
                                     selectedCustomer = customer
                                 } label: {
@@ -35,7 +35,7 @@ struct CustomersView: View {
                             Text(customer.name)
                                 .lineLimit(1)
                         }
-                        
+
                         Text(customer.email ?? "-")
                             .font(.subheadline)
                             .foregroundStyle(.gray)
@@ -48,17 +48,15 @@ struct CustomersView: View {
             .toolbar {
                 ToolbarItemGroup {
                     Button("اضافه", systemImage: "plus") {
-                        isCustomerFormViewPresented.toggle()
+                        showCustomerFormView.toggle()
                     }
                 }
             }
-            .sheet(isPresented: $isCustomerFormViewPresented) {
-                CustomerFormView(onSave: add)
-                    .environment(\.layoutDirection, .rightToLeft)
+            .sheet(isPresented: $showCustomerFormView) {
+                CustomerFormView()
             }
             .sheet(item: $selectedCustomer) { customer in
-                CustomerFormView(customer: customer, onSave: update)
-                    .environment(\.layoutDirection, .rightToLeft)
+                CustomerFormView(customer: customer)
             }
             .overlay {
                 if customers.isEmpty {
@@ -71,20 +69,10 @@ struct CustomersView: View {
             }
         }
     }
-    
-    private func add(_ customerDetails: CustomerDetails) {
-        let customer = Customer(from: customerDetails)
-        
-        context.insert(customer)
-    }
-    
-    private func update(_ customerDetails: CustomerDetails) {
-        selectedCustomer?.update(with: customerDetails)
-    }
-    
+
     private func delete(at indexSet: IndexSet) {
         indexSet.forEach { index in
-            context.delete(customers[index])
+            modelContext.delete(customers[index])
         }
     }
 }

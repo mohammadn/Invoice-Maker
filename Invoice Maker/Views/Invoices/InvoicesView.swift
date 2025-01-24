@@ -53,11 +53,9 @@ struct InvoicesView: View {
             }
             .sheet(isPresented: $showInvoiceFormView) {
                 InvoiceFormView(onSave: save)
-                    .environment(\.layoutDirection, .rightToLeft)
             }
             .sheet(item: $selectedInvoice) { invoice in
                 InvoiceFormView(invoice: invoice, onSave: update)
-                    .environment(\.layoutDirection, .rightToLeft)
             }
             .overlay {
                 if invoices.isEmpty {

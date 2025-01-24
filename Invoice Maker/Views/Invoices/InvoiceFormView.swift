@@ -13,6 +13,7 @@ struct InvoiceFormView: View {
     @Query(sort: \Customer.name) private var customers: [Customer]
     @Query private var business: [Business]
     @State private var showInvoiceProductSelection: Bool = false
+    @State private var showCustomerFormView: Bool = false
     @State private var invoiceDetails: InvoiceDetails
     @State private var generatedPDF: URL?
     @State private var showDismissAlert: Bool = false
@@ -57,6 +58,9 @@ struct InvoiceFormView: View {
                     }
                     .pickerStyle(.navigationLink)
                     .disabled(customers.isEmpty)
+                    Button("افزودن مشتری", systemImage: "plus") {
+                        showCustomerFormView.toggle()
+                    }
                 }
 
                 Section {
@@ -125,9 +129,11 @@ struct InvoiceFormView: View {
                     }
                 }
             }
+            .sheet(isPresented: $showCustomerFormView) {
+                CustomerFormView()
+            }
             .sheet(isPresented: $showInvoiceProductSelection) {
                 InvoiceProductSelection(items: $invoiceDetails.items)
-                    .environment(\.layoutDirection, .rightToLeft)
             }
             .onAppear {
                 if let invoice,

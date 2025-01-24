@@ -14,7 +14,6 @@ struct ProductFormView: View {
     @State private var showDismissAlert: Bool = false
 
     var product: Product?
-    //    var onSave: (ProductDetails) -> Void
 
     init(product: Product? = nil) {
         self.product = product

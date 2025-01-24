@@ -11,7 +11,7 @@ import SwiftUI
 struct InvoiceProductSelection: View {
     @Environment(\.dismiss) private var dismiss
     @Query(sort: \Product.name) private var products: [Product]
-    @State private var isProductFormViewPresented: Bool = false
+    @State private var showProductFormView: Bool = false
     @State private var selectedProducts: Set<Product> = []
 
     @Binding var items: [(product: Product, quantity: Int)]
@@ -20,8 +20,8 @@ struct InvoiceProductSelection: View {
         NavigationStack {
             List(selection: $selectedProducts) {
                 Section {
-                    Button("محصول جدید", systemImage: "plus") {
-                        isProductFormViewPresented.toggle()
+                    Button("افزودن محصول", systemImage: "plus") {
+                        showProductFormView.toggle()
                     }
                 }
 
@@ -52,9 +52,8 @@ struct InvoiceProductSelection: View {
         .onAppear {
             selectedProducts = Set(items.map { $0.product })
         }
-        .sheet(isPresented: $isProductFormViewPresented) {
+        .sheet(isPresented: $showProductFormView) {
             ProductFormView()
-                .environment(\.layoutDirection, .rightToLeft)
         }
     }
 
