@@ -128,7 +128,11 @@ struct PDF {
 
     // Helper Functions
     private func formattedDate(_ date: Date) -> String {
-        return date.formatted(.dateTime.locale(.init(identifier: "fa")))
+        var formatStyle = Date.FormatStyle.dateTime
+        formatStyle.locale = Locale(identifier: "fa")
+        formatStyle.calendar = Calendar(identifier: .persian)
+
+        return date.formatted(formatStyle)
     }
 
     private func formattedNumber(_ input: Int) -> String {

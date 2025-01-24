@@ -15,13 +15,14 @@ struct Invoice_MakerApp: App {
         calendar.firstWeekday = 7
         return calendar
     }
-
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .modelContainer(for: [Business.self, Invoice.self])
                 .environment(\.calendar, persianCalendar)
                 .environment(\.locale, Locale(identifier: "fa"))
+                .environment(\.layoutDirection, .rightToLeft)
         }
     }
 }
