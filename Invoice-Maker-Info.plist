@@ -4,5 +4,7 @@
 <dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>NSContactsUsageDescription</key>
+	<string>فاکتورساز برای افزودن مشتریان از لیست مخاطبین شما، نیاز به دسترسی دارد.</string>
 </dict>
 </plist>
