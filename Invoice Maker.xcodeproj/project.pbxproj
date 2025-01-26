@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A6555A8F2D4667F7002F6537 /* CustomersListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6555A8E2D4667F7002F6537 /* CustomersListItemView.swift */; };
+		A6555A912D466936002F6537 /* CustomersContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6555A902D466936002F6537 /* CustomersContactView.swift */; };
 		A68456062D30577400FBD1E1 /* NullishCoalescingBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68456052D30577400FBD1E1 /* NullishCoalescingBinding.swift */; };
 		A68456082D31F23900FBD1E1 /* OnboardingSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68456072D31F23900FBD1E1 /* OnboardingSheetView.swift */; };
+		A684560B2D444F7800FBD1E1 /* ContactStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A684560A2D444F7800FBD1E1 /* ContactStoreManager.swift */; };
+		A684560F2D44501900FBD1E1 /* CNContact+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A684560E2D44501900FBD1E1 /* CNContact+Extension.swift */; };
 		A6ACF5742B7945B100D4727B /* Invoice_MakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5732B7945B100D4727B /* Invoice_MakerApp.swift */; };
 		A6ACF5762B7945B100D4727B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5752B7945B100D4727B /* ContentView.swift */; };
 		A6ACF57A2B7945B200D4727B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6ACF5792B7945B200D4727B /* Assets.xcassets */; };
@@ -41,9 +45,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A6555A8E2D4667F7002F6537 /* CustomersListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomersListItemView.swift; sourceTree = "<group>"; };
+		A6555A902D466936002F6537 /* CustomersContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomersContactView.swift; sourceTree = "<group>"; };
 		A68456052D30577400FBD1E1 /* NullishCoalescingBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NullishCoalescingBinding.swift; sourceTree = "<group>"; };
 		A68456072D31F23900FBD1E1 /* OnboardingSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSheetView.swift; sourceTree = "<group>"; };
 		A68456092D38622600FBD1E1 /* Invoice-Maker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Invoice-Maker-Info.plist"; sourceTree = SOURCE_ROOT; };
+		A684560A2D444F7800FBD1E1 /* ContactStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactStoreManager.swift; sourceTree = "<group>"; };
+		A684560E2D44501900FBD1E1 /* CNContact+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CNContact+Extension.swift"; sourceTree = "<group>"; };
 		A6ACF5702B7945B100D4727B /* Invoice Maker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Invoice Maker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6ACF5732B7945B100D4727B /* Invoice_MakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invoice_MakerApp.swift; sourceTree = "<group>"; };
 		A6ACF5752B7945B100D4727B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -87,6 +95,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A6555A922D467033002F6537 /* CNContact */ = {
+			isa = PBXGroup;
+			children = (
+				A684560E2D44501900FBD1E1 /* CNContact+Extension.swift */,
+				A684560A2D444F7800FBD1E1 /* ContactStoreManager.swift */,
+			);
+			path = CNContact;
+			sourceTree = "<group>";
+		};
 		A6ACF5672B7945B100D4727B = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +213,8 @@
 			children = (
 				A6ACF5C52B7C151800D4727B /* CustomerFormView.swift */,
 				A6ACF5C32B7C141C00D4727B /* CustomersView.swift */,
+				A6555A902D466936002F6537 /* CustomersContactView.swift */,
+				A6555A8E2D4667F7002F6537 /* CustomersListItemView.swift */,
 			);
 			path = Customers;
 			sourceTree = "<group>";
@@ -203,6 +222,7 @@
 		A6ACF5C72B7C156C00D4727B /* Customer */ = {
 			isa = PBXGroup;
 			children = (
+				A6555A922D467033002F6537 /* CNContact */,
 				A6ACF5C82B7C157700D4727B /* Customer.swift */,
 				A6ACF5CA2B7C15DD00D4727B /* CustomerDetails.swift */,
 			);
@@ -315,7 +335,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6ACF5A12B7ACB9000D4727B /* Business+SampleData.swift in Sources */,
+				A6555A912D466936002F6537 /* CustomersContactView.swift in Sources */,
 				A6E4DFE52B8BBCEF0088BCFC /* PDF.swift in Sources */,
+				A6555A8F2D4667F7002F6537 /* CustomersListItemView.swift in Sources */,
 				A6ACF5CB2B7C15DD00D4727B /* CustomerDetails.swift in Sources */,
 				A6ACF5872B794F4400D4727B /* SettingsView.swift in Sources */,
 				A6ACF5762B7945B100D4727B /* ContentView.swift in Sources */,
@@ -324,6 +346,7 @@
 				A6ACF5C62B7C151800D4727B /* CustomerFormView.swift in Sources */,
 				A6ACF58A2B7975AD00D4727B /* SettingsBusinessDetailsView.swift in Sources */,
 				A6ACF5CD2B7C1C1700D4727B /* Customer+SampleData.swift in Sources */,
+				A684560B2D444F7800FBD1E1 /* ContactStoreManager.swift in Sources */,
 				A6ACF59E2B7AC79000D4727B /* Business.swift in Sources */,
 				A6D4F6F02B8B93CF0089B653 /* InvoiceDetails.swift in Sources */,
 				A68456062D30577400FBD1E1 /* NullishCoalescingBinding.swift in Sources */,
@@ -340,6 +363,7 @@
 				A6ACF5902B7984DC00D4727B /* Product.swift in Sources */,
 				A6ACF5D92B8117D500D4727B /* InvoiceProductSelection.swift in Sources */,
 				A6ACF5D22B7D6C4A00D4727B /* Invoice.swift in Sources */,
+				A684560F2D44501900FBD1E1 /* CNContact+Extension.swift in Sources */,
 				A6ACF5C42B7C141C00D4727B /* CustomersView.swift in Sources */,
 				A6ACF5992B799E2500D4727B /* ProductFormView.swift in Sources */,
 			);
@@ -488,12 +512,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "MN.Invoice-Maker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -525,12 +549,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "MN.Invoice-Maker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
