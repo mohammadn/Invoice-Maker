@@ -8,6 +8,7 @@
 import Foundation
 
 extension Product {
+    @MainActor
     static let sampleData: [Product] = [
         Product(code: 1, name: "سیب", details: "یک سیب تازه.", price: 29000),
         Product(code: 2, name: "موز", details: "یک خوشه موز.", price: 34000),
