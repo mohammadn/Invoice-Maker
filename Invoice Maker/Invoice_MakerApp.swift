@@ -10,19 +10,23 @@ import SwiftUI
 
 @main
 struct Invoice_MakerApp: App {
+    @State private var storeManager = ContactStoreManager()
     var persianCalendar: Calendar {
         var calendar = Calendar(identifier: .persian)
         calendar.firstWeekday = 7
         return calendar
     }
-    
+
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .modelContainer(for: [Business.self, Invoice.self])
                 .environment(\.calendar, persianCalendar)
                 .environment(\.locale, Locale(identifier: "fa"))
-                .environment(\.layoutDirection, .rightToLeft)
+                .environment(storeManager)
+                .onAppear {
+                    storeManager.fetchAuthorizationStatus()
+                }
         }
     }
 }

@@ -5,6 +5,7 @@
 //  Created by Mohammad Najafzadeh on 13/02/2024.
 //
 
+import Contacts
 import Foundation
 import SwiftData
 
@@ -32,6 +33,14 @@ class Customer {
                   details: customerDetails.details,
                   phone: customerDetails.phone,
                   email: customerDetails.email)
+    }
+
+    convenience init(from contact: CNContact) {
+        self.init(name: contact.formattedName,
+                  address: contact.address,
+                  details: nil,
+                  phone: contact.phone,
+                  email: contact.email)
     }
 }
 
