@@ -11,7 +11,7 @@ struct ProductFormView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @State private var productDetails: ProductDetails
-    @State private var showDismissAlert: Bool = false
+//    @State private var showDismissAlert: Bool = false
 
     var product: Product?
 
@@ -63,18 +63,19 @@ struct ProductFormView: View {
 
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("انصراف") {
-                        showDismissAlert.toggle()
+//                        showDismissAlert.toggle()
+                        dismiss()
                     }
-                    .alert("آیا مطمئن هستید؟", isPresented: $showDismissAlert) {
-                        Button("انصراف", role: .cancel) {
-                            showDismissAlert.toggle()
-                        }
-                        Button("بازگشت") {
-                            dismiss()
-                        }
-                    } message: {
-                        Text("در صورت بازگشت به صفحه قبل اطلاعات محصول ذخیره نخواهد شد.")
-                    }
+//                    .alert("آیا مطمئن هستید؟", isPresented: $showDismissAlert) {
+//                        Button("انصراف", role: .cancel) {
+//                            showDismissAlert.toggle()
+//                        }
+//                        Button("بازگشت") {
+//                            dismiss()
+//                        }
+//                    } message: {
+//                        Text("در صورت بازگشت به صفحه قبل اطلاعات محصول ذخیره نخواهد شد.")
+//                    }
                 }
             }
         }

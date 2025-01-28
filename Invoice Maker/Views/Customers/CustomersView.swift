@@ -69,11 +69,9 @@ struct CustomersView: View {
             .sheet(item: $selectedCustomer) { customer in
                 CustomerFormView(customer: customer)
             }
-            #if !os(macOS)
             .contactAccessPicker(isPresented: $showContactsPicker) { identifiers in
                 fetchContacts(with: identifiers)
             }
-            #endif
             .alert("دسترسی به مخاطبین", isPresented: $showContactsPermissionAlert) {
                 Button("ادامه", role: .cancel) {
                     showContactsPermissionAlert.toggle()
