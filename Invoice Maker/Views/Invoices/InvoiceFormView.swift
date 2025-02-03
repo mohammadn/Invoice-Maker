@@ -90,7 +90,7 @@ struct InvoiceFormView: View {
                     HStack {
                         Text("محصولات")
                         Spacer()
-                        Button("اضافه", systemImage: "plus") {
+                        Button("افزودن", systemImage: "plus") {
                             showInvoiceProductSelection.toggle()
                         }
                     }

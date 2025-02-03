@@ -40,7 +40,7 @@ struct ProductFormView: View {
                 }
 
                 Section {
-                    TextField("قیمت*", value: $productDetails.price, format: .number)
+                    TextField("قیمت*(ریال)", value: $productDetails.price, format: .number)
                         .keyboardType(.decimalPad)
                 }
             }

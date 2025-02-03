@@ -46,7 +46,7 @@ struct CustomersView: View {
                 }
             }
             .navigationTitle("مشتریان")
-            .searchable(text: $searchText, prompt: "جستجوی مشتری")
+            .searchable(text: $searchText, prompt: "جستجو مشتری")
             .animation(.default, value: filteredCustomers)
             .toolbar {
                 ToolbarItemGroup {
