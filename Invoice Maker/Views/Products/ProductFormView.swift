@@ -29,22 +29,22 @@ struct ProductFormView: View {
         NavigationStack {
             Form {
                 Section {
-                    TextField("کد کالا*", value: $productDetails.code, format: .number)
+                    TextField("کد*", value: $productDetails.code, format: .number)
                         .keyboardType(.numberPad)
                 }
 
                 Section {
-                    TextField("نام کالا*", text: $productDetails.name)
+                    TextField("نام محصول*", text: $productDetails.name)
                     TextField("جزئیات", text: $productDetails.details ?? "", axis: .vertical)
                         .lineLimit(2 ... 4)
                 }
 
                 Section {
-                    TextField("قیمت*(ریال)", value: $productDetails.price, format: .number)
+                    TextField("قیمت (ریال)*", value: $productDetails.price, format: .number)
                         .keyboardType(.decimalPad)
                 }
             }
-            .navigationBarTitle("افزودن کالا")
+            .navigationBarTitle("افزودن محصول")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
