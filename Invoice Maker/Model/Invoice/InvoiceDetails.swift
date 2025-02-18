@@ -43,3 +43,16 @@ class InvoiceDetails {
                   items: invoice.items.map { ($0.product, $0.quantity) })
     }
 }
+
+extension InvoiceDetails: Equatable {
+    static func == (lhs: InvoiceDetails, rhs: InvoiceDetails) -> Bool {
+        let areItemsEqual: Bool = lhs.items.elementsEqual(rhs.items) { $0.product == $1.product && $0.quantity == $1.quantity }
+
+        return lhs.number == rhs.number &&
+            lhs.customer == rhs.customer &&
+            lhs.date == rhs.date &&
+            lhs.note == rhs.note &&
+            lhs.type == rhs.type &&
+            areItemsEqual
+    }
+}

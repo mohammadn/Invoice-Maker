@@ -115,7 +115,16 @@ struct InvoiceFormView: View {
 
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("انصراف") {
-                        showDismissAlert.toggle()
+                        guard let invoice else {
+                            showDismissAlert.toggle()
+                            return
+                        }
+
+                        if InvoiceDetails(from: invoice) != invoiceDetails {
+                            showDismissAlert.toggle()
+                        } else {
+                            dismiss()
+                        }
                     }
                     .alert("آیا مطمئن هستید؟", isPresented: $showDismissAlert) {
                         Button("انصراف", role: .cancel) {
