@@ -7,12 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A6122BE52DA2F8C9003DC001 /* StandaloneInvoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6122BE42DA2F8C9003DC001 /* StandaloneInvoice.swift */; };
+		A6122BE72DA2FD70003DC001 /* StandaloneInvoiceDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6122BE62DA2FD70003DC001 /* StandaloneInvoiceDetails.swift */; };
+		A6122BE92DA2FEA5003DC001 /* StandaloneItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6122BE82DA2FEA5003DC001 /* StandaloneItem.swift */; };
+		A6122BEC2DA3020B003DC001 /* StandaloneItemDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6122BEB2DA3020B003DC001 /* StandaloneItemDetails.swift */; };
 		A6555A8F2D4667F7002F6537 /* CustomersListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6555A8E2D4667F7002F6537 /* CustomersListItemView.swift */; };
 		A6555A912D466936002F6537 /* CustomersContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6555A902D466936002F6537 /* CustomersContactView.swift */; };
 		A68456062D30577400FBD1E1 /* NullishCoalescingBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68456052D30577400FBD1E1 /* NullishCoalescingBinding.swift */; };
 		A68456082D31F23900FBD1E1 /* OnboardingSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A68456072D31F23900FBD1E1 /* OnboardingSheetView.swift */; };
 		A684560B2D444F7800FBD1E1 /* ContactStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A684560A2D444F7800FBD1E1 /* ContactStoreManager.swift */; };
 		A684560F2D44501900FBD1E1 /* CNContact+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A684560E2D44501900FBD1E1 /* CNContact+Extension.swift */; };
+		A69BC4252DA3306200172FE0 /* StandaloneInvoiceFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69BC4242DA3306200172FE0 /* StandaloneInvoiceFormView.swift */; };
+		A69BC4272DA33B2600172FE0 /* StandaloneInvoiceProductSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = A69BC4262DA33B2600172FE0 /* StandaloneInvoiceProductSelection.swift */; };
 		A6ACF5742B7945B100D4727B /* Invoice_MakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5732B7945B100D4727B /* Invoice_MakerApp.swift */; };
 		A6ACF5762B7945B100D4727B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5752B7945B100D4727B /* ContentView.swift */; };
 		A6ACF57A2B7945B200D4727B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A6ACF5792B7945B200D4727B /* Assets.xcassets */; };
@@ -45,6 +51,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A6122BE42DA2F8C9003DC001 /* StandaloneInvoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandaloneInvoice.swift; sourceTree = "<group>"; };
+		A6122BE62DA2FD70003DC001 /* StandaloneInvoiceDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandaloneInvoiceDetails.swift; sourceTree = "<group>"; };
+		A6122BE82DA2FEA5003DC001 /* StandaloneItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandaloneItem.swift; sourceTree = "<group>"; };
+		A6122BEB2DA3020B003DC001 /* StandaloneItemDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandaloneItemDetails.swift; sourceTree = "<group>"; };
 		A6555A8E2D4667F7002F6537 /* CustomersListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomersListItemView.swift; sourceTree = "<group>"; };
 		A6555A902D466936002F6537 /* CustomersContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomersContactView.swift; sourceTree = "<group>"; };
 		A68456052D30577400FBD1E1 /* NullishCoalescingBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NullishCoalescingBinding.swift; sourceTree = "<group>"; };
@@ -52,6 +62,8 @@
 		A68456092D38622600FBD1E1 /* Invoice-Maker-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Invoice-Maker-Info.plist"; sourceTree = SOURCE_ROOT; };
 		A684560A2D444F7800FBD1E1 /* ContactStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactStoreManager.swift; sourceTree = "<group>"; };
 		A684560E2D44501900FBD1E1 /* CNContact+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CNContact+Extension.swift"; sourceTree = "<group>"; };
+		A69BC4242DA3306200172FE0 /* StandaloneInvoiceFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandaloneInvoiceFormView.swift; sourceTree = "<group>"; };
+		A69BC4262DA33B2600172FE0 /* StandaloneInvoiceProductSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandaloneInvoiceProductSelection.swift; sourceTree = "<group>"; };
 		A6ACF5702B7945B100D4727B /* Invoice Maker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Invoice Maker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6ACF5732B7945B100D4727B /* Invoice_MakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invoice_MakerApp.swift; sourceTree = "<group>"; };
 		A6ACF5752B7945B100D4727B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -95,6 +107,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A6122BEA2DA2FF9F003DC001 /* StandaloneInvoice */ = {
+			isa = PBXGroup;
+			children = (
+				A6122BE42DA2F8C9003DC001 /* StandaloneInvoice.swift */,
+				A6122BE62DA2FD70003DC001 /* StandaloneInvoiceDetails.swift */,
+				A6122BE82DA2FEA5003DC001 /* StandaloneItem.swift */,
+				A6122BEB2DA3020B003DC001 /* StandaloneItemDetails.swift */,
+			);
+			path = StandaloneInvoice;
+			sourceTree = "<group>";
+		};
 		A6555A922D467033002F6537 /* CNContact */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +207,7 @@
 				A6ACF59F2B7AC79900D4727B /* Business */,
 				A6ACF5C72B7C156C00D4727B /* Customer */,
 				A6ACF5D32B7D6C5700D4727B /* Invoice */,
+				A6122BEA2DA2FF9F003DC001 /* StandaloneInvoice */,
 				A6E4DFE62B8BBCF70088BCFC /* PDF */,
 				A6ACF59C2B7AC77800D4727B /* Product */,
 			);
@@ -233,8 +257,10 @@
 			isa = PBXGroup;
 			children = (
 				A6ACF5D62B7ECC9900D4727B /* InvoiceFormView.swift */,
-				A6ACF5D82B8117D500D4727B /* InvoiceProductSelection.swift */,
+				A69BC4242DA3306200172FE0 /* StandaloneInvoiceFormView.swift */,
 				A6ACF5CE2B7D6BF800D4727B /* InvoicesView.swift */,
+				A6ACF5D82B8117D500D4727B /* InvoiceProductSelection.swift */,
+				A69BC4262DA33B2600172FE0 /* StandaloneInvoiceProductSelection.swift */,
 			);
 			path = Invoices;
 			sourceTree = "<group>";
@@ -288,7 +314,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1520;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 1630;
 				TargetAttributes = {
 					A6ACF56F2B7945B100D4727B = {
 						CreatedOnToolsVersion = 15.2;
@@ -334,7 +360,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A69BC4272DA33B2600172FE0 /* StandaloneInvoiceProductSelection.swift in Sources */,
 				A6ACF5A12B7ACB9000D4727B /* Business+SampleData.swift in Sources */,
+				A6122BE52DA2F8C9003DC001 /* StandaloneInvoice.swift in Sources */,
 				A6555A912D466936002F6537 /* CustomersContactView.swift in Sources */,
 				A6E4DFE52B8BBCEF0088BCFC /* PDF.swift in Sources */,
 				A6555A8F2D4667F7002F6537 /* CustomersListItemView.swift in Sources */,
@@ -348,9 +376,11 @@
 				A6ACF5CD2B7C1C1700D4727B /* Customer+SampleData.swift in Sources */,
 				A684560B2D444F7800FBD1E1 /* ContactStoreManager.swift in Sources */,
 				A6ACF59E2B7AC79000D4727B /* Business.swift in Sources */,
+				A6122BEC2DA3020B003DC001 /* StandaloneItemDetails.swift in Sources */,
 				A6D4F6F02B8B93CF0089B653 /* InvoiceDetails.swift in Sources */,
 				A68456062D30577400FBD1E1 /* NullishCoalescingBinding.swift in Sources */,
 				A6ACF5952B798E1900D4727B /* Product+SampleData.swift in Sources */,
+				A69BC4252DA3306200172FE0 /* StandaloneInvoiceFormView.swift in Sources */,
 				A6ACF5742B7945B100D4727B /* Invoice_MakerApp.swift in Sources */,
 				A6ACF58C2B79841C00D4727B /* ProductsView.swift in Sources */,
 				A6ACF5BF2B7ADA9600D4727B /* BusinessDetails.swift in Sources */,
@@ -361,10 +391,12 @@
 				A6ACF5932B798DF000D4727B /* PreviewContainer.swift in Sources */,
 				A6DAE5002D240BBD00205A54 /* String+ToPersian.swift in Sources */,
 				A6ACF5902B7984DC00D4727B /* Product.swift in Sources */,
+				A6122BE72DA2FD70003DC001 /* StandaloneInvoiceDetails.swift in Sources */,
 				A6ACF5D92B8117D500D4727B /* InvoiceProductSelection.swift in Sources */,
 				A6ACF5D22B7D6C4A00D4727B /* Invoice.swift in Sources */,
 				A684560F2D44501900FBD1E1 /* CNContact+Extension.swift in Sources */,
 				A6ACF5C42B7C141C00D4727B /* CustomersView.swift in Sources */,
+				A6122BE92DA2FEA5003DC001 /* StandaloneItem.swift in Sources */,
 				A6ACF5992B799E2500D4727B /* ProductFormView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -408,6 +440,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = LB6Z49AQCL;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -472,6 +505,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = LB6Z49AQCL;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -501,7 +535,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Invoice Maker/Preview Content\"";
-				DEVELOPMENT_TEAM = LB6Z49AQCL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Invoice-Maker-Info.plist";
@@ -538,7 +571,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Invoice Maker/Preview Content\"";
-				DEVELOPMENT_TEAM = LB6Z49AQCL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Invoice-Maker-Info.plist";
