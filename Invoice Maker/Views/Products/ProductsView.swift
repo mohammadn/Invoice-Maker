@@ -57,7 +57,7 @@ struct ProductsView: View {
                 .onDelete(perform: delete)
             }
             .navigationTitle("محصولات")
-            .searchable(text: $searchText, prompt: "جستجو محصول")
+            .searchable(text: $searchText, prompt: "جستجو")
             .toolbar {
                 ToolbarItemGroup {
                     Button("اضافه", systemImage: "plus") {

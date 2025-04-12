@@ -20,7 +20,7 @@ struct Invoice_MakerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .modelContainer(for: [Business.self, Invoice.self])
+                .modelContainer(for: [Business.self, Invoice.self, StandaloneInvoice.self, Product.self, Customer.self])
                 .environment(\.calendar, persianCalendar)
                 .environment(\.locale, Locale(identifier: "fa"))
                 .environment(storeManager)

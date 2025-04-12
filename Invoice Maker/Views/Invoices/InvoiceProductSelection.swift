@@ -61,6 +61,7 @@ struct InvoiceProductSelection: View {
         selectedProducts.forEach { product in
             if !items.contains(where: { $0.product == product }) {
                 let newItem = (product, 1)
+                
                 items.append(newItem)
             }
         }

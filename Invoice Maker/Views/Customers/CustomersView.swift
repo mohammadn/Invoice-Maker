@@ -12,7 +12,7 @@ import SwiftUI
 struct CustomersView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(ContactStoreManager.self) private var storeManager
-    @Query(sort: \Customer.createdDate) private var customers: [Customer]
+    @Query(sort: \Customer.name) private var customers: [Customer]
     @State private var showCustomerFormView: Bool = false
     @State private var showContactsPicker: Bool = false
     @State private var showContactsPermissionAlert: Bool = false
@@ -46,7 +46,7 @@ struct CustomersView: View {
                 }
             }
             .navigationTitle("مشتریان")
-            .searchable(text: $searchText, prompt: "جستجو مشتری")
+            .searchable(text: $searchText, prompt: "جستجو")
             .animation(.default, value: filteredCustomers)
             .toolbar {
                 ToolbarItemGroup {
