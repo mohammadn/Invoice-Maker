@@ -10,38 +10,80 @@ import SwiftUI
 
 struct InvoicesView: View {
     @Environment(\.modelContext) private var context
-    @Query(sort: \Invoice.createdDate, order: .reverse) private var invoices: [Invoice]
+    @Query private var business: [Business]
+    @Query private var invoices: [Invoice]
+    @Query(sort: \StandaloneInvoice.createdDate, order: .reverse) private var standaloneInvoices: [StandaloneInvoice]
     @State private var showInvoiceFormView: Bool = false
-    @State private var selectedInvoice: Invoice?
+    @State private var selectedInvoice: StandaloneInvoice?
+
+    var invalidInvoices: [StandaloneInvoice] {
+        standaloneInvoices.filter { $0.isInvalid }
+    }
+
+    var validInvoices: [StandaloneInvoice] {
+        standaloneInvoices.filter { !$0.isInvalid }
+    }
 
     var body: some View {
         NavigationStack {
             List {
-                ForEach(invoices) { invoice in
-                    VStack(alignment: .leading) {
-                        LabeledContent {
-                            HStack {
-                                Text(invoice.date, style: .date)
+                if !invalidInvoices.isEmpty {
+                    Section("نامعتبر") {
+                        ForEach(invalidInvoices) { invoice in
+                            VStack(alignment: .leading) {
+                                LabeledContent {
+                                    HStack {
+                                        Text(invoice.date, style: .date)
 
-                                Button {
-                                    selectedInvoice = invoice
+                                        Button {
+                                            selectedInvoice = invoice
+                                        } label: {
+                                            Image(systemName: "info.circle")
+                                                .font(.title3)
+                                        }
+                                    }
                                 } label: {
-                                    Image(systemName: "info.circle")
-                                        .font(.title3)
+                                    Text(invoice.number)
+                                        .lineLimit(1)
                                 }
-                            }
-                        } label: {
-                            Text(invoice.number)
-                                .lineLimit(1)
-                        }
 
-                        Text(invoice.customer.name)
-                            .font(.subheadline)
-                            .foregroundStyle(.gray)
-                            .lineLimit(1)
+                                Text(invoice.customerName ?? "-")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.gray)
+                                    .lineLimit(1)
+                            }
+                        }
+                        .onDelete(perform: deleteInvalidInvoice)
                     }
                 }
-                .onDelete(perform: delete)
+
+                Section {
+                    ForEach(validInvoices) { invoice in
+                        VStack(alignment: .leading) {
+                            LabeledContent {
+                                HStack {
+                                    Text(invoice.date, style: .date)
+
+                                    Button {
+                                        selectedInvoice = invoice
+                                    } label: {
+                                        Image(systemName: "info.circle")
+                                            .font(.title3)
+                                    }
+                                }
+                            } label: {
+                                Text(invoice.number)
+                                    .lineLimit(1)
+                            }
+
+                            Text(invoice.customerName ?? "-")
+                                .font(.subheadline)
+                                .foregroundStyle(.gray)
+                                .lineLimit(1)
+                        }
+                    }
+                    .onDelete(perform: deleteValidInvoice)
+                }
             }
             .navigationBarTitle("فاکتورها")
             .toolbar {
@@ -52,13 +94,13 @@ struct InvoicesView: View {
                 }
             }
             .sheet(isPresented: $showInvoiceFormView) {
-                InvoiceFormView(onSave: save)
+                StandaloneInvoiceFormView(onSave: save)
             }
             .sheet(item: $selectedInvoice) { invoice in
-                InvoiceFormView(invoice: invoice, onSave: update)
+                StandaloneInvoiceFormView(invoice: invoice, onSave: update)
             }
             .overlay {
-                if invoices.isEmpty {
+                if standaloneInvoices.isEmpty {
                     ContentUnavailableView {
                         Label("فاکتوری یافت نشد", systemImage: "doc.text")
                     } description: {
@@ -66,24 +108,59 @@ struct InvoicesView: View {
                     }
                 }
             }
+            .onAppear {
+                invoices.forEach { invoice in
+                    let items: [StandaloneItem] = invoice.items.compactMap { item in
+                        let productModelID = item.product.persistentModelID
+                        let descriptor = FetchDescriptor<Product>(predicate: #Predicate { product in product.persistentModelID == productModelID })
+                        let results = try? context.fetch(descriptor)
+
+                        if results?.isEmpty ?? true {
+                            return nil
+                        } else {
+                            return StandaloneItem(from: item)
+                        }
+                    }
+
+                    let customerModelID = invoice.customer.persistentModelID
+                    let descriptor = FetchDescriptor<Customer>(predicate: #Predicate { customer in customer.persistentModelID == customerModelID })
+                    let results = try? context.fetch(descriptor)
+
+                    guard let business = business.first else { return }
+
+                    let standaloneInvoice = StandaloneInvoice(from: invoice,
+                                                              business: business,
+                                                              items: items,
+                                                              customer: results?.isEmpty ?? true ? nil : invoice.customer)
+
+                    context.insert(standaloneInvoice)
+                    context.delete(invoice)
+                }
+            }
         }
     }
 
-    private func save(invoiceDetails: InvoiceDetails) {
-        let invoice = Invoice(from: invoiceDetails)
+    private func save(invoiceDetails: StandaloneInvoiceDetails) {
+        let invoice = StandaloneInvoice(from: invoiceDetails)
 
         if let invoice {
             context.insert(invoice)
         }
     }
 
-    private func update(invoiceDetails: InvoiceDetails) {
+    private func update(invoiceDetails: StandaloneInvoiceDetails) {
         selectedInvoice?.update(with: invoiceDetails)
     }
 
-    private func delete(at offsets: IndexSet) {
+    private func deleteInvalidInvoice(at offsets: IndexSet) {
         for index in offsets {
-            context.delete(invoices[index])
+            context.delete(invalidInvoices[index])
+        }
+    }
+
+    private func deleteValidInvoice(at offsets: IndexSet) {
+        for index in offsets {
+            context.delete(validInvoices[index])
         }
     }
 }
