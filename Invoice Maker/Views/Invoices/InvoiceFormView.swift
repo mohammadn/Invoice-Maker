@@ -145,12 +145,12 @@ struct InvoiceFormView: View {
                 InvoiceProductSelection(items: $invoiceDetails.items)
             }
             .onAppear {
-                if let invoice,
-                   let business = business.first {
-                    let pdf = PDF(invoice: invoice, business: business)
-
-                    generatedPDF = pdf.generatePDF()
-                }
+//                if let invoice,
+//                   let business = business.first {
+//                    let pdf = PDF(invoice: invoice, business: business)
+//
+//                    generatedPDF = pdf.generatePDF()
+//                }
             }
         }
     }

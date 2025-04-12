@@ -9,6 +9,7 @@ import Foundation
 
 @Observable
 class CustomerDetails {
+    var id: UUID
     var name: String
     var address: String?
     var details: String?
@@ -19,7 +20,8 @@ class CustomerDetails {
         name.isEmpty
     }
 
-    init(name: String = "", address: String? = nil, details: String? = nil, phone: String? = nil, email: String? = nil) {
+    init(id: UUID = UUID(), name: String = "", address: String? = nil, details: String? = nil, phone: String? = nil, email: String? = nil) {
+        self.id = id
         self.name = name
         self.address = address
         self.details = details
@@ -28,7 +30,8 @@ class CustomerDetails {
     }
 
     convenience init(from customer: Customer) {
-        self.init(name: customer.name,
+        self.init(id: customer.id,
+                  name: customer.name,
                   address: customer.address,
                   details: customer.details,
                   phone: customer.phone,

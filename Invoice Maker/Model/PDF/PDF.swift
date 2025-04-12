@@ -10,7 +10,7 @@ import TPPDF
 import UIKit
 
 struct PDF {
-    let invoice: Invoice
+    let invoice: StandaloneInvoice
     let business: Business
 
     func generatePDF() -> URL? {
@@ -45,20 +45,25 @@ struct PDF {
         let customerDetailsTable = PDFTable(rows: 2, columns: 1)
         customerDetailsTable.padding = 5
 
-        let customerDetails = NSMutableAttributedString()
-        customerDetails.append(createAttributedString(label: "نام", value: invoice.customer.name))
-
-        if let phone = invoice.customer.phone, !phone.isEmpty {
-            customerDetails.append(comma)
-            customerDetails.append(createAttributedString(label: "تلفن", value: phone))
+        guard let name = invoice.customerName, !name.isEmpty else {
+            print("Error generating PDF: Customer name is empty")
+            return nil
         }
 
-        if let email = invoice.customer.email, !email.isEmpty {
+        let customerDetails = NSMutableAttributedString()
+        customerDetails.append(createAttributedString(label: "نام", value: name))
+
+        if let phone = invoice.customerPhone, !phone.isEmpty {
+            customerDetails.append(comma)
+            customerDetails.append(createAttributedString(label: "تلفن", value: phone.filter { $0.isNumber }.toPersian()))
+        }
+
+        if let email = invoice.customerEmail, !email.isEmpty {
             customerDetails.append(comma)
             customerDetails.append(createAttributedString(label: "ایمیل", value: email))
         }
 
-        if let address = invoice.customer.address, !address.isEmpty {
+        if let address = invoice.customerAddress, !address.isEmpty {
             customerDetails.append(comma)
             customerDetails.append(createAttributedString(label: "آدرس", value: address))
         }
@@ -155,10 +160,10 @@ struct PDF {
         // Table Content
         for (index, item) in invoice.items.enumerated() {
             let row = index + 1
-            table[row, 0].content = try? PDFTableContent(content: formattedNumber(item.product.price * item.quantity))
-            table[row, 1].content = try? PDFTableContent(content: formattedNumber(item.product.price))
+            table[row, 0].content = try? PDFTableContent(content: formattedNumber(item.productPrice * item.quantity))
+            table[row, 1].content = try? PDFTableContent(content: formattedNumber(item.productPrice))
             table[row, 2].content = try? PDFTableContent(content: formattedNumber(item.quantity))
-            table[row, 3].content = try? PDFTableContent(content: item.product.name)
+            table[row, 3].content = try? PDFTableContent(content: item.productName)
             table[row, 4].content = try? PDFTableContent(content: formattedNumber(row))
         }
 

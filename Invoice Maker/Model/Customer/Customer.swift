@@ -10,7 +10,8 @@ import Foundation
 import SwiftData
 
 @Model
-class Customer {
+class Customer: Identifiable {
+    var id: UUID = UUID()
     var name: String
     var address: String?
     var details: String?
@@ -19,7 +20,8 @@ class Customer {
     var invoices: [Invoice] = []
     var createdDate: Date = Date.now
 
-    init(name: String, address: String?, details: String?, phone: String?, email: String?) {
+    init(id: UUID = UUID(), name: String, address: String?, details: String?, phone: String?, email: String?) {
+        self.id = id
         self.name = name
         self.address = address
         self.details = details
@@ -28,7 +30,8 @@ class Customer {
     }
 
     convenience init(from customerDetails: CustomerDetails) {
-        self.init(name: customerDetails.name,
+        self.init(id: customerDetails.id,
+                  name: customerDetails.name,
                   address: customerDetails.address,
                   details: customerDetails.details,
                   phone: customerDetails.phone,
