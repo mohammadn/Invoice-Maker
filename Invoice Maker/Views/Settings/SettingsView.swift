@@ -34,7 +34,9 @@ struct SettingsView: View {
 
                 Section {
                     Button("امتیاز به ما", systemImage: "star") {
-                        openURL(URL(string: "itms-apps://apps.apple.com/gb/app/id6738891697?action=write-review")!)
+                        if let url = URL(string: "itms-apps://apps.apple.com/app/id6738891697?action=write-review") {
+                            openURL(url)
+                        }
                     }
 
                     ShareLink(item: URL(string: "https://apple.co/4j6DlPl")!) {
@@ -42,11 +44,15 @@ struct SettingsView: View {
                     }
 
                     Button("تماس با ما", systemImage: "envelope") {
-                        openURL(URL(string: "mailto:mohammadnajafzade@yahoo.com?subject=Invoice Maker")!)
+                        if let url = URL(string: "mailto:mohammadnajafzade@yahoo.com?subject=Invoice Maker") {
+                            openURL(url)
+                        }
                     }
 
                     Button("تلگرام", systemImage: "paperplane") {
-                        openURL(URL(string: "tg://resolve?domain=invoicemaker")!)
+                        if let url = URL(string: "tg://resolve?domain=invoicemaker") {
+                            openURL(url)
+                        }
                     }
                 }
             }
