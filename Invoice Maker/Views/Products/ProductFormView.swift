@@ -14,9 +14,11 @@ struct ProductFormView: View {
 //    @State private var showDismissAlert: Bool = false
 
     var product: Product?
+    var dismissAction: (() -> Void)?
 
-    init(product: Product? = nil) {
+    init(product: Product? = nil, dismissAction: (() -> Void)? = nil) {
         self.product = product
+        self.dismissAction = dismissAction
 
         if let product {
             _productDetails = State(initialValue: ProductDetails(from: product))
@@ -26,46 +28,41 @@ struct ProductFormView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            Form {
-                Section {
-                    TextField("کد*", value: $productDetails.code, format: .number)
-                        .keyboardType(.numberPad)
-                }
-
-                Section {
-                    TextField("نام محصول*", text: $productDetails.name)
-                    TextField("جزئیات", text: $productDetails.details ?? "", axis: .vertical)
-                        .lineLimit(2 ... 4)
-                }
-
-                Section {
-                    TextField("قیمت (ریال)*", value: $productDetails.price, format: .number)
-                        .keyboardType(.decimalPad)
-                }
+        Form {
+            Section {
+                TextField("کد*", value: $productDetails.code, format: .number)
+                    .keyboardType(.numberPad)
             }
-            .navigationBarTitle("افزودن محصول")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("ذخیره") {
-                        if let product {
-                            product.update(with: productDetails)
-                        } else {
-                            let product = Product(from: productDetails)
 
-                            modelContext.insert(product)
-                        }
-                        dismiss()
-                    }
-                    .disabled(productDetails.isInvalid)
+            Section {
+                TextField("نام محصول*", text: $productDetails.name)
+                TextField("جزئیات", text: $productDetails.details ?? "", axis: .vertical)
+                    .lineLimit(2 ... 4)
+            }
+
+            Section {
+                TextField("قیمت (ریال)*", value: $productDetails.price, format: .number)
+                    .keyboardType(.decimalPad)
+            }
+        }
+        .navigationBarTitle(product == nil ? "افزودن محصول" : "ویرایش محصول")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("ذخیره") {
+                    save()
+
+                    dismissAction?() ?? dismiss()
                 }
+                .disabled(productDetails.isInvalid)
+            }
 
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("انصراف") {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("انصراف") {
 //                        showDismissAlert.toggle()
-                        dismiss()
-                    }
+                    dismissAction?() ?? dismiss()
+                }
 //                    .alert("آیا مطمئن هستید؟", isPresented: $showDismissAlert) {
 //                        Button("انصراف", role: .cancel) {
 //                            showDismissAlert.toggle()
@@ -76,8 +73,19 @@ struct ProductFormView: View {
 //                    } message: {
 //                        Text("در صورت بازگشت به صفحه قبل اطلاعات محصول ذخیره نخواهد شد.")
 //                    }
-                }
             }
+        }
+    }
+
+    private func save() {
+        productDetails.details = productDetails.details?.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if let product {
+            product.update(with: productDetails)
+        } else {
+            let product = Product(from: productDetails)
+
+            modelContext.insert(product)
         }
     }
 }

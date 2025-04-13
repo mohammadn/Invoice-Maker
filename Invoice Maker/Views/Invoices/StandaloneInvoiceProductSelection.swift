@@ -55,7 +55,9 @@ struct StandaloneInvoiceProductSelection: View {
             selectedProducts = Set(products.filter { itemProductCodes.contains($0.code) })
         }
         .sheet(isPresented: $showProductFormView) {
-            ProductFormView()
+            NavigationStack {
+                ProductFormView()
+            }
         }
     }
 

@@ -29,29 +29,28 @@ struct ProductsView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            List {
+        NavigationSplitView {
+            List(selection: $selectedProduct) {
                 ForEach(filteredProducts) { product in
-                    VStack(alignment: .leading) {
-                        LabeledContent {
+                    NavigationLink(value: product) {
+                        VStack(alignment: .leading) {
                             HStack {
-                                Text("\(product.price)")
+                                Text(product.name)
+                                    .lineLimit(1)
+                                    .truncationMode(.tail)
 
-                                Button {
-                                    selectedProduct = product
-                                } label: {
-                                    Image(systemName: "info.circle")
-                                        .font(.title3)
-                                }
+                                Spacer()
+
+                                Text(product.price.formatted(.currency(code: "IRR")).toPersian())
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                    .lineLimit(1)
                             }
-                        } label: {
-                            Text(product.name)
-                        }
 
-                        Text(product.details ?? "-")
-                            .font(.subheadline)
-                            .foregroundStyle(.gray)
-                            .lineLimit(1)
+                            Text(product.details?.isEmpty == false ? product.details! : "-").font(.subheadline)
+                                .foregroundStyle(.gray)
+                                .lineLimit(1)
+                        }
                     }
                 }
                 .onDelete(perform: delete)
@@ -66,10 +65,9 @@ struct ProductsView: View {
                 }
             }
             .sheet(isPresented: $isProductFormViewPresented) {
-                ProductFormView()
-            }
-            .sheet(item: $selectedProduct) { product in
-                ProductFormView(product: product)
+                NavigationStack {
+                    ProductFormView()
+                }
             }
             .overlay {
                 if filteredProducts.isEmpty && searchText.isEmpty {
@@ -87,6 +85,14 @@ struct ProductsView: View {
                         Text("برای جستجو، کد، نام، قیمت یا جزئیات محصول را وارد کنید")
                     }
                 }
+            }
+        } detail: {
+            if let product = selectedProduct {
+                ProductView(product: product)
+            } else {
+                Text(".یک محصول را انتخاب کنید")
+                    .font(.title)
+                    .foregroundStyle(.secondary)
             }
         }
     }
