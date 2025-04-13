@@ -5,10 +5,12 @@
 //  Created by Mohammad Najafzadeh on 15/02/2024.
 //
 
+import Foundation
 import SwiftData
 
 @Observable
-class StandaloneItemDetails {
+class StandaloneItemDetails: Identifiable {
+    var id: UUID = UUID()
     var productCode: Int
     var productName: String
     var productDetails: String?
@@ -37,5 +39,25 @@ class StandaloneItemDetails {
                   productDetails: product.details,
                   productPrice: product.price,
                   quantity: quantity)
+    }
+}
+
+extension StandaloneItemDetails: Equatable {
+    static func == (lhs: StandaloneItemDetails, rhs: StandaloneItemDetails) -> Bool {
+        lhs.productCode == rhs.productCode &&
+            lhs.productName == rhs.productName &&
+            lhs.productDetails == rhs.productDetails &&
+            lhs.productPrice == rhs.productPrice &&
+            lhs.quantity == rhs.quantity
+    }
+}
+
+extension StandaloneItemDetails: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(productCode)
+        hasher.combine(productName)
+        hasher.combine(productDetails)
+        hasher.combine(productPrice)
+        hasher.combine(quantity)
     }
 }

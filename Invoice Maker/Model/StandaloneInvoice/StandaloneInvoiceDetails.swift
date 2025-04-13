@@ -111,3 +111,24 @@ extension StandaloneInvoiceDetails: Equatable {
             areItemsEqual
     }
 }
+
+extension StandaloneInvoiceDetails: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(number)
+        hasher.combine(customerId)
+        hasher.combine(customerName)
+        hasher.combine(customerAddress)
+        hasher.combine(customerDetails)
+        hasher.combine(customerPhone)
+        hasher.combine(customerEmail)
+        hasher.combine(businessName)
+        hasher.combine(businessPhone)
+        hasher.combine(businessAddress)
+        hasher.combine(businessEmail)
+        hasher.combine(businessWebsite)
+        hasher.combine(date)
+        hasher.combine(note)
+        hasher.combine(type)
+        hasher.combine(status)
+    }
+}

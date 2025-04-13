@@ -37,6 +37,7 @@ struct InvoiceProductSelection: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("تا‫ئید‬") {
                         updateItems(with: selectedProducts)
+                        
                         dismiss()
                     }
                 }

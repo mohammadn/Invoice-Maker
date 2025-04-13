@@ -91,15 +91,15 @@ struct StandaloneInvoiceFormView: View {
                 }
 
                 Section {
-                    ForEach(invoiceDetails.items.indices, id: \.self) { index in
+                    ForEach($invoiceDetails.items) { $item in
                         Stepper {
-                            Text(invoiceDetails.items[index].productName)
-                            Text(invoiceDetails.items[index].quantity.description)
+                            Text(item.productName)
+                            Text(item.quantity.description)
                         } onIncrement: {
-                            invoiceDetails.items[index].quantity += 1
+                            item.quantity += 1
                         } onDecrement: {
-                            if invoiceDetails.items[index].quantity > 0 {
-                                invoiceDetails.items[index].quantity -= 1
+                            if item.quantity > 0 {
+                                item.quantity -= 1
                             }
                         }
                     }
