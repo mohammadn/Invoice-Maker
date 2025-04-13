@@ -28,7 +28,7 @@ struct InvoicesView: View {
         NavigationStack {
             List {
                 if !invalidInvoices.isEmpty {
-                    Section("نامعتبر") {
+                    Section {
                         ForEach(invalidInvoices) { invoice in
                             VStack(alignment: .leading) {
                                 LabeledContent {
@@ -54,6 +54,10 @@ struct InvoicesView: View {
                             }
                         }
                         .onDelete(perform: deleteInvalidInvoice)
+                    } header: {
+                        Text("نامعتبر")
+                    } footer: {
+                        Text("این فاکتورها به دلیل عدم وجود مشتری یا محصول نامعتبر هستند.")
                     }
                 }
 
