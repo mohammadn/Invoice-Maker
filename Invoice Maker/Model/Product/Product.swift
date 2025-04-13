@@ -13,10 +13,10 @@ class Product {
     @Attribute(.unique) var code: Int
     var name: String
     var details: String?
-    var price: Int
+    var price: Float
     var createdDate: Date = Date.now
 
-    init(code: Int, name: String, details: String?, price: Int) {
+    init(code: Int, name: String, details: String?, price: Float) {
         self.code = code
         self.name = name
         self.details = details

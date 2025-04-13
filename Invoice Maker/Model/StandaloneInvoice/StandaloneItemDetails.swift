@@ -14,10 +14,10 @@ class StandaloneItemDetails: Identifiable {
     var productCode: Int
     var productName: String
     var productDetails: String?
-    var productPrice: Int
+    var productPrice: Float
     var quantity: Int
 
-    init(productCode: Int, productName: String, productDetails: String? = nil, productPrice: Int, quantity: Int = 1) {
+    init(productCode: Int, productName: String, productDetails: String? = nil, productPrice: Float, quantity: Int = 1) {
         self.productCode = productCode
         self.productName = productName
         self.productDetails = productDetails

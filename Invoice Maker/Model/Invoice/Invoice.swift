@@ -19,7 +19,7 @@ class Invoice {
     var createdDate: Date = Date.now
 
     var total: Int {
-        items.reduce(0) { $0 + ($1.quantity * $1.product.price) }
+        items.reduce(0) { $0 + ($1.quantity * Int($1.product.price)) }
     }
 
     init(number: String = "", customer: Customer, date: Date = .now, note: String = "", type: InvoiceType = .sale, items: [Item] = []) {

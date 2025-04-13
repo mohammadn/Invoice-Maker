@@ -12,11 +12,11 @@ class StandaloneItem {
     @Attribute(.unique) var productCode: Int
     var productName: String
     var productDetails: String?
-    var productPrice: Int
+    var productPrice: Float
     var quantity: Int
     var invoice: StandaloneInvoice?
 
-    init(productCode: Int, productName: String, productDetails: String? = nil, productPrice: Int, quantity: Int = 1, invoice: StandaloneInvoice? = nil) {
+    init(productCode: Int, productName: String, productDetails: String? = nil, productPrice: Float, quantity: Int = 1, invoice: StandaloneInvoice? = nil) {
         self.productCode = productCode
         self.productName = productName
         self.productDetails = productDetails
