@@ -32,8 +32,8 @@ struct ProductsView: View {
         NavigationSplitView {
             List(selection: $selectedProduct) {
                 ForEach(filteredProducts) { product in
-                    NavigationLink(value: product) {
-                        VStack(alignment: .leading) {
+                    VStack(alignment: .leading) {
+                        NavigationLink(value: product) {
                             HStack {
                                 Text(product.name)
                                     .lineLimit(1)
@@ -46,11 +46,11 @@ struct ProductsView: View {
                                     .foregroundColor(.secondary)
                                     .lineLimit(1)
                             }
-
-                            Text(product.details?.isEmpty == false ? product.details! : "-").font(.subheadline)
-                                .foregroundStyle(.gray)
-                                .lineLimit(1)
                         }
+
+                        Text(product.details?.isEmpty == false ? product.details! : "-").font(.subheadline)
+                            .foregroundStyle(.gray)
+                            .lineLimit(1)
                     }
                 }
                 .onDelete(perform: delete)
