@@ -118,21 +118,18 @@ struct OnboardingSheetView: View {
                     Divider()
 
                     TextField("شماره تماس*", text: $businessDetails.phone)
+                        .onSubmit {
+                            if !businessDetails.isInvalid {
+                                save()
+                            }
+                        }
                 }
 
                 Spacer()
                 Spacer()
 
                 Button {
-                    if let business {
-                        business.update(with: businessDetails)
-                    } else {
-                        let business = Business(from: businessDetails)
-
-                        context.insert(business)
-                    }
-
-                    isWelcomeSheetShowing = false
+                    save()
                 } label: {
                     Text("ذخیره و شروع")
                         .font(.title3.bold())
@@ -152,6 +149,18 @@ struct OnboardingSheetView: View {
         .tabViewStyle(.page(indexDisplayMode: .always))
         .indexViewStyle(.page(backgroundDisplayMode: .always))
         .ignoresSafeArea(.keyboard)
+    }
+
+    private func save() {
+        if let business {
+            business.update(with: businessDetails)
+        } else {
+            let business = Business(from: businessDetails)
+
+            context.insert(business)
+        }
+
+        isWelcomeSheetShowing = false
     }
 }
 
