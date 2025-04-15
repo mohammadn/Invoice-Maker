@@ -15,7 +15,7 @@ struct CustomersListItemView: View {
         VStack(alignment: .leading) {
             LabeledContent {
                 HStack {
-                    Text(customer.phone ?? "-")
+                    Text(customer.phone?.toPersian() ?? "-")
                         .lineLimit(1)
 
                     Button {

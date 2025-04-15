@@ -90,9 +90,8 @@ struct ProductsView: View {
             if let product = selectedProduct {
                 ProductView(product: product)
             } else {
-                Text(".یک محصول را انتخاب کنید")
+                Text("یک محصول را انتخاب کنید")
                     .font(.title)
-                    .foregroundStyle(.secondary)
             }
         }
     }
