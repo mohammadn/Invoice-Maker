@@ -59,7 +59,7 @@ struct ProductsView: View {
             .searchable(text: $searchText, prompt: "جستجو")
             .toolbar {
                 ToolbarItemGroup {
-                    Button("اضافه", systemImage: "plus") {
+                    Button("افزودن محصول", systemImage: "plus") {
                         isProductFormViewPresented.toggle()
                     }
                 }

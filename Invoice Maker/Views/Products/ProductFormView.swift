@@ -64,7 +64,7 @@ struct ProductFormView: View {
 
                     dismissAction?() ?? dismiss()
                 }
-                .disabled(productDetails.isInvalid)
+                .disabled(productDetails.isInvalid || duplicateCode)
             }
 
             ToolbarItem(placement: .navigationBarLeading) {

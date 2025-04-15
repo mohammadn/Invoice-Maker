@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct ProductView: View {
-    @State var isEditingProduct: Bool = false
+    @State var isEditing: Bool = false
 
     var product: Product
 
     var body: some View {
         NavigationStack {
-            if isEditingProduct {
+            if isEditing {
                 ProductFormView(product: product) {
-                    isEditingProduct.toggle()
+                    isEditing.toggle()
                 }
             } else {
                 List {
@@ -38,13 +38,13 @@ struct ProductView: View {
                 .toolbar {
                     ToolbarItemGroup {
                         Button("ویرایش") {
-                            isEditingProduct.toggle()
+                            isEditing.toggle()
                         }
                     }
                 }
             }
         }
-        .animation(.default, value: isEditingProduct)
+        .animation(.default, value: isEditing)
     }
 }
 
