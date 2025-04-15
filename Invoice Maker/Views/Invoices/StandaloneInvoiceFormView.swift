@@ -157,7 +157,9 @@ struct StandaloneInvoiceFormView: View {
                 }
             }
             .sheet(isPresented: $showCustomerFormView) {
-                CustomerFormView()
+                NavigationStack {
+                    CustomerFormView()
+                }
             }
             .sheet(isPresented: $showInvoiceProductSelection) {
                 StandaloneInvoiceProductSelection(items: $invoiceDetails.items)

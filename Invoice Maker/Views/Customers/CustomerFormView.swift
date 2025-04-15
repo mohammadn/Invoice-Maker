@@ -14,9 +14,11 @@ struct CustomerFormView: View {
 //    @State private var showDismissAlert: Bool = false
 
     var customer: Customer?
+    var dismissAction: (() -> Void)?
 
-    init(customer: Customer? = nil) {
+    init(customer: Customer? = nil, dismissAction: (() -> Void)? = nil) {
         self.customer = customer
+        self.dismissAction = dismissAction
 
         if let customer {
             _customerDetails = State(initialValue: CustomerDetails(from: customer))
@@ -26,47 +28,42 @@ struct CustomerFormView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            Form {
-                Section {
-                    TextField("نام*", text: $customerDetails.name)
-                    TextField("جزئیات", text: $customerDetails.details ?? "", axis: .vertical)
-                        .lineLimit(2 ... 4)
-                }
-
-                Section {
-                    TextField("تلفن", text: $customerDetails.phone ?? "")
-                        .keyboardType(.phonePad)
-                    TextField("آدرس", text: $customerDetails.address ?? "", axis: .vertical)
-                        .lineLimit(3 ... 5)
-                }
-
-                Section {
-                    TextField("ایمیل", text: $customerDetails.email ?? "")
-                        .keyboardType(.emailAddress)
-                }
+        Form {
+            Section {
+                TextField("نام*", text: $customerDetails.name)
+                TextField("جزئیات", text: $customerDetails.details ?? "", axis: .vertical)
+                    .lineLimit(2 ... 4)
             }
-            .navigationBarTitle("افزودن مشتری")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("ذخیره") {
-                        if let customer {
-                            customer.update(with: customerDetails)
-                        } else {
-                            let customer = Customer(from: customerDetails)
 
-                            modelContext.insert(customer)
-                        }
-                        dismiss()
-                    }
-                    .disabled(customerDetails.isInvalid)
+            Section {
+                TextField("تلفن", text: $customerDetails.phone ?? "")
+                    .keyboardType(.phonePad)
+                TextField("آدرس", text: $customerDetails.address ?? "", axis: .vertical)
+                    .lineLimit(3 ... 5)
+            }
+
+            Section {
+                TextField("ایمیل", text: $customerDetails.email ?? "")
+                    .keyboardType(.emailAddress)
+            }
+        }
+        .navigationBarTitle(customer == nil ? "افزودن مشتری" : "ویرایش مشتری")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("ذخیره") {
+                    save()
+
+                    dismissAction?() ?? dismiss()
                 }
+                .disabled(customerDetails.isInvalid)
+            }
 
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("انصراف") {
-                        dismiss()
-                    }
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button("انصراف") {
+                    dismissAction?() ?? dismiss()
+                }
 //                    .alert("آیا مطمئن هستید؟", isPresented: $showDismissAlert) {
 //                        Button("انصراف", role: .cancel) {
 //                            showDismissAlert.toggle()
@@ -77,8 +74,19 @@ struct CustomerFormView: View {
 //                    } message: {
 //                        Text("در صورت بازگشت به صفحه قبل اطلاعات مشتری ذخیره نخواهد شد.")
 //                    }
-                }
             }
+        }
+    }
+
+    private func save() {
+        customerDetails.details = customerDetails.details?.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if let customer {
+            customer.update(with: customerDetails)
+        } else {
+            let customer = Customer(from: customerDetails)
+
+            modelContext.insert(customer)
         }
     }
 }

@@ -13,21 +13,19 @@ struct CustomersListItemView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            LabeledContent {
+            NavigationLink(value: customer) {
                 HStack {
-                    Text(customer.phone?.toPersian() ?? "-")
+                    Text(customer.name)
                         .lineLimit(1)
+                        .truncationMode(.tail)
 
-                    Button {
-                        selectedCustomer = customer
-                    } label: {
-                        Image(systemName: "info.circle")
-                            .font(.title3)
-                    }
+                    Spacer()
+
+                    Text(customer.phone?.toPersian() ?? "-")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
                 }
-            } label: {
-                Text(customer.name)
-                    .lineLimit(1)
             }
 
             Text(customer.email ?? "-")

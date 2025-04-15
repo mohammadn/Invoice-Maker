@@ -34,8 +34,8 @@ struct CustomersView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            List {
+        NavigationSplitView {
+            List(selection: $selectedCustomer) {
                 ForEach(filteredCustomers) { customer in
                     CustomersListItemView(selectedCustomer: $selectedCustomer, customer: customer)
                 }
@@ -64,10 +64,9 @@ struct CustomersView: View {
                 }
             }
             .sheet(isPresented: $showCustomerFormView) {
-                CustomerFormView()
-            }
-            .sheet(item: $selectedCustomer) { customer in
-                CustomerFormView(customer: customer)
+                NavigationStack {
+                    CustomerFormView()
+                }
             }
             .contactAccessPicker(isPresented: $showContactsPicker) { identifiers in
                 fetchContacts(with: identifiers)
@@ -95,6 +94,13 @@ struct CustomersView: View {
                         Text("برای جستجو، نام، شماره تلفن، ایمیل، آدرس یا جزئیات مشتری را وارد کنید")
                     }
                 }
+            }
+        } detail: {
+            if let customer = selectedCustomer {
+                CustomerView(customer: customer)
+            } else {
+                Text("یک مشتری را انتخاب کنید")
+                    .font(.title)
             }
         }
     }
