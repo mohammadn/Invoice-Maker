@@ -14,7 +14,7 @@ struct InvoiceProductSelection: View {
     @State private var showProductFormView: Bool = false
     @State private var selectedProducts: Set<Product> = []
 
-    @Binding var items: [(product: Product, quantity: Int)]
+    @Binding var items: [StandaloneItemDetails]
 
     var body: some View {
         NavigationStack {
@@ -37,7 +37,7 @@ struct InvoiceProductSelection: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("تا‫ئید‬") {
                         updateItems(with: selectedProducts)
-                        
+
                         dismiss()
                     }
                 }
@@ -51,24 +51,29 @@ struct InvoiceProductSelection: View {
             .environment(\.editMode, .constant(.active))
         }
         .onAppear {
-            selectedProducts = Set(items.map { $0.product })
+            let itemProductCodes = Set(items.map { $0.productCode })
+            selectedProducts = Set(products.filter { itemProductCodes.contains($0.code) })
         }
         .sheet(isPresented: $showProductFormView) {
-            ProductFormView()
+            NavigationStack {
+                ProductFormView()
+            }
         }
     }
 
     func updateItems(with selectedProducts: Set<Product>) {
+        let itemProductCodes = Set(items.map { $0.productCode })
+
         selectedProducts.forEach { product in
-            if !items.contains(where: { $0.product == product }) {
-                let newItem = (product, 1)
-                
-                items.append(newItem)
+            if !itemProductCodes.contains(product.code) {
+                let item = StandaloneItemDetails(from: product, quantity: 1)
+
+                items.append(item)
             }
         }
 
         items = items.filter { item in
-            selectedProducts.contains(where: { $0 == item.product })
+            selectedProducts.contains(where: { $0.code == item.productCode })
         }
     }
 }

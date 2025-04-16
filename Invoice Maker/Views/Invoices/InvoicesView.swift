@@ -98,10 +98,10 @@ struct InvoicesView: View {
                 }
             }
             .sheet(isPresented: $showInvoiceFormView) {
-                StandaloneInvoiceFormView(onSave: save)
+                InvoiceFormView(onSave: save)
             }
             .sheet(item: $selectedInvoice) { invoice in
-                StandaloneInvoiceFormView(invoice: invoice, onSave: update)
+                InvoiceFormView(invoice: invoice, onSave: update)
             }
             .overlay {
                 if standaloneInvoices.isEmpty {

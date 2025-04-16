@@ -14,20 +14,20 @@ struct InvoiceFormView: View {
     @Query private var business: [Business]
     @State private var showInvoiceProductSelection: Bool = false
     @State private var showCustomerFormView: Bool = false
-    @State private var invoiceDetails: InvoiceDetails
+    @State private var invoiceDetails: StandaloneInvoiceDetails
     @State private var generatedPDF: URL?
     @State private var showDismissAlert: Bool = false
 
-    let invoice: Invoice?
-    var onSave: (InvoiceDetails) -> Void
+    let invoice: StandaloneInvoice?
+    var onSave: (StandaloneInvoiceDetails) -> Void
 
-    init(invoice: Invoice? = nil, onSave: @escaping (InvoiceDetails) -> Void) {
+    init(invoice: StandaloneInvoice? = nil, onSave: @escaping (StandaloneInvoiceDetails) -> Void) {
         self.invoice = invoice
 
         if let invoice {
-            _invoiceDetails = State(initialValue: InvoiceDetails(from: invoice))
+            _invoiceDetails = State(initialValue: StandaloneInvoiceDetails(from: invoice))
         } else {
-            _invoiceDetails = State(initialValue: InvoiceDetails())
+            _invoiceDetails = State(initialValue: StandaloneInvoiceDetails())
         }
 
         self.onSave = onSave
@@ -48,16 +48,34 @@ struct InvoiceFormView: View {
                 }
 
                 Section {
-                    Picker("مشتری", selection: $invoiceDetails.customer) {
+                    Picker("مشتری", selection: $invoiceDetails.customerId) {
                         Text("انتخاب کنید")
-                            .tag(nil as Customer?)
+                            .tag(nil as UUID?)
                         ForEach(customers) { customer in
                             Text(customer.name)
-                                .tag(customer as Customer?)
+                                .tag(customer.id as UUID?)
                         }
                     }
                     .pickerStyle(.navigationLink)
                     .disabled(customers.isEmpty)
+                    .onChange(of: invoiceDetails.customerId) {
+                        let customer = customers.first { $0.id == invoiceDetails.customerId }
+
+                        if let customer {
+                            invoiceDetails.customerName = customer.name
+                            invoiceDetails.customerAddress = customer.address
+                            invoiceDetails.customerDetails = customer.details
+                            invoiceDetails.customerPhone = customer.phone
+                            invoiceDetails.customerEmail = customer.email
+                        } else {
+                            invoiceDetails.customerName = nil
+                            invoiceDetails.customerAddress = nil
+                            invoiceDetails.customerDetails = nil
+                            invoiceDetails.customerPhone = nil
+                            invoiceDetails.customerEmail = nil
+                        }
+                    }
+
                     Button("افزودن مشتری", systemImage: "plus") {
                         showCustomerFormView.toggle()
                     }
@@ -73,15 +91,15 @@ struct InvoiceFormView: View {
                 }
 
                 Section {
-                    ForEach(invoiceDetails.items.indices, id: \.self) { index in
+                    ForEach($invoiceDetails.items) { $item in
                         Stepper {
-                            Text(invoiceDetails.items[index].product.name)
-                            Text(invoiceDetails.items[index].quantity.description)
+                            Text(item.productName)
+                            Text(item.quantity.description)
                         } onIncrement: {
-                            invoiceDetails.items[index].quantity += 1
+                            item.quantity += 1
                         } onDecrement: {
-                            if invoiceDetails.items[index].quantity > 0 {
-                                invoiceDetails.items[index].quantity -= 1
+                            if item.quantity > 0 {
+                                item.quantity -= 1
                             }
                         }
                     }
@@ -120,7 +138,7 @@ struct InvoiceFormView: View {
                             return
                         }
 
-                        if InvoiceDetails(from: invoice) != invoiceDetails {
+                        if StandaloneInvoiceDetails(from: invoice) != invoiceDetails {
                             showDismissAlert.toggle()
                         } else {
                             dismiss()
@@ -139,18 +157,21 @@ struct InvoiceFormView: View {
                 }
             }
             .sheet(isPresented: $showCustomerFormView) {
-                CustomerFormView()
+                NavigationStack {
+                    CustomerFormView()
+                }
             }
             .sheet(isPresented: $showInvoiceProductSelection) {
                 InvoiceProductSelection(items: $invoiceDetails.items)
             }
             .onAppear {
-//                if let invoice,
-//                   let business = business.first {
-//                    let pdf = PDF(invoice: invoice, business: business)
-//
-//                    generatedPDF = pdf.generatePDF()
-//                }
+                guard let invoice else { return }
+
+                if let business = business.first {
+                    let pdf = PDF(invoice: invoice, business: business)
+
+                    generatedPDF = pdf.generatePDF()
+                }
             }
         }
     }
