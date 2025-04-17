@@ -41,7 +41,7 @@ struct ProductsView: View {
 
                                 Spacer()
 
-                                Text(product.price.formatted(.currency(code: "IRR")).toPersian())
+                                Text(product.price, format: .currency(code: "IRR"))
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
                                     .lineLimit(1)

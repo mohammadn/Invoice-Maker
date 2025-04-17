@@ -21,7 +21,7 @@ struct ProductView: View {
             } else {
                 List {
                     Section {
-                        LabeledContent("کد", value: product.code.description.toPersian())
+                        LabeledContent("کد", value: product.code, format: .number)
                     }
 
                     Section {
@@ -30,7 +30,7 @@ struct ProductView: View {
                     }
 
                     Section {
-                        LabeledContent("قیمت", value: product.price.formatted(.currency(code: "IRR")).toPersian())
+                        LabeledContent("قیمت", value: product.price, format: .currency(code: "IRR"))
                     }
                 }
                 .navigationTitle(product.name)
