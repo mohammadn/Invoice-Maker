@@ -45,6 +45,7 @@
 		A6ACF5D52B7EC42600D4727B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6ACF5D42B7EC42600D4727B /* Item.swift */; };
 		A6C7721D2DAC394000315110 /* ProductView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C7721C2DAC394000315110 /* ProductView.swift */; };
 		A6C772212DAF16C000315110 /* CustomerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C772202DAF16C000315110 /* CustomerView.swift */; };
+		A6C772232DB07DFC00315110 /* InvoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C772222DB07DFC00315110 /* InvoiceView.swift */; };
 		A6D4F6F02B8B93CF0089B653 /* InvoiceDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6D4F6EF2B8B93CF0089B653 /* InvoiceDetails.swift */; };
 		A6DAE5002D240BBD00205A54 /* String+ToPersian.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6DAE4FF2D240BBD00205A54 /* String+ToPersian.swift */; };
 		A6E4DFE52B8BBCEF0088BCFC /* PDF.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6E4DFE42B8BBCEF0088BCFC /* PDF.swift */; };
@@ -90,6 +91,7 @@
 		A6ACF5D42B7EC42600D4727B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		A6C7721C2DAC394000315110 /* ProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductView.swift; sourceTree = "<group>"; };
 		A6C772202DAF16C000315110 /* CustomerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerView.swift; sourceTree = "<group>"; };
+		A6C772222DB07DFC00315110 /* InvoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceView.swift; sourceTree = "<group>"; };
 		A6D4F6EF2B8B93CF0089B653 /* InvoiceDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceDetails.swift; sourceTree = "<group>"; };
 		A6DAE4FF2D240BBD00205A54 /* String+ToPersian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+ToPersian.swift"; sourceTree = "<group>"; };
 		A6E4DFE42B8BBCEF0088BCFC /* PDF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDF.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				A69BC4242DA3306200172FE0 /* InvoiceFormView.swift */,
 				A6ACF5CE2B7D6BF800D4727B /* InvoicesView.swift */,
 				A69BC4262DA33B2600172FE0 /* InvoiceProductSelection.swift */,
+				A6C772222DB07DFC00315110 /* InvoiceView.swift */,
 			);
 			path = Invoices;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				A6ACF59B2B7AB4DB00D4727B /* ProductDetails.swift in Sources */,
 				A6ACF5C62B7C151800D4727B /* CustomerFormView.swift in Sources */,
 				A6ACF58A2B7975AD00D4727B /* SettingsBusinessDetailsView.swift in Sources */,
+				A6C772232DB07DFC00315110 /* InvoiceView.swift in Sources */,
 				A6ACF5CD2B7C1C1700D4727B /* Customer+SampleData.swift in Sources */,
 				A684560B2D444F7800FBD1E1 /* ContactStoreManager.swift in Sources */,
 				A6ACF59E2B7AC79000D4727B /* Business.swift in Sources */,
@@ -545,7 +549,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -558,7 +562,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -581,7 +585,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -594,7 +598,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

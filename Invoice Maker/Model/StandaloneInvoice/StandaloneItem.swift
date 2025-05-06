@@ -41,3 +41,9 @@ class StandaloneItem {
                   quantity: item.quantity)
     }
 }
+
+extension StandaloneItem {
+    func update(with itemDetails: StandaloneItemDetails) {
+        quantity = itemDetails.quantity
+    }
+}
