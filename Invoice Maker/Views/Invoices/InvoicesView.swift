@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct InvoicesView: View {
-    @Environment(\.modelContext) private var context
+    @Environment(\.modelContext) private var modelContext
     @Query private var business: [Business]
     @Query private var invoices: [Invoice]
     @Query(sort: \StandaloneInvoice.createdDate, order: .reverse) private var standaloneInvoices: [StandaloneInvoice]
@@ -25,26 +25,21 @@ struct InvoicesView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            List {
+        NavigationSplitView {
+            List(selection: $selectedInvoice) {
                 if !invalidInvoices.isEmpty {
                     Section {
                         ForEach(invalidInvoices) { invoice in
                             VStack(alignment: .leading) {
-                                LabeledContent {
+                                NavigationLink(value: invoice) {
                                     HStack {
-                                        Text(invoice.date, style: .date)
+                                        Text(invoice.number)
+                                            .lineLimit(1)
 
-                                        Button {
-                                            selectedInvoice = invoice
-                                        } label: {
-                                            Image(systemName: "info.circle")
-                                                .font(.title3)
-                                        }
+                                        Spacer()
+
+                                        Text(invoice.date, style: .date)
                                     }
-                                } label: {
-                                    Text(invoice.number)
-                                        .lineLimit(1)
                                 }
 
                                 Text(invoice.customerName ?? "-")
@@ -64,20 +59,15 @@ struct InvoicesView: View {
                 Section {
                     ForEach(validInvoices) { invoice in
                         VStack(alignment: .leading) {
-                            LabeledContent {
+                            NavigationLink(value: invoice) {
                                 HStack {
-                                    Text(invoice.date, style: .date)
+                                    Text(invoice.number)
+                                        .lineLimit(1)
 
-                                    Button {
-                                        selectedInvoice = invoice
-                                    } label: {
-                                        Image(systemName: "info.circle")
-                                            .font(.title3)
-                                    }
+                                    Spacer()
+
+                                    Text(invoice.date, style: .date)
                                 }
-                            } label: {
-                                Text(invoice.number)
-                                    .lineLimit(1)
                             }
 
                             Text(invoice.customerName ?? "-")
@@ -92,16 +82,15 @@ struct InvoicesView: View {
             .navigationBarTitle("فاکتورها")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("اضافه", systemImage: "plus") {
+                    Button("افزودن فاکتور", systemImage: "plus") {
                         showInvoiceFormView.toggle()
                     }
                 }
             }
             .sheet(isPresented: $showInvoiceFormView) {
-                InvoiceFormView(onSave: save)
-            }
-            .sheet(item: $selectedInvoice) { invoice in
-                InvoiceFormView(invoice: invoice, onSave: update)
+                NavigationStack {
+                    InvoiceFormView()
+                }
             }
             .overlay {
                 if standaloneInvoices.isEmpty {
@@ -117,7 +106,7 @@ struct InvoicesView: View {
                     let items: [StandaloneItem] = invoice.items.compactMap { item in
                         let productModelID = item.product.persistentModelID
                         let descriptor = FetchDescriptor<Product>(predicate: #Predicate { product in product.persistentModelID == productModelID })
-                        let results = try? context.fetch(descriptor)
+                        let results = try? modelContext.fetch(descriptor)
 
                         if results?.isEmpty ?? true {
                             return nil
@@ -128,7 +117,7 @@ struct InvoicesView: View {
 
                     let customerModelID = invoice.customer.persistentModelID
                     let descriptor = FetchDescriptor<Customer>(predicate: #Predicate { customer in customer.persistentModelID == customerModelID })
-                    let results = try? context.fetch(descriptor)
+                    let results = try? modelContext.fetch(descriptor)
 
                     guard let business = business.first else { return }
 
@@ -137,34 +126,29 @@ struct InvoicesView: View {
                                                               items: items,
                                                               customer: results?.isEmpty ?? true ? nil : invoice.customer)
 
-                    context.insert(standaloneInvoice)
-                    context.delete(invoice)
+                    modelContext.insert(standaloneInvoice)
+                    modelContext.delete(invoice)
                 }
+            }
+        } detail: {
+            if let invoice = selectedInvoice {
+                InvoiceView(invoice: invoice)
+            } else {
+                Text("یک فاکتور را انتخاب کنید")
+                    .font(.title)
             }
         }
     }
 
-    private func save(invoiceDetails: StandaloneInvoiceDetails) {
-        let invoice = StandaloneInvoice(from: invoiceDetails)
-
-        if let invoice {
-            context.insert(invoice)
-        }
-    }
-
-    private func update(invoiceDetails: StandaloneInvoiceDetails) {
-        selectedInvoice?.update(with: invoiceDetails)
-    }
-
     private func deleteInvalidInvoice(at offsets: IndexSet) {
         for index in offsets {
-            context.delete(invalidInvoices[index])
+            modelContext.delete(invalidInvoices[index])
         }
     }
 
     private func deleteValidInvoice(at offsets: IndexSet) {
         for index in offsets {
-            context.delete(validInvoices[index])
+            modelContext.delete(validInvoices[index])
         }
     }
 }
