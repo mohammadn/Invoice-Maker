@@ -9,7 +9,7 @@ import SwiftData
 
 @Model
 class StandaloneItem {
-    @Attribute(.unique) var productCode: Int
+    var productCode: Int
     var productName: String
     var productDetails: String?
     var productPrice: Float
@@ -33,12 +33,13 @@ class StandaloneItem {
                   quantity: item.quantity)
     }
 
-    convenience init(from item: StandaloneItemDetails) {
+    convenience init(from item: StandaloneItemDetails, invoice: StandaloneInvoice) {
         self.init(productCode: item.productCode,
                   productName: item.productName,
                   productDetails: item.productDetails,
                   productPrice: item.productPrice,
-                  quantity: item.quantity)
+                  quantity: item.quantity,
+                  invoice: invoice)
     }
 }
 

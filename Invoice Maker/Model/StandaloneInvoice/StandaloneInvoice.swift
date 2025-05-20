@@ -108,7 +108,6 @@ class StandaloneInvoice {
                   date: invoiceDetails.date,
                   note: invoiceDetails.note,
                   type: invoiceDetails.type,
-                  items: invoiceDetails.items.map { item in StandaloneItem(from: item) },
                   status: invoiceDetails.status)
     }
 }
@@ -148,17 +147,5 @@ extension StandaloneInvoice {
         note = invoiceDetails.note
         type = invoiceDetails.type
         status = invoiceDetails.status
-        
-        invoiceDetails.items.forEach { item in
-            if let existingItem = items.first(where: { $0.productCode == item.productCode }) {
-                existingItem.update(with: item)
-            } else {
-                items.append(StandaloneItem(from: item))
-            }
-        }
-        
-        items.removeAll { item in
-            !invoiceDetails.items.contains { $0.productCode == item.productCode }
-        }
     }
 }

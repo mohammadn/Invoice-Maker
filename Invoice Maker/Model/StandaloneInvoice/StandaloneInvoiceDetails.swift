@@ -86,6 +86,15 @@ class StandaloneInvoiceDetails {
                   items: invoice.items.map { item in StandaloneItemDetails(from: item) },
                   status: invoice.status)
     }
+
+    convenience init(with business: Business) {
+        self.init(
+            businessName: business.name,
+            businessPhone: business.phone,
+            businessAddress: business.address,
+            businessEmail: business.email,
+            businessWebsite: business.website,)
+    }
 }
 
 extension StandaloneInvoiceDetails: Equatable {

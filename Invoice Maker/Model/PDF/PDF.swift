@@ -11,7 +11,6 @@ import UIKit
 
 struct PDF {
     let invoice: StandaloneInvoice
-    let business: Business
 
     func generatePDF() -> URL? {
         let document = PDFDocument(format: .a4)
@@ -19,7 +18,7 @@ struct PDF {
 
         // Document Info
         document.info.title = "Invoice \(invoice.number)"
-        document.info.author = business.name
+        document.info.author = invoice.businessName
 
         // Title Section
         let attributedTitle = NSMutableAttributedString(string: invoice.type.label, attributes: [.font: UIFont.systemFont(ofSize: .init(30), weight: .bold)])
@@ -95,22 +94,22 @@ struct PDF {
 
         // Business Details
         let businessDetails = NSMutableAttributedString()
-        businessDetails.append(createAttributedString(label: "نام", value: business.name))
+        businessDetails.append(createAttributedString(label: "نام", value: invoice.businessName))
 
         businessDetails.append(comma)
-        businessDetails.append(createAttributedString(label: "تلفن", value: business.phone))
+        businessDetails.append(createAttributedString(label: "تلفن", value: invoice.businessPhone))
 
-        if let website = business.website, !website.isEmpty {
+        if let website = invoice.businessWebsite, !website.isEmpty {
             businessDetails.append(comma)
             businessDetails.append(createAttributedString(label: "وب سایت", value: website))
         }
 
-        if let email = business.email, !email.isEmpty {
+        if let email = invoice.businessEmail, !email.isEmpty {
             businessDetails.append(comma)
             businessDetails.append(createAttributedString(label: "ایمیل", value: email))
         }
 
-        if let address = business.address, !address.isEmpty {
+        if let address = invoice.businessAddress, !address.isEmpty {
             businessDetails.append(comma)
             businessDetails.append(createAttributedString(label: "آدرس", value: address))
         }
@@ -143,7 +142,7 @@ struct PDF {
     private func formattedNumber(_ input: Int) -> String {
         return input.formatted(.number.grouping(.automatic).locale(Locale(identifier: "fa")))
     }
-    
+
     private func formattedNumber(_ input: Float) -> String {
         return input.formatted(.number.grouping(.automatic).locale(Locale(identifier: "fa")))
     }

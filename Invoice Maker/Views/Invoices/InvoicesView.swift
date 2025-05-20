@@ -89,7 +89,7 @@ struct InvoicesView: View {
             }
             .sheet(isPresented: $showInvoiceFormView) {
                 NavigationStack {
-                    InvoiceFormView()
+                    InvoiceFormView(business: business.first)
                 }
             }
             .overlay {

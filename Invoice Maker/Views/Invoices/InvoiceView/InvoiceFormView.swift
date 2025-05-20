@@ -20,12 +20,19 @@ struct InvoiceFormView: View {
     let invoice: StandaloneInvoice?
     var dismissAction: (() -> Void)?
 
-    init(invoice: StandaloneInvoice? = nil, dismissAction: (() -> Void)? = nil) {
+    init(invoice: StandaloneInvoice, dismissAction: @escaping () -> Void) {
         self.invoice = invoice
         self.dismissAction = dismissAction
 
-        if let invoice {
-            _invoiceDetails = State(initialValue: StandaloneInvoiceDetails(from: invoice))
+        _invoiceDetails = State(initialValue: StandaloneInvoiceDetails(from: invoice))
+    }
+
+    init(business: Business? = nil) {
+        invoice = nil
+        dismissAction = nil
+
+        if let business {
+            _invoiceDetails = State(initialValue: StandaloneInvoiceDetails(with: business))
         } else {
             _invoiceDetails = State(initialValue: StandaloneInvoiceDetails())
         }
@@ -164,11 +171,35 @@ struct InvoiceFormView: View {
 
         if let invoice {
             invoice.update(with: invoiceDetails)
+
+            invoiceDetails.items.forEach { item in
+                if let existingItem = invoice.items.first(where: { $0.productCode == item.productCode }) {
+                    existingItem.update(with: item)
+                } else {
+                    let standaloneItem = StandaloneItem(from: item, invoice: invoice)
+
+                    modelContext.insert(standaloneItem)
+                }
+            }
+
+            invoice.items.forEach { item in
+                if (!invoiceDetails.items.contains { $0.productCode == item.productCode }) {
+                    modelContext.delete(item)
+                }
+            }
         } else {
             let invoice = StandaloneInvoice(from: invoiceDetails)
 
             modelContext.insert(invoice)
+
+            invoiceDetails.items.forEach { item in
+                let standaloneItem = StandaloneItem(from: item, invoice: invoice)
+
+                modelContext.insert(standaloneItem)
+            }
         }
+
+        try? modelContext.save()
     }
 
     private func deleteProduct(at indexSet: IndexSet) {
