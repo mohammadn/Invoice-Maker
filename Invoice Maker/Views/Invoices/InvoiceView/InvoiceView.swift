@@ -5,11 +5,9 @@
 //  Created by Mohammad Najafzadeh on 17/04/2025.
 //
 
-import SwiftData
 import SwiftUI
 
 struct InvoiceView: View {
-    @Query private var business: [Business]
     @State var isEditing: Bool = false
 
     var invoice: StandaloneInvoice

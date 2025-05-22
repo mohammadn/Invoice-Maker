@@ -11,6 +11,10 @@ import SwiftData
 @Model
 class StandaloneInvoice {
     var number: String
+    var type: Invoice.InvoiceType
+    var date: Date
+    var note: String
+    var status: Status
     var customerId: UUID?
     var customerName: String?
     var customerAddress: String?
@@ -22,10 +26,7 @@ class StandaloneInvoice {
     var businessAddress: String?
     var businessEmail: String?
     var businessWebsite: String?
-    var date: Date
-    var note: String
-    var type: Invoice.InvoiceType
-    var status: Status
+
     @Relationship(deleteRule: .cascade, inverse: \StandaloneItem.invoice) var items: [StandaloneItem]
     var createdDate: Date = Date.now
 
@@ -35,6 +36,16 @@ class StandaloneInvoice {
 
     var total: Float {
         items.reduce(0) { $0 + (Float($1.quantity) * $1.productPrice) }
+    }
+
+    var customer: Customer? {
+        guard let customerId, let customerName else { return nil }
+
+        return Customer(id: customerId, name: customerName, address: customerAddress, details: customerDetails, phone: customerPhone, email: customerEmail)
+    }
+
+    var business: Business {
+        Business(name: businessName, address: businessAddress, phone: businessPhone, email: businessEmail, website: businessWebsite)
     }
 
     init(number: String = "",
@@ -134,18 +145,35 @@ extension StandaloneInvoice {
         number = invoiceDetails.number
         customerId = invoiceDetails.customerId
         customerName = invoiceDetails.customerName
-        customerAddress = invoiceDetails.customerAddress
-        customerDetails = invoiceDetails.customerDetails
         customerPhone = invoiceDetails.customerPhone
         customerEmail = invoiceDetails.customerEmail
+        customerAddress = invoiceDetails.customerAddress
+        customerDetails = invoiceDetails.customerDetails
         businessName = invoiceDetails.businessName
         businessPhone = invoiceDetails.businessPhone
-        businessAddress = invoiceDetails.businessAddress
         businessEmail = invoiceDetails.businessEmail
         businessWebsite = invoiceDetails.businessWebsite
+        businessAddress = invoiceDetails.businessAddress
         date = invoiceDetails.date
         note = invoiceDetails.note
         type = invoiceDetails.type
         status = invoiceDetails.status
+    }
+
+    func updateCustomer(with customer: Customer) {
+        customerId = customer.id
+        customerName = customer.name
+        customerPhone = customer.phone
+        customerEmail = customer.email
+        customerAddress = customer.address
+        customerDetails = customer.details
+    }
+
+    func updateBusiness(with business: Business) {
+        businessName = business.name
+        businessPhone = business.phone
+        businessEmail = business.email
+        businessWebsite = business.website
+        businessAddress = business.address
     }
 }

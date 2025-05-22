@@ -13,10 +13,10 @@ import SwiftData
 class Customer: Identifiable {
     var id: UUID = UUID()
     var name: String
-    var address: String?
-    var details: String?
     var phone: String?
     var email: String?
+    var address: String?
+    var details: String?
     var invoices: [Invoice] = []
     var createdDate: Date = Date.now
 
@@ -54,5 +54,27 @@ extension Customer {
         details = customerDetails.details
         phone = customerDetails.phone
         email = customerDetails.email
+    }
+}
+
+extension Customer: Equatable {
+    static func == (lhs: Customer, rhs: Customer) -> Bool {
+        lhs.id == rhs.id &&
+            lhs.name == rhs.name &&
+            lhs.address == rhs.address &&
+            lhs.details == rhs.details &&
+            lhs.phone == rhs.phone &&
+            lhs.email == rhs.email
+    }
+}
+
+extension Customer: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(name)
+        hasher.combine(address)
+        hasher.combine(details)
+        hasher.combine(phone)
+        hasher.combine(email)
     }
 }

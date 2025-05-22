@@ -49,6 +49,8 @@ struct InvoiceFormView: View {
                             .tag(type)
                     }
                 }
+
+                DatePicker("تاریخ", selection: $invoiceDetails.date)
             }
 
             Section {
@@ -83,10 +85,6 @@ struct InvoiceFormView: View {
                 Button("افزودن مشتری", systemImage: "plus") {
                     showCustomerFormView.toggle()
                 }
-            }
-
-            Section {
-                DatePicker("تاریخ", selection: $invoiceDetails.date)
             }
 
             Section {

@@ -11,10 +11,10 @@ import SwiftData
 @Model
 class Business {
     var name: String
-    var address: String?
     var phone: String
     var email: String?
     var website: String?
+    var address: String?
 
     init(name: String, address: String?, phone: String, email: String?, website: String?) {
         self.name = name
@@ -40,5 +40,25 @@ extension Business {
         phone = businessDetails.phone
         email = businessDetails.email
         website = businessDetails.website
+    }
+}
+
+extension Business: Equatable {
+    static func == (lhs: Business, rhs: Business) -> Bool {
+        lhs.name == rhs.name &&
+            lhs.address == rhs.address &&
+            lhs.phone == rhs.phone &&
+            lhs.email == rhs.email &&
+            lhs.website == rhs.website
+    }
+}
+
+extension Business: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(address)
+        hasher.combine(phone)
+        hasher.combine(email)
+        hasher.combine(website)
     }
 }

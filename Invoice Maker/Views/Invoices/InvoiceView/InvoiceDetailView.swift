@@ -9,47 +9,101 @@ import SwiftData
 import SwiftUI
 
 struct InvoiceDetailView: View {
+    @Environment(\.modelContext) private var modelContext
+    @State private var showCustomerSection: Bool = false
+    @State private var showBusinessSection: Bool = false
+    @State private var showProductsSection: Bool = false
     @State private var generatedPDF: URL?
+    @State private var customer: Customer?
+    @State private var business: Business?
 
-    var invoice: StandaloneInvoice
-
+    let invoice: StandaloneInvoice
     @Binding var isEditing: Bool
 
     var body: some View {
         List {
             Section {
                 LabeledContent("شماره فاکتور", value: invoice.number)
-                LabeledContent("تاریخ", value: invoice.date, format: .dateTime)
-            }
-
-            Section {
                 LabeledContent("نوع فاکتور", value: invoice.type.label)
+                LabeledContent("تاریخ", value: invoice.date, format: .dateTime)
                 LabeledContent("جزئیات", value: invoice.note.isEmpty ? "-" : invoice.note)
             }
 
-            Section {
-                LabeledContent("مشتری", value: invoice.customerName ?? "-")
-            } footer: {
+            Section(isExpanded: $showCustomerSection) {
+                LabeledContent("نام", value: invoice.customerName ?? "-")
+                LabeledContent("شماره تماس", value: invoice.customerPhone ?? "-")
+                LabeledContent("ایمیل", value: invoice.customerEmail ?? "-")
+                LabeledContent("آدرس", value: invoice.customerAddress ?? "-")
+                LabeledContent("جزئیات", value: invoice.customerDetails ?? "-")
+            } header: {
                 HStack {
-                    Image(systemName: "exclamationmark.triangle")
-                        .foregroundStyle(.yellow)
+                    Text("مشتری")
 
-                    Text("اطلاعات مشتری تغییر کرده است. در صورت نیاز، اطلاعات را بروزرسانی کنید.")
+                    if let customer, customer != invoice.customer {
+                        ButtonWithPopover(text: "اطلاعات مشتری تغییر کرده است. در صورت نیاز می توانید اطلاعات را بروزرسانی کنید.") {
+                            invoice.updateCustomer(with: customer)
+                        }
+                    }
+
+                    Spacer()
+
+                    Button {
+                        showCustomerSection.toggle()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .font(.subheadline)
+                            .rotationEffect(.degrees(showCustomerSection ? 90 : 0))
+                    }
                 }
             }
 
-            Section {
+            Section(isExpanded: $showBusinessSection) {
+                LabeledContent("نام", value: invoice.businessName)
+                LabeledContent("شماره تماس", value: invoice.businessPhone)
+                LabeledContent("ایمیل", value: invoice.businessEmail ?? "-")
+                LabeledContent("وب سایت", value: invoice.businessWebsite ?? "-")
+                LabeledContent("آدرس", value: invoice.businessAddress ?? "-")
+            } header: {
+                HStack {
+                    Text("کسب و کار")
+
+                    if let business, business != invoice.business {
+                        ButtonWithPopover(text: "اطلاعات کسب و کار تغییر کرده است. در صورت نیاز می توانید اطلاعات را بروزرسانی کنید.") {
+                            invoice.updateBusiness(with: business)
+                        }
+                    }
+
+                    Spacer()
+
+                    Button {
+                        showBusinessSection.toggle()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .font(.subheadline)
+                            .rotationEffect(.degrees(showBusinessSection ? 90 : 0))
+                    }
+                }
+            }
+
+            Section(isExpanded: $showProductsSection) {
                 ForEach(invoice.items) { item in
                     LabeledContent(item.productName, value: item.quantity, format: .number)
                 }
             } header: {
-                Text("محصولات")
-            } footer: {
                 HStack {
-                    Image(systemName: "exclamationmark.triangle")
-                        .foregroundStyle(.yellow)
+                    Text("محصولات")
 
-                    Text("اطلاعات یک یا چند محصول تغییر کرده است. در صورت نیاز، اطلاعات را بروزرسانی کنید.")
+//                    ButtonWithPopover(text: "اطلاعات یک یا چند محصول تغییر کرده است. در صورت نیاز میتوانید اطلاعات را بروزرسانی کنید.") {}
+
+                    Spacer()
+
+                    Button {
+                        showProductsSection.toggle()
+                    } label: {
+                        Image(systemName: "chevron.left")
+                            .font(.subheadline)
+                            .rotationEffect(.degrees(showProductsSection ? 90 : 0))
+                    }
                 }
             }
         }
@@ -62,18 +116,6 @@ struct InvoiceDetailView: View {
                         isEditing.toggle()
                     }
 
-                    Button("بروزرسانی اطلاعات مشتری", systemImage: "arrow.trianglehead.clockwise") {
-                        isEditing.toggle()
-                    }
-
-                    Button("بروزرسانی اطلاعات محصولات", systemImage: "arrow.trianglehead.clockwise") {
-                        isEditing.toggle()
-                    }
-                    
-                    Button("بروزرسانی اطلاعات کسب وکار", systemImage: "arrow.trianglehead.clockwise") {
-                        isEditing.toggle()
-                    }
-
                     if let generatedPDF {
                         ShareLink("پرینت", item: generatedPDF)
                     }
@@ -83,12 +125,24 @@ struct InvoiceDetailView: View {
             }
         }
         .onAppear {
+            if let customerId = invoice.customerId {
+                let customerDescriptor = FetchDescriptor<Customer>(
+                    predicate: #Predicate<Customer> { $0.id == customerId },
+                    sortBy: [SortDescriptor(\.createdDate, order: .reverse)]
+                )
+                customer = (try? modelContext.fetch(customerDescriptor))?.first
+            }
+            let businessDescriptor = FetchDescriptor<Business>()
+            business = (try? modelContext.fetch(businessDescriptor))?.first
+
             guard !invoice.isInvalid else { return }
 
             let pdf = PDF(invoice: invoice)
-
             generatedPDF = pdf.generatePDF()
         }
+        .animation(.easeInOut, value: showBusinessSection)
+        .animation(.easeInOut, value: showCustomerSection)
+        .animation(.easeInOut, value: showProductsSection)
     }
 }
 

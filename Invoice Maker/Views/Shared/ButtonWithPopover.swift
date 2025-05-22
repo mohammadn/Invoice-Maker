@@ -1,4 +1,11 @@
+//
+//  ButtonWithPopover.swift
+//  Invoice Maker
+//
+//  Created by Mohammad Najafzadeh on 22/05/2025.
+//
 
+import SwiftUI
 
 struct ButtonWithPopover: View {
     @State var show: Bool = false
@@ -17,10 +24,12 @@ struct ButtonWithPopover: View {
                 Text(text)
                     .fixedSize(horizontal: false, vertical: true)
 
-                Button("بروزرسانی") {
-                    print(1)
+                Spacer(minLength: 20)
 
+                Button("بروزرسانی") {
                     action()
+
+                    show.toggle()
                 }
             }
             .padding(20)

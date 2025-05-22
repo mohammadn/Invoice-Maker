@@ -30,16 +30,16 @@ struct CustomerDetailView: View {
         List {
             Section {
                 LabeledContent("نام", value: customer.name)
-                LabeledContent("جزئیات", value: customer.details?.isEmpty == false ? customer.details! : "-")
-            }
-
-            Section {
                 LabeledContent("تلفن", value: customer.phone?.toPersian() ?? "-")
-                LabeledContent("آدرس", value: customer.address ?? "-")
             }
 
             Section {
                 LabeledContent("ایمیل", value: customer.email ?? "-")
+                LabeledContent("آدرس", value: customer.address ?? "-")
+            }
+
+            Section {
+                LabeledContent("جزئیات", value: customer.details?.isEmpty == false ? customer.details! : "-")
             }
 
             Section {
