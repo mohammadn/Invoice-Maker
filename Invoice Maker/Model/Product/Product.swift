@@ -12,15 +12,15 @@ import SwiftData
 class Product {
     @Attribute(.unique) var code: Int
     var name: String
-    var details: String?
     var price: Float
+    var details: String?
     var createdDate: Date = Date.now
 
     init(code: Int, name: String, details: String?, price: Float) {
         self.code = code
         self.name = name
-        self.details = details
         self.price = price
+        self.details = details
     }
 
     convenience init(from productDetails: ProductDetails) {
@@ -35,7 +35,25 @@ extension Product {
     func update(with productDetails: ProductDetails) {
         code = productDetails.code ?? 0
         name = productDetails.name
-        details = productDetails.details
         price = productDetails.price ?? 0
+        details = productDetails.details
+    }
+}
+
+extension Product: Equatable {
+    static func == (lhs: Product, rhs: Product) -> Bool {
+        lhs.code == rhs.code &&
+            lhs.name == rhs.name &&
+            lhs.price == rhs.price &&
+            lhs.details == rhs.details
+    }
+}
+
+extension Product: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(code)
+        hasher.combine(name)
+        hasher.combine(price)
+        hasher.combine(details)
     }
 }

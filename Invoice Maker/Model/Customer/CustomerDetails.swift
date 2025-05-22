@@ -11,10 +11,10 @@ import Foundation
 class CustomerDetails {
     var id: UUID
     var name: String
-    var address: String?
-    var details: String?
     var phone: String?
     var email: String?
+    var address: String?
+    var details: String?
 
     var isInvalid: Bool {
         name.isEmpty

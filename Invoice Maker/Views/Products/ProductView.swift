@@ -26,11 +26,11 @@ struct ProductView: View {
 
                     Section {
                         LabeledContent("نام", value: product.name)
-                        LabeledContent("جزئیات", value: product.details?.isEmpty == false ? product.details! : "-")
+                        LabeledContent("قیمت", value: product.price, format: .currency(code: "IRR"))
                     }
 
                     Section {
-                        LabeledContent("قیمت", value: product.price, format: .currency(code: "IRR"))
+                        LabeledContent("جزئیات", value: product.details?.isEmpty == false ? product.details! : "-")
                     }
                 }
                 .navigationTitle(product.name)

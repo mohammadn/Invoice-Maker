@@ -45,13 +45,13 @@ struct ProductFormView: View {
 
             Section {
                 TextField("نام محصول*", text: $productDetails.name)
-                TextField("جزئیات", text: $productDetails.details ?? "", axis: .vertical)
-                    .lineLimit(2 ... 4)
+                TextField("قیمت (ریال)*", value: $productDetails.price, format: .number)
+                    .keyboardType(.decimalPad)
             }
 
             Section {
-                TextField("قیمت (ریال)*", value: $productDetails.price, format: .number)
-                    .keyboardType(.decimalPad)
+                TextField("جزئیات", text: $productDetails.details ?? "", axis: .vertical)
+                    .lineLimit(2 ... 4)
             }
         }
         .navigationBarTitle(product == nil ? "افزودن محصول" : "ویرایش محصول")

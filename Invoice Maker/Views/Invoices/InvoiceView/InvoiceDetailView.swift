@@ -16,10 +16,11 @@ struct InvoiceDetailView: View {
     @State private var generatedPDF: URL?
     @State private var customer: Customer?
     @State private var business: Business?
-
+    @State private var products: [Product] = []
+    
     let invoice: StandaloneInvoice
     @Binding var isEditing: Bool
-
+    
     var body: some View {
         List {
             Section {
@@ -28,7 +29,7 @@ struct InvoiceDetailView: View {
                 LabeledContent("تاریخ", value: invoice.date, format: .dateTime)
                 LabeledContent("جزئیات", value: invoice.note.isEmpty ? "-" : invoice.note)
             }
-
+            
             Section(isExpanded: $showCustomerSection) {
                 LabeledContent("نام", value: invoice.customerName ?? "-")
                 LabeledContent("شماره تماس", value: invoice.customerPhone ?? "-")
@@ -38,15 +39,15 @@ struct InvoiceDetailView: View {
             } header: {
                 HStack {
                     Text("مشتری")
-
+                    
                     if let customer, customer != invoice.customer {
                         ButtonWithPopover(text: "اطلاعات مشتری تغییر کرده است. در صورت نیاز می توانید اطلاعات را بروزرسانی کنید.") {
                             invoice.updateCustomer(with: customer)
                         }
                     }
-
+                    
                     Spacer()
-
+                    
                     Button {
                         showCustomerSection.toggle()
                     } label: {
@@ -56,7 +57,7 @@ struct InvoiceDetailView: View {
                     }
                 }
             }
-
+            
             Section(isExpanded: $showBusinessSection) {
                 LabeledContent("نام", value: invoice.businessName)
                 LabeledContent("شماره تماس", value: invoice.businessPhone)
@@ -66,15 +67,15 @@ struct InvoiceDetailView: View {
             } header: {
                 HStack {
                     Text("کسب و کار")
-
+                    
                     if let business, business != invoice.business {
                         ButtonWithPopover(text: "اطلاعات کسب و کار تغییر کرده است. در صورت نیاز می توانید اطلاعات را بروزرسانی کنید.") {
                             invoice.updateBusiness(with: business)
                         }
                     }
-
+                    
                     Spacer()
-
+                    
                     Button {
                         showBusinessSection.toggle()
                     } label: {
@@ -84,7 +85,7 @@ struct InvoiceDetailView: View {
                     }
                 }
             }
-
+            
             Section(isExpanded: $showProductsSection) {
                 ForEach(invoice.items) { item in
                     LabeledContent(item.productName, value: item.quantity, format: .number)
@@ -92,11 +93,19 @@ struct InvoiceDetailView: View {
             } header: {
                 HStack {
                     Text("محصولات")
-
-//                    ButtonWithPopover(text: "اطلاعات یک یا چند محصول تغییر کرده است. در صورت نیاز میتوانید اطلاعات را بروزرسانی کنید.") {}
-
+                    
+                    if Set(invoice.items.compactMap(\.product)) != Set(products) {
+                        ButtonWithPopover(text: "اطلاعات یک یا چند محصول تغییر کرده است. در صورت نیاز می‌توانید اطلاعات را بروزرسانی کنید.") {
+                            for item in invoice.items {
+                                if let product = products.first(where: { $0.code == item.productCode }) {
+                                    item.update(with: product)
+                                }
+                            }
+                        }
+                    }
+                    
                     Spacer()
-
+                    
                     Button {
                         showProductsSection.toggle()
                     } label: {
@@ -115,7 +124,7 @@ struct InvoiceDetailView: View {
                     Button("ویرایش", systemImage: "pencil") {
                         isEditing.toggle()
                     }
-
+                    
                     if let generatedPDF {
                         ShareLink("پرینت", item: generatedPDF)
                     }
@@ -132,11 +141,20 @@ struct InvoiceDetailView: View {
                 )
                 customer = (try? modelContext.fetch(customerDescriptor))?.first
             }
+            
             let businessDescriptor = FetchDescriptor<Business>()
             business = (try? modelContext.fetch(businessDescriptor))?.first
-
+            
+            // Fetch products referenced by this invoice
+            let productCodes = invoice.items.map { $0.productCode }
+            let productDescriptor = FetchDescriptor<Product>(
+                predicate: #Predicate<Product> { productCodes.contains($0.code) },
+                sortBy: [SortDescriptor(\.createdDate, order: .reverse)]
+            )
+            products = (try? modelContext.fetch(productDescriptor)) ?? []
+            
             guard !invoice.isInvalid else { return }
-
+            
             let pdf = PDF(invoice: invoice)
             generatedPDF = pdf.generatePDF()
         }

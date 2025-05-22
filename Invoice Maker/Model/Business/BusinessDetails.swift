@@ -10,10 +10,10 @@ import Foundation
 @Observable
 class BusinessDetails {
     var name: String
-    var address: String?
     var phone: String
     var email: String?
     var website: String?
+    var address: String?
 
     var isInvalid: Bool {
         name.isEmpty || phone.isEmpty

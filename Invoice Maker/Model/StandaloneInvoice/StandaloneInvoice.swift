@@ -15,20 +15,21 @@ class StandaloneInvoice {
     var date: Date
     var note: String
     var status: Status
-    var customerId: UUID?
-    var customerName: String?
-    var customerAddress: String?
-    var customerDetails: String?
-    var customerPhone: String?
-    var customerEmail: String?
-    var businessName: String
-    var businessPhone: String
-    var businessAddress: String?
-    var businessEmail: String?
-    var businessWebsite: String?
-
     @Relationship(deleteRule: .cascade, inverse: \StandaloneItem.invoice) var items: [StandaloneItem]
     var createdDate: Date = Date.now
+
+    var customerId: UUID?
+    var customerName: String?
+    var customerPhone: String?
+    var customerEmail: String?
+    var customerAddress: String?
+    var customerDetails: String?
+
+    var businessName: String
+    var businessPhone: String
+    var businessEmail: String?
+    var businessWebsite: String?
+    var businessAddress: String?
 
     var isInvalid: Bool {
         number.isEmpty || customerId == nil || items.isEmpty

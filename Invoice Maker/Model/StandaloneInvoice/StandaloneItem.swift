@@ -11,10 +11,14 @@ import SwiftData
 class StandaloneItem {
     var productCode: Int
     var productName: String
-    var productDetails: String?
     var productPrice: Float
+    var productDetails: String?
     var quantity: Int
     var invoice: StandaloneInvoice?
+
+    var product: Product {
+        Product(code: productCode, name: productName, details: productDetails, price: productPrice)
+    }
 
     init(productCode: Int, productName: String, productDetails: String? = nil, productPrice: Float, quantity: Int = 1, invoice: StandaloneInvoice? = nil) {
         self.productCode = productCode
@@ -46,5 +50,12 @@ class StandaloneItem {
 extension StandaloneItem {
     func update(with itemDetails: StandaloneItemDetails) {
         quantity = itemDetails.quantity
+    }
+
+    func update(with product: Product) {
+        productCode = product.code
+        productName = product.name
+        productPrice = product.price
+        productDetails = product.details
     }
 }

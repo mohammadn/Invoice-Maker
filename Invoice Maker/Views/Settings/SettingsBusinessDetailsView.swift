@@ -34,13 +34,13 @@ struct SettingsBusinessDetailsView: View {
             }
 
             Section {
-                TextField("آدرس", text: $businessDetails.address ?? "", axis: .vertical)
-                    .lineLimit(3 ... 5)
+                TextField("ایمیل", text: $businessDetails.email ?? "")
+                TextField("وبسایت", text: $businessDetails.website ?? "")
             }
 
             Section {
-                TextField("ایمیل", text: $businessDetails.email ?? "")
-                TextField("وبسایت", text: $businessDetails.website ?? "")
+                TextField("آدرس", text: $businessDetails.address ?? "", axis: .vertical)
+                    .lineLimit(3 ... 5)
             }
 
 //            Section {
