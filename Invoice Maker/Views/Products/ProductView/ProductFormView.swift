@@ -50,7 +50,7 @@ struct ProductFormView: View {
             }
 
             Section {
-                TextField("جزئیات", text: $productDetails.details ?? "", axis: .vertical)
+                TextField("توضیحات", text: $productDetails.details ?? "", axis: .vertical)
                     .lineLimit(2 ... 4)
             }
         }

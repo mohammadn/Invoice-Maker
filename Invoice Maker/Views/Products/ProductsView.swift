@@ -82,7 +82,7 @@ struct ProductsView: View {
                     ContentUnavailableView {
                         Label("محصولی با این مشخصات یافت نشد", systemImage: "magnifyingglass")
                     } description: {
-                        Text("برای جستجو، کد، نام، قیمت یا جزئیات محصول را وارد کنید")
+                        Text("برای جستجو، کد، نام، قیمت یا توضیحات محصول را وارد کنید")
                     }
                 }
             }

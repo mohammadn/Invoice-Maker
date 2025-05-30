@@ -27,7 +27,7 @@ struct InvoiceDetailView: View {
                 LabeledContent("شماره فاکتور", value: invoice.number)
                 LabeledContent("نوع فاکتور", value: invoice.type.label)
                 LabeledContent("تاریخ", value: invoice.date, format: .dateTime)
-                LabeledContent("جزئیات", value: invoice.note.isEmpty ? "-" : invoice.note)
+                LabeledContent("توضیحات", value: invoice.note.isEmpty ? "-" : invoice.note)
             }
 
             Section(isExpanded: $showCustomerSection) {
@@ -35,7 +35,7 @@ struct InvoiceDetailView: View {
                 LabeledContent("شماره تماس", value: invoice.customerPhone ?? "-")
                 LabeledContent("ایمیل", value: invoice.customerEmail ?? "-")
                 LabeledContent("آدرس", value: invoice.customerAddress ?? "-")
-                LabeledContent("جزئیات", value: invoice.customerDetails ?? "-")
+                LabeledContent("توضیحات", value: invoice.customerDetails ?? "-")
             } header: {
                 HStack {
                     Text("مشتری")

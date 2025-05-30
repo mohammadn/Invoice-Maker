@@ -43,7 +43,7 @@ struct CustomerFormView: View {
             }
 
             Section {
-                TextField("جزئیات", text: $customerDetails.details ?? "", axis: .vertical)
+                TextField("توضیحات", text: $customerDetails.details ?? "", axis: .vertical)
                     .lineLimit(2 ... 4)
             }
         }

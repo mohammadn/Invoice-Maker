@@ -39,7 +39,7 @@ struct CustomerDetailView: View {
             }
 
             Section {
-                LabeledContent("جزئیات", value: customer.details?.isEmpty == false ? customer.details! : "-")
+                LabeledContent("توضیحات", value: customer.details?.isEmpty == false ? customer.details! : "-")
             }
 
             Section {

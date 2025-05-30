@@ -91,7 +91,7 @@ struct CustomersView: View {
                     ContentUnavailableView {
                         Label("مشتری با این مشخصات یافت نشد", systemImage: "magnifyingglass")
                     } description: {
-                        Text("برای جستجو، نام، شماره تلفن، ایمیل، آدرس یا جزئیات مشتری را وارد کنید")
+                        Text("برای جستجو، نام، شماره تلفن، ایمیل، آدرس یا توضیحات مشتری را وارد کنید")
                     }
                 }
             }

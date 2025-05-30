@@ -38,7 +38,7 @@ struct ProductDetailView: View {
             }
 
             Section {
-                LabeledContent("جزئیات", value: product.details?.isEmpty == false ? product.details! : "-")
+                LabeledContent("توضیحات", value: product.details?.isEmpty == false ? product.details! : "-")
             }
 
             Section {
