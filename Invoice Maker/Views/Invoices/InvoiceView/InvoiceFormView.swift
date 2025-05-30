@@ -119,6 +119,7 @@ struct InvoiceFormView: View {
         .navigationBarTitle(invoice == nil ? "فاکتور جدید" : "ویرایش فاکتور")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
+        .interactiveDismissDisabled()
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("ذخیره") {
