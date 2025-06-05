@@ -39,6 +39,8 @@ struct InvoicesView: View {
                                         Spacer()
 
                                         Text(invoice.date, style: .date)
+                                            .font(.subheadline)
+                                            .foregroundColor(.secondary)
                                     }
                                 }
 
@@ -67,6 +69,8 @@ struct InvoicesView: View {
                                     Spacer()
 
                                     Text(invoice.date, style: .date)
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
                                 }
                             }
 

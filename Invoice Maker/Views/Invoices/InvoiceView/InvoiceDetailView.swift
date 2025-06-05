@@ -26,6 +26,7 @@ struct InvoiceDetailView: View {
             Section {
                 LabeledContent("شماره فاکتور", value: invoice.number)
                 LabeledContent("نوع فاکتور", value: invoice.type.label)
+                LabeledContent("ارز", value: Locale.current.localizedString(forCurrencyCode: invoice.currency) ?? "-")
                 LabeledContent("تاریخ", value: invoice.date, format: .dateTime)
                 LabeledContent("توضیحات", value: invoice.note.isEmpty ? "-" : invoice.note)
             }
@@ -92,7 +93,24 @@ struct InvoiceDetailView: View {
 
             Section(isExpanded: $showProductsSection) {
                 ForEach(invoice.items) { item in
-                    LabeledContent(item.productName, value: item.quantity, format: .number)
+//                    LabeledContent(item.productName, value: item.quantity, format: .number)
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text(item.productName)
+                                .lineLimit(1)
+
+                            Spacer()
+
+                            Text(item.quantity, format: .number)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+
+                        Text(item.productPrice, format: .currency(code: item.productCurrency))
+                            .font(.subheadline)
+                            .foregroundStyle(.gray)
+                            .lineLimit(1)
+                    }
                 }
             } header: {
                 HStack {

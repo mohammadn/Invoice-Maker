@@ -10,11 +10,19 @@ import SwiftUI
 
 struct InvoiceProductSelection: View {
     @Environment(\.dismiss) private var dismiss
-    @Query(sort: \VersionedProduct.name) private var products: [VersionedProduct]
+    @Query private var products: [VersionedProduct]
     @State private var showProductFormView: Bool = false
     @State private var selectedProducts: Set<VersionedProduct> = []
 
     @Binding var items: [StandaloneItemDetails]
+
+    init(items: Binding<[StandaloneItemDetails]>, currency: String) {
+        _items = items
+
+        let predicate = #Predicate<VersionedProduct> { $0.currency == currency }
+
+        _products = Query(filter: predicate, sort: \.name)
+    }
 
     var body: some View {
         NavigationStack {

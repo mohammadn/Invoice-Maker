@@ -10,6 +10,12 @@ import Foundation
 @Observable
 class StandaloneInvoiceDetails {
     var number: String
+    var type: Invoice.InvoiceType
+    var currency: String
+    var date: Date
+    var note: String
+    var status: StandaloneInvoice.Status
+    var items: [StandaloneItemDetails]
     var customerId: UUID?
     var customerName: String?
     var customerAddress: String?
@@ -21,17 +27,18 @@ class StandaloneInvoiceDetails {
     var businessAddress: String?
     var businessEmail: String?
     var businessWebsite: String?
-    var date: Date
-    var note: String
-    var type: Invoice.InvoiceType
-    var items: [StandaloneItemDetails]
-    var status: StandaloneInvoice.Status
 
     var isInvalid: Bool {
         number.isEmpty || customerId == nil || items.isEmpty
     }
 
     init(number: String = "",
+         type: Invoice.InvoiceType = .sale,
+         currency: String = "IRR",
+         date: Date = .now,
+         note: String = "",
+         status: StandaloneInvoice.Status = .pending,
+         items: [StandaloneItemDetails] = [],
          customerId: UUID? = nil,
          customerName: String? = nil,
          customerAddress: String? = nil,
@@ -42,13 +49,14 @@ class StandaloneInvoiceDetails {
          businessPhone: String = "",
          businessAddress: String? = nil,
          businessEmail: String? = nil,
-         businessWebsite: String? = nil,
-         date: Date = .now,
-         note: String = "",
-         type: Invoice.InvoiceType = .sale,
-         items: [StandaloneItemDetails] = [],
-         status: StandaloneInvoice.Status = .pending) {
+         businessWebsite: String? = nil) {
         self.number = number
+        self.type = type
+        self.currency = currency
+        self.date = date
+        self.note = note
+        self.status = status
+        self.items = items
         self.customerId = customerId
         self.customerName = customerName
         self.customerAddress = customerAddress
@@ -60,15 +68,16 @@ class StandaloneInvoiceDetails {
         self.businessAddress = businessAddress
         self.businessEmail = businessEmail
         self.businessWebsite = businessWebsite
-        self.date = date
-        self.note = note
-        self.type = type
-        self.items = items
-        self.status = status
     }
 
     convenience init(from invoice: StandaloneInvoice) {
         self.init(number: invoice.number,
+                  type: invoice.type,
+                  currency: invoice.currency,
+                  date: invoice.date,
+                  note: invoice.note,
+                  status: invoice.status,
+                  items: invoice.items.map { item in StandaloneItemDetails(from: item) },
                   customerId: invoice.customerId,
                   customerName: invoice.customerName,
                   customerAddress: invoice.customerAddress,
@@ -79,12 +88,7 @@ class StandaloneInvoiceDetails {
                   businessPhone: invoice.businessPhone,
                   businessAddress: invoice.businessAddress,
                   businessEmail: invoice.businessEmail,
-                  businessWebsite: invoice.businessWebsite,
-                  date: invoice.date,
-                  note: invoice.note,
-                  type: invoice.type,
-                  items: invoice.items.map { item in StandaloneItemDetails(from: item) },
-                  status: invoice.status)
+                  businessWebsite: invoice.businessWebsite)
     }
 
     convenience init(with business: Business) {
@@ -102,6 +106,12 @@ extension StandaloneInvoiceDetails: Equatable {
         let areItemsEqual: Bool = lhs.items.elementsEqual(rhs.items) { $0.productCode == $1.productCode && $0.quantity == $1.quantity }
 
         return lhs.number == rhs.number &&
+            lhs.type == rhs.type &&
+            lhs.currency == rhs.currency &&
+            lhs.date == rhs.date &&
+            lhs.note == rhs.note &&
+            lhs.status == rhs.status &&
+            areItemsEqual &&
             lhs.customerId == rhs.customerId &&
             lhs.customerName == rhs.customerName &&
             lhs.customerAddress == rhs.customerAddress &&
@@ -112,18 +122,18 @@ extension StandaloneInvoiceDetails: Equatable {
             lhs.businessPhone == rhs.businessPhone &&
             lhs.businessAddress == rhs.businessAddress &&
             lhs.businessEmail == rhs.businessEmail &&
-            lhs.businessWebsite == rhs.businessWebsite &&
-            lhs.date == rhs.date &&
-            lhs.note == rhs.note &&
-            lhs.type == rhs.type &&
-            lhs.status == rhs.status &&
-            areItemsEqual
+            lhs.businessWebsite == rhs.businessWebsite
     }
 }
 
 extension StandaloneInvoiceDetails: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(number)
+        hasher.combine(type)
+        hasher.combine(currency)
+        hasher.combine(date)
+        hasher.combine(note)
+        hasher.combine(status)
         hasher.combine(customerId)
         hasher.combine(customerName)
         hasher.combine(customerAddress)
@@ -135,9 +145,5 @@ extension StandaloneInvoiceDetails: Hashable {
         hasher.combine(businessAddress)
         hasher.combine(businessEmail)
         hasher.combine(businessWebsite)
-        hasher.combine(date)
-        hasher.combine(note)
-        hasher.combine(type)
-        hasher.combine(status)
     }
 }

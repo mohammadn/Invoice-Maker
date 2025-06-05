@@ -50,6 +50,13 @@ struct InvoiceFormView: View {
                     }
                 }
 
+                Picker("ارز", selection: $invoiceDetails.currency) {
+                    ForEach(Locale.commonISOCurrencyCodes.sorted(), id: \.self) { currency in
+                        Text((Locale.current.localizedString(forCurrencyCode: currency) ?? "-") + " (" + currency + ")").tag(currency)
+                    }
+                }
+                .disabled(invoiceDetails.items.count > 0)
+
                 DatePicker("تاریخ", selection: $invoiceDetails.date)
             }
 
@@ -161,7 +168,7 @@ struct InvoiceFormView: View {
             }
         }
         .sheet(isPresented: $showInvoiceProductSelection) {
-            InvoiceProductSelection(items: $invoiceDetails.items)
+            InvoiceProductSelection(items: $invoiceDetails.items, currency: invoiceDetails.currency)
         }
     }
 

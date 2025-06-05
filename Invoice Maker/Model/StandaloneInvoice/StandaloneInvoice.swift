@@ -12,6 +12,7 @@ import SwiftData
 class StandaloneInvoice {
     var number: String
     var type: Invoice.InvoiceType
+    var currency: String
     var date: Date
     var note: String
     var status: Status
@@ -49,78 +50,85 @@ class StandaloneInvoice {
         Business(name: businessName, address: businessAddress, phone: businessPhone, email: businessEmail, website: businessWebsite)
     }
 
-    init(number: String = "",
-         customerId: UUID? = nil,
-         customerName: String? = nil,
-         customerAddress: String? = nil,
-         customerDetails: String? = nil,
-         customerPhone: String? = nil,
-         customerEmail: String? = nil,
+    init(number: String,
+         type: Invoice.InvoiceType,
+         currency: String,
+         date: Date,
+         note: String,
+         status: Status,
+         items: [StandaloneItem],
+         customerId: UUID?,
+         customerName: String?,
+         customerPhone: String?,
+         customerEmail: String?,
+         customerAddress: String?,
+         customerDetails: String?,
          businessName: String,
          businessPhone: String,
-         businessAddress: String? = nil,
-         businessEmail: String? = nil,
-         businessWebsite: String? = nil,
-         date: Date = .now,
-         note: String = "",
-         type: Invoice.InvoiceType = .sale,
-         items: [StandaloneItem] = [],
-         status: Status = .pending) {
+         businessEmail: String?,
+         businessWebsite: String?,
+         businessAddress: String?,
+    ) {
         self.number = number
-        self.customerId = customerId
-        self.customerName = customerName
-        self.customerAddress = customerAddress
-        self.customerDetails = customerDetails
-        self.customerPhone = customerPhone
-        self.customerEmail = customerEmail
-        self.businessName = businessName
-        self.businessPhone = businessPhone
-        self.businessAddress = businessAddress
-        self.businessEmail = businessEmail
-        self.businessWebsite = businessWebsite
+        self.type = type
+        self.currency = currency
         self.date = date
         self.note = note
-        self.type = type
-        self.items = items
         self.status = status
+        self.items = items
+        self.customerId = customerId
+        self.customerName = customerName
+        self.customerPhone = customerPhone
+        self.customerEmail = customerEmail
+        self.customerAddress = customerAddress
+        self.customerDetails = customerDetails
+        self.businessName = businessName
+        self.businessPhone = businessPhone
+        self.businessEmail = businessEmail
+        self.businessWebsite = businessWebsite
+        self.businessAddress = businessAddress
     }
 
     convenience init(from invoice: Invoice, business: Business, items: [StandaloneItem], customer: Customer? = nil) {
         self.init(number: invoice.number,
-                  customerId: customer?.id,
-                  customerName: customer?.name,
-                  customerAddress: customer?.address,
-                  customerDetails: customer?.details,
-                  customerPhone: customer?.phone,
-                  customerEmail: customer?.email,
-                  businessName: business.name,
-                  businessPhone: business.phone,
-                  businessAddress: business.address,
-                  businessEmail: business.email,
-                  businessWebsite: business.website,
+                  type: invoice.type,
+                  currency: "IRR",
                   date: invoice.date,
                   note: invoice.note,
-                  type: invoice.type,
-                  items: items)
+                  status: .pending,
+                  items: items,
+                  customerId: customer?.id,
+                  customerName: customer?.name,
+                  customerPhone: customer?.phone,
+                  customerEmail: customer?.email,
+                  customerAddress: customer?.address,
+                  customerDetails: customer?.details,
+                  businessName: business.name,
+                  businessPhone: business.phone,
+                  businessEmail: business.email,
+                  businessWebsite: business.website,
+                  businessAddress: business.address)
     }
 
     convenience init(from invoiceDetails: StandaloneInvoiceDetails) {
         self.init(number: invoiceDetails.number,
-                  customerId: invoiceDetails.customerId,
-                  customerName: invoiceDetails.customerName,
-                  customerAddress: invoiceDetails.customerAddress,
-                  customerDetails: invoiceDetails.customerDetails,
-                  customerPhone: invoiceDetails.customerPhone,
-                  customerEmail: invoiceDetails.customerEmail,
-                  businessName: invoiceDetails.businessName,
-                  businessPhone: invoiceDetails.businessPhone,
-                  businessAddress: invoiceDetails.businessAddress,
-                  businessEmail: invoiceDetails.businessEmail,
-                  businessWebsite: invoiceDetails.businessWebsite,
+                  type: invoiceDetails.type,
+                  currency: invoiceDetails.currency,
                   date: invoiceDetails.date,
                   note: invoiceDetails.note,
-                  type: invoiceDetails.type,
-                  status: invoiceDetails.status)
+                  status: invoiceDetails.status,
+                  items: [],
+                  customerId: invoiceDetails.customerId,
+                  customerName: invoiceDetails.customerName,
+                  customerPhone: invoiceDetails.customerPhone,
+                  customerEmail: invoiceDetails.customerEmail,
+                  customerAddress: invoiceDetails.customerAddress,
+                  customerDetails: invoiceDetails.customerDetails,
+                  businessName: invoiceDetails.businessName,
+                  businessPhone: invoiceDetails.businessPhone,
+                  businessEmail: invoiceDetails.businessEmail,
+                  businessWebsite: invoiceDetails.businessWebsite,
+                  businessAddress: invoiceDetails.businessAddress)
     }
 }
 
@@ -144,6 +152,11 @@ extension StandaloneInvoice {
 extension StandaloneInvoice {
     func update(with invoiceDetails: StandaloneInvoiceDetails) {
         number = invoiceDetails.number
+        type = invoiceDetails.type
+        currency = invoiceDetails.currency
+        date = invoiceDetails.date
+        note = invoiceDetails.note
+        status = invoiceDetails.status
         customerId = invoiceDetails.customerId
         customerName = invoiceDetails.customerName
         customerPhone = invoiceDetails.customerPhone
@@ -155,10 +168,6 @@ extension StandaloneInvoice {
         businessEmail = invoiceDetails.businessEmail
         businessWebsite = invoiceDetails.businessWebsite
         businessAddress = invoiceDetails.businessAddress
-        date = invoiceDetails.date
-        note = invoiceDetails.note
-        type = invoiceDetails.type
-        status = invoiceDetails.status
     }
 
     func updateCustomer(with customer: Customer) {
