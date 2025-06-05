@@ -52,7 +52,7 @@ struct CustomerDetailView: View {
 
                             Spacer()
 
-                            Text(invoice.total, format: .currency(code: "IRR"))
+                            Text(invoice.total, format: .currency(code: invoice.currency))
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                                 .lineLimit(1)

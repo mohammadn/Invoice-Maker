@@ -91,8 +91,9 @@ class StandaloneInvoiceDetails {
                   businessWebsite: invoice.businessWebsite)
     }
 
-    convenience init(with business: Business) {
+    convenience init(with business: Business, currency: String) {
         self.init(
+            currency: currency,
             businessName: business.name,
             businessPhone: business.phone,
             businessAddress: business.address,

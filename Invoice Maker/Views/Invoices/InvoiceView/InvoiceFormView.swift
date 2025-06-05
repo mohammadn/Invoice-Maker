@@ -31,10 +31,12 @@ struct InvoiceFormView: View {
         invoice = nil
         dismissAction = nil
 
+        let defaultCurrency = UserDefaults.standard.string(forKey: "defaultCurrency") ?? "IRR"
+
         if let business {
-            _invoiceDetails = State(initialValue: StandaloneInvoiceDetails(with: business))
+            _invoiceDetails = State(initialValue: StandaloneInvoiceDetails(with: business, currency: defaultCurrency))
         } else {
-            _invoiceDetails = State(initialValue: StandaloneInvoiceDetails())
+            _invoiceDetails = State(initialValue: StandaloneInvoiceDetails(currency: defaultCurrency))
         }
     }
 
@@ -50,7 +52,7 @@ struct InvoiceFormView: View {
                     }
                 }
 
-                Picker("ارز", selection: $invoiceDetails.currency) {
+                Picker("نوع ارز", selection: $invoiceDetails.currency) {
                     ForEach(Locale.commonISOCurrencyCodes.sorted(), id: \.self) { currency in
                         Text((Locale.current.localizedString(forCurrencyCode: currency) ?? "-") + " (" + currency + ")").tag(currency)
                     }

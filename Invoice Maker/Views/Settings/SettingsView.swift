@@ -20,6 +20,7 @@ struct NavigationLazyView<Content: View>: View {
 }
 
 struct SettingsView: View {
+    @AppStorage("defaultCurrency") var defaultCurrency: String = "IRR"
     @Environment(\.openURL) var openURL
     @Query private var business: [Business]
 
@@ -29,6 +30,14 @@ struct SettingsView: View {
                 Section {
                     NavigationLink("اطلاعات کسب و کار") {
                         NavigationLazyView(SettingsBusinessDetailsView(business: business.first))
+                    }
+                }
+
+                Section("پیش‌ فرض‌") {
+                    Picker("نوع ارز", selection: $defaultCurrency) {
+                        ForEach(Locale.commonISOCurrencyCodes.sorted(), id: \.self) { currency in
+                            Text((Locale.current.localizedString(forCurrencyCode: currency) ?? "-") + " (" + currency + ")").tag(currency)
+                        }
                     }
                 }
 
