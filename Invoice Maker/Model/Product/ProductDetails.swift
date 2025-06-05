@@ -11,7 +11,7 @@ import Foundation
 class ProductDetails {
     var code: Int?
     var name: String
-    var price: Float?
+    var price: Decimal?
     var currency: String
     var details: String?
 
@@ -19,7 +19,7 @@ class ProductDetails {
         code == nil || name.isEmpty || price == nil
     }
 
-    init(code: Int? = nil, name: String = "", price: Float? = nil, currency: String = "IRR", details: String? = nil) {
+    init(code: Int? = nil, name: String = "", price: Decimal? = nil, currency: String = "IRR", details: String? = nil) {
         self.code = code
         self.name = name
         self.price = price

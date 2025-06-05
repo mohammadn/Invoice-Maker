@@ -35,8 +35,8 @@ class StandaloneInvoice {
         number.isEmpty || customerId == nil || items.isEmpty
     }
 
-    var total: Float {
-        items.reduce(0) { $0 + (Float($1.quantity) * $1.productPrice) }
+    var total: Decimal {
+        items.reduce(0) { $0 + (Decimal($1.quantity) * $1.productPrice) }
     }
 
     var customer: Customer? {

@@ -34,7 +34,8 @@ struct ProductDetailView: View {
 
             Section {
                 LabeledContent("نام", value: product.name)
-                LabeledContent("قیمت", value: product.price, format: .currency(code: "IRR"))
+                LabeledContent("قیمت", value: product.price, format: .currency(code: product.currency))
+                LabeledContent("ارز", value: Locale.current.localizedString(forCurrencyCode: product.currency) ?? "-")
             }
 
             Section {

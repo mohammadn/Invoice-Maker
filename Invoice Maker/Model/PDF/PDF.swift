@@ -143,7 +143,7 @@ struct PDF {
         return input.formatted(.number.grouping(.automatic).locale(Locale(identifier: "fa")))
     }
 
-    private func formattedNumber(_ input: Float) -> String {
+    private func formattedNumber(_ input: Decimal) -> String {
         return input.formatted(.number.grouping(.automatic).locale(Locale(identifier: "fa")))
     }
 
@@ -163,7 +163,7 @@ struct PDF {
         // Table Content
         for (index, item) in invoice.items.enumerated() {
             let row = index + 1
-            table[row, 0].content = try? PDFTableContent(content: formattedNumber(item.productPrice * Float(item.quantity)))
+            table[row, 0].content = try? PDFTableContent(content: formattedNumber(item.productPrice * Decimal(item.quantity)))
             table[row, 1].content = try? PDFTableContent(content: formattedNumber(item.productPrice))
             table[row, 2].content = try? PDFTableContent(content: formattedNumber(item.quantity))
             table[row, 3].content = try? PDFTableContent(content: item.productName)

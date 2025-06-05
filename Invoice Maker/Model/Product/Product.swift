@@ -23,22 +23,22 @@ class Product {
         self.details = details
     }
 
-    convenience init(from productDetails: ProductDetails) {
-        self.init(code: productDetails.code ?? 0,
-                  name: productDetails.name,
-                  details: productDetails.details,
-                  price: productDetails.price ?? 0)
-    }
+//    convenience init(from productDetails: ProductDetails) {
+//        self.init(code: productDetails.code ?? 0,
+//                  name: productDetails.name,
+//                  details: productDetails.details,
+//                  price: productDetails.price ?? 0)
+//    }
 }
 
-extension Product {
-    func update(with productDetails: ProductDetails) {
-        code = productDetails.code ?? 0
-        name = productDetails.name
-        price = productDetails.price ?? 0
-        details = productDetails.details
-    }
-}
+//extension Product {
+//    func update(with productDetails: ProductDetails) {
+//        code = productDetails.code ?? 0
+//        name = productDetails.name
+//        price = productDetails.price ?? 0
+//        details = productDetails.details
+//    }
+//}
 
 extension Product: Equatable {
     static func == (lhs: Product, rhs: Product) -> Bool {

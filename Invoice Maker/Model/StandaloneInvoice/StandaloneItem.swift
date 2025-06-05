@@ -5,13 +5,14 @@
 //  Created by Mohammad Najafzadeh on 15/02/2024.
 //
 
+import Foundation
 import SwiftData
 
 @Model
 class StandaloneItem {
     var productCode: Int
     var productName: String
-    var productPrice: Float
+    var productPrice: Decimal
     var productCurrency: String
     var productDetails: String?
     var quantity: Int
@@ -21,7 +22,7 @@ class StandaloneItem {
         VersionedProduct(code: productCode, name: productName, price: productPrice, currency: productCurrency, details: productDetails)
     }
 
-    init(productCode: Int, productName: String, productPrice: Float, productCurrency: String, productDetails: String? = nil, quantity: Int = 1, invoice: StandaloneInvoice? = nil) {
+    init(productCode: Int, productName: String, productPrice: Decimal, productCurrency: String, productDetails: String? = nil, quantity: Int = 1, invoice: StandaloneInvoice? = nil) {
         self.productCode = productCode
         self.productName = productName
         self.productPrice = productPrice
@@ -34,7 +35,7 @@ class StandaloneItem {
     convenience init(from item: Item) {
         self.init(productCode: item.product.code,
                   productName: item.product.name,
-                  productPrice: item.product.price,
+                  productPrice: Decimal(Double(item.product.price)),
                   productCurrency: "IRR",
                   productDetails: item.product.details,
                   quantity: item.quantity)

@@ -19,12 +19,12 @@ enum ProductSchemaV1: VersionedSchema {
     class VersionedProduct {
         @Attribute(.unique) var code: Int
         var name: String
-        var price: Float
+        var price: Decimal
         var currency: String
         var details: String?
         var createdDate: Date = Date.now
 
-        init(code: Int, name: String, price: Float, currency: String, details: String?) {
+        init(code: Int, name: String, price: Decimal, currency: String, details: String?) {
             self.code = code
             self.name = name
             self.price = price
@@ -35,7 +35,7 @@ enum ProductSchemaV1: VersionedSchema {
         convenience init(from product: Invoice_Maker.Product) {
             self.init(code: product.code,
                       name: product.name,
-                      price: product.price,
+                      price: Decimal(Double(product.price)),
                       currency: "IRR",
                       details: product.details)
         }

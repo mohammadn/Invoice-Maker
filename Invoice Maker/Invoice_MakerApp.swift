@@ -32,7 +32,7 @@ struct Invoice_MakerApp: App {
             ContentView()
                 .modelContainer(container)
                 .environment(\.calendar, persianCalendar)
-                .environment(\.locale, Locale(identifier: "fa"))
+//                .environment(\.locale, Locale(identifier: "fa"))
                 .environment(storeManager)
                 .onAppear {
                     storeManager.fetchAuthorizationStatus()

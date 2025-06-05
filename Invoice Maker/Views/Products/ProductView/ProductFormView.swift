@@ -14,7 +14,7 @@ struct ProductFormView: View {
     @Query private var products: [VersionedProduct]
     @State private var productDetails: ProductDetails
     @State private var duplicateCode: Bool = false
-//    @State private var showDismissAlert: Bool = false
+    //    @State private var showDismissAlert: Bool = false
 
     var product: VersionedProduct?
     var dismissAction: (() -> Void)?
@@ -45,8 +45,14 @@ struct ProductFormView: View {
 
             Section {
                 TextField("نام محصول*", text: $productDetails.name)
-                TextField("قیمت (ریال)*", value: $productDetails.price, format: .number)
+                TextField("قیمت*", value: $productDetails.price, format: .number.locale(Locale(identifier: "en_US")).precision(.fractionLength(2)))
                     .keyboardType(.decimalPad)
+
+                Picker("ارز", selection: $productDetails.currency) {
+                    ForEach(Locale.commonISOCurrencyCodes.sorted(), id: \.self) { currency in
+                        Text((Locale.current.localizedString(forCurrencyCode: currency) ?? "-") + " (" + currency + ")").tag(currency)
+                    }
+                }
             }
 
             Section {
@@ -69,19 +75,19 @@ struct ProductFormView: View {
 
             ToolbarItem(placement: .navigationBarLeading) {
                 Button("انصراف") {
-//                        showDismissAlert.toggle()
+                    //                        showDismissAlert.toggle()
                     dismissAction?() ?? dismiss()
                 }
-//                    .alert("آیا مطمئن هستید؟", isPresented: $showDismissAlert) {
-//                        Button("انصراف", role: .cancel) {
-//                            showDismissAlert.toggle()
-//                        }
-//                        Button("بازگشت") {
-//                            dismiss()
-//                        }
-//                    } message: {
-//                        Text("در صورت بازگشت به صفحه قبل اطلاعات محصول ذخیره نخواهد شد.")
-//                    }
+                //                    .alert("آیا مطمئن هستید؟", isPresented: $showDismissAlert) {
+                //                        Button("انصراف", role: .cancel) {
+                //                            showDismissAlert.toggle()
+                //                        }
+                //                        Button("بازگشت") {
+                //                            dismiss()
+                //                        }
+                //                    } message: {
+                //                        Text("در صورت بازگشت به صفحه قبل اطلاعات محصول ذخیره نخواهد شد.")
+                //                    }
             }
         }
     }
@@ -96,7 +102,7 @@ struct ProductFormView: View {
         if let product {
             product.update(with: productDetails)
         } else {
-            let product = Product(from: productDetails)
+            let product = VersionedProduct(from: productDetails)
 
             modelContext.insert(product)
         }

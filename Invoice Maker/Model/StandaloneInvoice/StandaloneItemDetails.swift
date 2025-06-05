@@ -13,12 +13,12 @@ class StandaloneItemDetails: Identifiable {
     var id: UUID = UUID()
     var productCode: Int
     var productName: String
-    var productPrice: Float
+    var productPrice: Decimal
     var productCurrency: String
     var productDetails: String?
     var quantity: Int
 
-    init(productCode: Int, productName: String, productPrice: Float, productCurrency: String, productDetails: String? = nil, quantity: Int = 1) {
+    init(productCode: Int, productName: String, productPrice: Decimal, productCurrency: String, productDetails: String? = nil, quantity: Int = 1) {
         self.productCode = productCode
         self.productName = productName
         self.productPrice = productPrice
