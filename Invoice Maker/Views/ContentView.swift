@@ -14,8 +14,10 @@ enum TabItems: Hashable {
 
 struct ContentView: View {
     @AppStorage("isWelcomeSheetShowing") var isWelcomeSheetShowing = true
-    @State private var selectedTab: TabItems = .invoices
+    @Environment(\.modelContext) private var modelContext
     @Query private var business: [Business]
+    @Query private var products: [Product]
+    @State private var selectedTab: TabItems = .invoices
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -42,6 +44,13 @@ struct ContentView: View {
         }
         .sheet(isPresented: $isWelcomeSheetShowing) {
             OnboardingSheetView(business: business.first)
+        }
+        .onAppear {
+            products.forEach { product in
+                let versionedProduct = VersionedProduct(from: product)
+                modelContext.insert(versionedProduct)
+                modelContext.delete(product)
+            }
         }
     }
 }

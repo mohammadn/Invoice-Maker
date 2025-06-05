@@ -13,31 +13,35 @@ class StandaloneItemDetails: Identifiable {
     var id: UUID = UUID()
     var productCode: Int
     var productName: String
-    var productDetails: String?
     var productPrice: Float
+    var productCurrency: String
+    var productDetails: String?
     var quantity: Int
 
-    init(productCode: Int, productName: String, productDetails: String? = nil, productPrice: Float, quantity: Int = 1) {
+    init(productCode: Int, productName: String, productPrice: Float, productCurrency: String, productDetails: String? = nil, quantity: Int = 1) {
         self.productCode = productCode
         self.productName = productName
-        self.productDetails = productDetails
         self.productPrice = productPrice
+        self.productCurrency = productCurrency
+        self.productDetails = productDetails
         self.quantity = quantity
     }
 
     convenience init(from item: StandaloneItem) {
         self.init(productCode: item.productCode,
                   productName: item.productName,
-                  productDetails: item.productDetails,
                   productPrice: item.productPrice,
+                  productCurrency: item.productCurrency,
+                  productDetails: item.productDetails,
                   quantity: item.quantity)
     }
 
-    convenience init(from product: Product, quantity: Int) {
+    convenience init(from product: VersionedProduct, quantity: Int) {
         self.init(productCode: product.code,
                   productName: product.name,
-                  productDetails: product.details,
                   productPrice: product.price,
+                  productCurrency: product.currency,
+                  productDetails: product.details,
                   quantity: quantity)
     }
 }
@@ -46,8 +50,9 @@ extension StandaloneItemDetails: Equatable {
     static func == (lhs: StandaloneItemDetails, rhs: StandaloneItemDetails) -> Bool {
         lhs.productCode == rhs.productCode &&
             lhs.productName == rhs.productName &&
-            lhs.productDetails == rhs.productDetails &&
             lhs.productPrice == rhs.productPrice &&
+            lhs.productCurrency == rhs.productCurrency &&
+            lhs.productDetails == rhs.productDetails &&
             lhs.quantity == rhs.quantity
     }
 }
@@ -56,8 +61,9 @@ extension StandaloneItemDetails: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(productCode)
         hasher.combine(productName)
-        hasher.combine(productDetails)
         hasher.combine(productPrice)
+        hasher.combine(productCurrency)
+        hasher.combine(productDetails)
         hasher.combine(quantity)
     }
 }

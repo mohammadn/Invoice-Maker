@@ -12,20 +12,22 @@ class ProductDetails {
     var code: Int?
     var name: String
     var price: Float?
+    var currency: String
     var details: String?
 
     var isInvalid: Bool {
         code == nil || name.isEmpty || price == nil
     }
 
-    init(code: Int? = nil, name: String = "", details: String? = nil, price: Float? = nil) {
+    init(code: Int? = nil, name: String = "", price: Float? = nil, currency: String = "IRR", details: String? = nil) {
         self.code = code
         self.name = name
         self.price = price
+        self.currency = currency
         self.details = details
     }
 
-    convenience init(from product: Product) {
-        self.init(code: product.code, name: product.name, details: product.details, price: product.price)
+    convenience init(from product: VersionedProduct) {
+        self.init(code: product.code, name: product.name, price: product.price, currency: product.currency, details: product.details)
     }
 }

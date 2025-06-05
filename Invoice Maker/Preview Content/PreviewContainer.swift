@@ -22,9 +22,9 @@ public let previewContainer: ModelContainer = {
             modelContext.insert(Business.sampleData)
         }
 
-        if try modelContext.fetch(FetchDescriptor<Product>()).isEmpty {
-            Product.sampleData.forEach { modelContext.insert($0) }
-        }
+//        if try modelContext.fetch(FetchDescriptor<Product>()).isEmpty {
+//            Product.sampleData.forEach { modelContext.insert($0) }
+//        }
 
         if try modelContext.fetch(FetchDescriptor<Customer>()).isEmpty {
             Customer.sampleData.forEach { modelContext.insert($0) }

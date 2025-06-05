@@ -10,12 +10,12 @@ import SwiftUI
 
 struct ProductsView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query(sort: \Product.createdDate) private var products: [Product]
+    @Query(sort: \VersionedProduct.createdDate) private var products: [VersionedProduct]
     @State private var isProductFormViewPresented: Bool = false
-    @State private var selectedProduct: Product?
+    @State private var selectedProduct: VersionedProduct?
     @State private var searchText: String = ""
 
-    var filteredProducts: [Product] {
+    var filteredProducts: [VersionedProduct] {
         if searchText.isEmpty {
             return products
         } else {

@@ -10,11 +10,11 @@ import SwiftUI
 
 struct ProductDetailView: View {
     @Query private var invoices: [StandaloneInvoice]
-    var product: Product
+    var product: VersionedProduct
 
     @Binding var isEditing: Bool
 
-    init(product: Product, isEditing: Binding<Bool>) {
+    init(product: VersionedProduct, isEditing: Binding<Bool>) {
         self.product = product
         _isEditing = isEditing
 

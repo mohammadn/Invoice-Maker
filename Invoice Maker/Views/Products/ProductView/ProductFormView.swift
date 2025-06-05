@@ -11,15 +11,15 @@ import SwiftUI
 struct ProductFormView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
-    @Query private var products: [Product]
+    @Query private var products: [VersionedProduct]
     @State private var productDetails: ProductDetails
     @State private var duplicateCode: Bool = false
 //    @State private var showDismissAlert: Bool = false
 
-    var product: Product?
+    var product: VersionedProduct?
     var dismissAction: (() -> Void)?
 
-    init(product: Product? = nil, dismissAction: (() -> Void)? = nil) {
+    init(product: VersionedProduct? = nil, dismissAction: (() -> Void)? = nil) {
         self.product = product
         self.dismissAction = dismissAction
 

@@ -12,19 +12,21 @@ class StandaloneItem {
     var productCode: Int
     var productName: String
     var productPrice: Float
+    var productCurrency: String
     var productDetails: String?
     var quantity: Int
     var invoice: StandaloneInvoice?
 
-    var product: Product {
-        Product(code: productCode, name: productName, details: productDetails, price: productPrice)
+    var product: VersionedProduct {
+        VersionedProduct(code: productCode, name: productName, price: productPrice, currency: productCurrency, details: productDetails)
     }
 
-    init(productCode: Int, productName: String, productDetails: String? = nil, productPrice: Float, quantity: Int = 1, invoice: StandaloneInvoice? = nil) {
+    init(productCode: Int, productName: String, productPrice: Float, productCurrency: String, productDetails: String? = nil, quantity: Int = 1, invoice: StandaloneInvoice? = nil) {
         self.productCode = productCode
         self.productName = productName
-        self.productDetails = productDetails
         self.productPrice = productPrice
+        self.productCurrency = productCurrency
+        self.productDetails = productDetails
         self.quantity = quantity
         self.invoice = invoice
     }
@@ -32,16 +34,18 @@ class StandaloneItem {
     convenience init(from item: Item) {
         self.init(productCode: item.product.code,
                   productName: item.product.name,
-                  productDetails: item.product.details,
                   productPrice: item.product.price,
+                  productCurrency: "IRR",
+                  productDetails: item.product.details,
                   quantity: item.quantity)
     }
 
     convenience init(from item: StandaloneItemDetails, invoice: StandaloneInvoice) {
         self.init(productCode: item.productCode,
                   productName: item.productName,
-                  productDetails: item.productDetails,
                   productPrice: item.productPrice,
+                  productCurrency: item.productCurrency,
+                  productDetails: item.productDetails,
                   quantity: item.quantity,
                   invoice: invoice)
     }
@@ -52,10 +56,11 @@ extension StandaloneItem {
         quantity = itemDetails.quantity
     }
 
-    func update(with product: Product) {
+    func update(with product: VersionedProduct) {
         productCode = product.code
         productName = product.name
         productPrice = product.price
+        productCurrency = product.currency
         productDetails = product.details
     }
 }
