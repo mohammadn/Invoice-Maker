@@ -83,7 +83,7 @@ struct PDF {
 
         // Summary Section
         let lastRow = table.size.rows - 1
-        table[lastRow, 1].content = try? PDFTableContent(content: "جمع کل (ریال)")
+        table[lastRow, 1].content = try? PDFTableContent(content: "جمع کل (\(symbol(of: invoice.currency)))")
         table[lastRow, 0].content = try? PDFTableContent(content: "\(formattedNumber(invoice.total))")
         table[rows: lastRow, columns: 1 ... 3].merge()
         document.add(space: 20)
@@ -147,14 +147,19 @@ struct PDF {
         return input.formatted(.number.grouping(.automatic).locale(Locale(identifier: "fa")))
     }
 
+    private func symbol(of code: String) -> String {
+        let locale = NSLocale(localeIdentifier: code)
+        return locale.displayName(forKey: NSLocale.Key.currencySymbol, value: code) ?? code
+    }
+
     private func createItemsTable() -> PDFTable {
         let table = PDFTable(rows: invoice.items.count + 2, columns: 5)
         table.widths = [0.2, 0.3, 0.1, 0.3, 0.1]
         table.padding = 5
 
         // Table Headers
-        table[0, 0].content = try? PDFTableContent(content: "قیمت کل (ریال)")
-        table[0, 1].content = try? PDFTableContent(content: "قیمت واحد (ریال)")
+        table[0, 0].content = try? PDFTableContent(content: "قیمت کل (\(symbol(of: invoice.currency)))")
+        table[0, 1].content = try? PDFTableContent(content: "قیمت واحد (\(symbol(of: invoice.currency)))")
         table[0, 2].content = try? PDFTableContent(content: "تعداد")
         table[0, 3].content = try? PDFTableContent(content: "نام محصول")
         table[0, 4].content = try? PDFTableContent(content: "ردیف")
