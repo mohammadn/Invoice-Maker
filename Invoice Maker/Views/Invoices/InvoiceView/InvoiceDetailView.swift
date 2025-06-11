@@ -18,7 +18,7 @@ struct InvoiceDetailView: View {
     @State private var business: Business?
     @State private var products: [VersionedProduct] = []
 
-    let invoice: StandaloneInvoice
+    let invoice: VersionedInvoice
     @Binding var isEditing: Bool
 
     var body: some View {

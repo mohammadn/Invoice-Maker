@@ -21,7 +21,7 @@ struct Invoice_MakerApp: App {
 
     init() {
         do {
-            container = try ModelContainer(for: Business.self, Invoice.self, StandaloneInvoice.self, Product.self, VersionedProduct.self, Customer.self, migrationPlan: MigrationPlan.self)
+            container = try ModelContainer(for: Business.self, Invoice.self, VersionedInvoice.self, Product.self, VersionedProduct.self, Customer.self, migrationPlan: MigrationPlan.self)
         } catch {
             fatalError("Failed to initialize model container.")
         }

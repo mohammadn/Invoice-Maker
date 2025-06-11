@@ -11,17 +11,17 @@ import SwiftUI
 struct InvoicesView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var business: [Business]
-    @Query private var invoices: [Invoice]
-    @Query(sort: \StandaloneInvoice.createdDate, order: .reverse) private var standaloneInvoices: [StandaloneInvoice]
+    @Query private var oldInvoices: [Invoice]
+    @Query(sort: \VersionedInvoice.createdDate, order: .reverse) private var invoices: [VersionedInvoice]
     @State private var showInvoiceFormView: Bool = false
-    @State private var selectedInvoice: StandaloneInvoice?
+    @State private var selectedInvoice: VersionedInvoice?
 
-    var invalidInvoices: [StandaloneInvoice] {
-        standaloneInvoices.filter { $0.isInvalid }
+    var invalidInvoices: [VersionedInvoice] {
+        invoices.filter { $0.isInvalid }
     }
 
-    var validInvoices: [StandaloneInvoice] {
-        standaloneInvoices.filter { !$0.isInvalid }
+    var validInvoices: [VersionedInvoice] {
+        invoices.filter { !$0.isInvalid }
     }
 
     var body: some View {
@@ -97,7 +97,7 @@ struct InvoicesView: View {
                 }
             }
             .overlay {
-                if standaloneInvoices.isEmpty {
+                if invoices.isEmpty {
                     ContentUnavailableView {
                         Label("فاکتوری یافت نشد", systemImage: "doc.text")
                     } description: {
@@ -106,8 +106,8 @@ struct InvoicesView: View {
                 }
             }
             .onAppear {
-                invoices.forEach { invoice in
-                    let items: [StandaloneItem] = invoice.items.compactMap { item in
+                oldInvoices.forEach { invoice in
+                    let items: [VersionedItem] = invoice.items.compactMap { item in
                         let productModelID = item.product.persistentModelID
                         let descriptor = FetchDescriptor<Product>(predicate: #Predicate { product in product.persistentModelID == productModelID })
                         let results = try? modelContext.fetch(descriptor)
@@ -115,7 +115,7 @@ struct InvoicesView: View {
                         if results?.isEmpty ?? true {
                             return nil
                         } else {
-                            return StandaloneItem(from: item)
+                            return VersionedItem(from: item)
                         }
                     }
 
@@ -125,12 +125,12 @@ struct InvoicesView: View {
 
                     guard let business = business.first else { return }
 
-                    let standaloneInvoice = StandaloneInvoice(from: invoice,
+                    let versionedInvoice = VersionedInvoice(from: invoice,
                                                               business: business,
                                                               items: items,
                                                               customer: results?.isEmpty ?? true ? nil : invoice.customer)
 
-                    modelContext.insert(standaloneInvoice)
+                    modelContext.insert(versionedInvoice)
                     modelContext.delete(invoice)
                 }
             }

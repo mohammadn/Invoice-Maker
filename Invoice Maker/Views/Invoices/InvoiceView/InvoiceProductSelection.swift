@@ -14,9 +14,9 @@ struct InvoiceProductSelection: View {
     @State private var showProductFormView: Bool = false
     @State private var selectedProducts: Set<VersionedProduct> = []
 
-    @Binding var items: [StandaloneItemDetails]
+    @Binding var items: [ItemDetails]
 
-    init(items: Binding<[StandaloneItemDetails]>, currency: String) {
+    init(items: Binding<[ItemDetails]>, currency: String) {
         _items = items
 
         let predicate = #Predicate<VersionedProduct> { $0.currency == currency }
@@ -74,7 +74,7 @@ struct InvoiceProductSelection: View {
 
         selectedProducts.forEach { product in
             if !itemProductCodes.contains(product.code) {
-                let item = StandaloneItemDetails(from: product, quantity: 1)
+                let item = ItemDetails(from: product, quantity: 1)
 
                 items.append(item)
             }

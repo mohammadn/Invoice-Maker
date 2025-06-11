@@ -31,17 +31,17 @@ class Invoice {
         self.items = items
     }
 
-    convenience init?(from invoiceDetails: InvoiceDetails) {
-        guard let customer = invoiceDetails.customer else { return nil }
-
-        self.init(number: invoiceDetails.number,
-                  customer: customer,
-                  date: invoiceDetails.date,
-                  note: invoiceDetails.note,
-                  type: invoiceDetails.type)
-
-        items = invoiceDetails.items.map { Item(product: $0.product, quantity: $0.quantity) }
-    }
+//    convenience init?(from invoiceDetails: InvoiceDetails) {
+//        guard let customer = invoiceDetails.customer else { return nil }
+//
+//        self.init(number: invoiceDetails.number,
+//                  customer: customer,
+//                  date: invoiceDetails.date,
+//                  note: invoiceDetails.note,
+//                  type: invoiceDetails.type)
+//
+//        items = invoiceDetails.items.map { Item(product: $0.product, quantity: $0.quantity) }
+//    }
 }
 
 extension Invoice {
@@ -57,15 +57,15 @@ extension Invoice {
     }
 }
 
-extension Invoice {
-    func update(with invoiceDetails: InvoiceDetails) {
-        guard let customer = invoiceDetails.customer else { return }
-
-        number = invoiceDetails.number
-        self.customer = customer
-        date = invoiceDetails.date
-        note = invoiceDetails.note
-        type = invoiceDetails.type
-        items = invoiceDetails.items.map { Item(product: $0.product, quantity: $0.quantity) }
-    }
-}
+//extension Invoice {
+//    func update(with invoiceDetails: InvoiceDetails) {
+//        guard let customer = invoiceDetails.customer else { return }
+//
+//        number = invoiceDetails.number
+//        self.customer = customer
+//        date = invoiceDetails.date
+//        note = invoiceDetails.note
+//        type = invoiceDetails.type
+//        items = invoiceDetails.items.map { Item(product: $0.product, quantity: $0.quantity) }
+//    }
+//}

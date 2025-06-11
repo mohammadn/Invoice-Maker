@@ -10,7 +10,7 @@ import SwiftUI
 struct InvoiceView: View {
     @State var isEditing: Bool = false
 
-    var invoice: StandaloneInvoice
+    var invoice: VersionedInvoice
 
     var body: some View {
         NavigationStack {

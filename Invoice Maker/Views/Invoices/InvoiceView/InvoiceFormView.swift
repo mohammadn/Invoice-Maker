@@ -14,17 +14,17 @@ struct InvoiceFormView: View {
     @Query(sort: \Customer.name) private var customers: [Customer]
     @State private var showInvoiceProductSelection: Bool = false
     @State private var showCustomerFormView: Bool = false
-    @State private var invoiceDetails: StandaloneInvoiceDetails
+    @State private var invoiceDetails: InvoiceDetails
     @State private var showDismissAlert: Bool = false
 
-    let invoice: StandaloneInvoice?
+    let invoice: VersionedInvoice?
     var dismissAction: (() -> Void)?
 
-    init(invoice: StandaloneInvoice, dismissAction: @escaping () -> Void) {
+    init(invoice: VersionedInvoice, dismissAction: @escaping () -> Void) {
         self.invoice = invoice
         self.dismissAction = dismissAction
 
-        _invoiceDetails = State(initialValue: StandaloneInvoiceDetails(from: invoice))
+        _invoiceDetails = State(initialValue: InvoiceDetails(from: invoice))
     }
 
     init(business: Business? = nil) {
@@ -34,9 +34,9 @@ struct InvoiceFormView: View {
         let defaultCurrency = UserDefaults.standard.string(forKey: "defaultCurrency") ?? "IRR"
 
         if let business {
-            _invoiceDetails = State(initialValue: StandaloneInvoiceDetails(with: business, currency: defaultCurrency))
+            _invoiceDetails = State(initialValue: InvoiceDetails(with: business, currency: defaultCurrency))
         } else {
-            _invoiceDetails = State(initialValue: StandaloneInvoiceDetails(currency: defaultCurrency))
+            _invoiceDetails = State(initialValue: InvoiceDetails(currency: defaultCurrency))
         }
     }
 
@@ -146,7 +146,7 @@ struct InvoiceFormView: View {
                         return
                     }
 
-                    if StandaloneInvoiceDetails(from: invoice) != invoiceDetails {
+                    if InvoiceDetails(from: invoice) != invoiceDetails {
                         showDismissAlert.toggle()
                     } else {
                         dismissAction?() ?? dismiss()
@@ -184,9 +184,9 @@ struct InvoiceFormView: View {
                 if let existingItem = invoice.items.first(where: { $0.productCode == item.productCode }) {
                     existingItem.update(with: item)
                 } else {
-                    let standaloneItem = StandaloneItem(from: item, invoice: invoice)
+                    let versionedItem = VersionedItem(from: item, invoice: invoice)
 
-                    modelContext.insert(standaloneItem)
+                    modelContext.insert(versionedItem)
                 }
             }
 
@@ -196,14 +196,14 @@ struct InvoiceFormView: View {
                 }
             }
         } else {
-            let invoice = StandaloneInvoice(from: invoiceDetails)
+            let invoice = VersionedInvoice(from: invoiceDetails)
 
             modelContext.insert(invoice)
 
             invoiceDetails.items.forEach { item in
-                let standaloneItem = StandaloneItem(from: item, invoice: invoice)
+                let versionedItem = VersionedItem(from: item, invoice: invoice)
 
-                modelContext.insert(standaloneItem)
+                modelContext.insert(versionedItem)
             }
         }
 

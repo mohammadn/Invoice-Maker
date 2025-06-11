@@ -9,7 +9,7 @@
 
 class MigrationPlan: SchemaMigrationPlan {
     static var schemas: [any VersionedSchema.Type] {
-        [ProductSchemaV1.self]
+        [ProductSchemaV1.self, InvoiceSchemaV1.self]
     }
 
     static var stages: [MigrationStage] { [] }

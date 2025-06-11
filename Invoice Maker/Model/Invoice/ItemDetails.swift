@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Observable
-class StandaloneItemDetails: Identifiable {
+class ItemDetails: Identifiable {
     var id: UUID = UUID()
     var productCode: Int
     var productName: String
@@ -27,7 +27,7 @@ class StandaloneItemDetails: Identifiable {
         self.quantity = quantity
     }
 
-    convenience init(from item: StandaloneItem) {
+    convenience init(from item: VersionedItem) {
         self.init(productCode: item.productCode,
                   productName: item.productName,
                   productPrice: item.productPrice,
@@ -46,8 +46,8 @@ class StandaloneItemDetails: Identifiable {
     }
 }
 
-extension StandaloneItemDetails: Equatable {
-    static func == (lhs: StandaloneItemDetails, rhs: StandaloneItemDetails) -> Bool {
+extension ItemDetails: Equatable {
+    static func == (lhs: ItemDetails, rhs: ItemDetails) -> Bool {
         lhs.productCode == rhs.productCode &&
             lhs.productName == rhs.productName &&
             lhs.productPrice == rhs.productPrice &&
@@ -57,7 +57,7 @@ extension StandaloneItemDetails: Equatable {
     }
 }
 
-extension StandaloneItemDetails: Hashable {
+extension ItemDetails: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(productCode)
         hasher.combine(productName)

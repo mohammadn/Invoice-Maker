@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 enum ProductSchemaV1: VersionedSchema {
-    static var versionIdentifier: Schema.Version { Schema.Version(2, 0, 0) }
+    static var versionIdentifier: Schema.Version { Schema.Version(1, 0, 0) }
 
     static var models: [any PersistentModel.Type] {
         [ProductSchemaV1.VersionedProduct.self]
