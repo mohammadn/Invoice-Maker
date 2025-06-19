@@ -18,7 +18,7 @@ struct PDF {
 
         // Document Info
         document.info.title = "Invoice \(invoice.number)"
-        document.info.author = invoice.businessName
+        document.info.author = invoice.business.name
 
         // Title Section
         let attributedTitle = NSMutableAttributedString(string: invoice.type.label, attributes: [.font: UIFont.systemFont(ofSize: .init(30), weight: .bold)])
@@ -44,7 +44,7 @@ struct PDF {
         let customerDetailsTable = PDFTable(rows: 2, columns: 1)
         customerDetailsTable.padding = 5
 
-        guard let name = invoice.customerName, !name.isEmpty else {
+        guard let name = invoice.customer?.name, !name.isEmpty else {
             print("Error generating PDF: Customer name is empty")
             return nil
         }
@@ -52,17 +52,17 @@ struct PDF {
         let customerDetails = NSMutableAttributedString()
         customerDetails.append(createAttributedString(label: "نام", value: name))
 
-        if let phone = invoice.customerPhone, !phone.isEmpty {
+        if let phone = invoice.customer?.phone, !phone.isEmpty {
             customerDetails.append(comma)
             customerDetails.append(createAttributedString(label: "تلفن", value: phone.filter { $0.isNumber }.toPersian()))
         }
 
-        if let email = invoice.customerEmail, !email.isEmpty {
+        if let email = invoice.customer?.email, !email.isEmpty {
             customerDetails.append(comma)
             customerDetails.append(createAttributedString(label: "ایمیل", value: email))
         }
 
-        if let address = invoice.customerAddress, !address.isEmpty {
+        if let address = invoice.customer?.address, !address.isEmpty {
             customerDetails.append(comma)
             customerDetails.append(createAttributedString(label: "آدرس", value: address))
         }
@@ -94,22 +94,22 @@ struct PDF {
 
         // Business Details
         let businessDetails = NSMutableAttributedString()
-        businessDetails.append(createAttributedString(label: "نام", value: invoice.businessName))
+        businessDetails.append(createAttributedString(label: "نام", value: invoice.business.name))
 
         businessDetails.append(comma)
-        businessDetails.append(createAttributedString(label: "تلفن", value: invoice.businessPhone))
+        businessDetails.append(createAttributedString(label: "تلفن", value: invoice.business.phone))
 
-        if let website = invoice.businessWebsite, !website.isEmpty {
+        if let website = invoice.business.website, !website.isEmpty {
             businessDetails.append(comma)
             businessDetails.append(createAttributedString(label: "وب سایت", value: website))
         }
 
-        if let email = invoice.businessEmail, !email.isEmpty {
+        if let email = invoice.business.email, !email.isEmpty {
             businessDetails.append(comma)
             businessDetails.append(createAttributedString(label: "ایمیل", value: email))
         }
 
-        if let address = invoice.businessAddress, !address.isEmpty {
+        if let address = invoice.business.address, !address.isEmpty {
             businessDetails.append(comma)
             businessDetails.append(createAttributedString(label: "آدرس", value: address))
         }

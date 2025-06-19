@@ -20,7 +20,7 @@ struct CustomerDetailView: View {
 
         let customerId = customer.id
         let predicate = #Predicate<VersionedInvoice> {
-            $0.customerId != nil && $0.customerId == customerId
+            $0.customer?.id != nil && $0.customer?.id == customerId
         }
 
         _invoices = Query(filter: predicate, sort: \.createdDate, order: .reverse)

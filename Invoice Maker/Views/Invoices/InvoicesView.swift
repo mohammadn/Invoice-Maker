@@ -44,7 +44,7 @@ struct InvoicesView: View {
                                     }
                                 }
 
-                                Text(invoice.customerName ?? "-")
+                                Text(invoice.customer?.name ?? "-")
                                     .font(.subheadline)
                                     .foregroundStyle(.gray)
                                     .lineLimit(1)
@@ -74,7 +74,7 @@ struct InvoicesView: View {
                                 }
                             }
 
-                            Text(invoice.customerName ?? "-")
+                            Text(invoice.customer?.name ?? "-")
                                 .font(.subheadline)
                                 .foregroundStyle(.gray)
                                 .lineLimit(1)
@@ -93,7 +93,7 @@ struct InvoicesView: View {
             }
             .sheet(isPresented: $showInvoiceFormView) {
                 NavigationStack {
-                    InvoiceFormView(business: business.first)
+                    InvoiceFormView()
                 }
             }
             .overlay {
@@ -125,10 +125,13 @@ struct InvoicesView: View {
 
                     guard let business = business.first else { return }
 
+                    let invoiceBusiness = InvoiceBusiness(from: business)
+                    let invoiceCustomer = InvoiceCustomer(from: invoice.customer)
+
                     let versionedInvoice = VersionedInvoice(from: invoice,
-                                                              business: business,
-                                                              items: items,
-                                                              customer: results?.isEmpty ?? true ? nil : invoice.customer)
+                                                            items: items,
+                                                            customer: results?.isEmpty ?? true ? nil : invoiceCustomer,
+                                                            business: invoiceBusiness)
 
                     modelContext.insert(versionedInvoice)
                     modelContext.delete(invoice)

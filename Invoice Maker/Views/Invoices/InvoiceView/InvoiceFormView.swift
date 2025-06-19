@@ -11,6 +11,7 @@ import SwiftUI
 struct InvoiceFormView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
+    @Query private var business: [Business]
     @Query(sort: \Customer.name) private var customers: [Customer]
     @State private var showInvoiceProductSelection: Bool = false
     @State private var showCustomerFormView: Bool = false
@@ -20,22 +21,15 @@ struct InvoiceFormView: View {
     let invoice: VersionedInvoice?
     var dismissAction: (() -> Void)?
 
-    init(invoice: VersionedInvoice, dismissAction: @escaping () -> Void) {
+    init(invoice: VersionedInvoice? = nil, dismissAction: (() -> Void)? = nil) {
         self.invoice = invoice
         self.dismissAction = dismissAction
 
-        _invoiceDetails = State(initialValue: InvoiceDetails(from: invoice))
-    }
-
-    init(business: Business? = nil) {
-        invoice = nil
-        dismissAction = nil
-
-        let defaultCurrency = UserDefaults.standard.string(forKey: "defaultCurrency") ?? "IRR"
-
-        if let business {
-            _invoiceDetails = State(initialValue: InvoiceDetails(with: business, currency: defaultCurrency))
+        if let invoice {
+            _invoiceDetails = State(initialValue: InvoiceDetails(from: invoice))
         } else {
+            let defaultCurrency = UserDefaults.standard.string(forKey: "defaultCurrency") ?? "IRR"
+
             _invoiceDetails = State(initialValue: InvoiceDetails(currency: defaultCurrency))
         }
     }
@@ -184,9 +178,9 @@ struct InvoiceFormView: View {
                 if let existingItem = invoice.items.first(where: { $0.productCode == item.productCode }) {
                     existingItem.update(with: item)
                 } else {
-                    let versionedItem = VersionedItem(from: item, invoice: invoice)
+                    let item = VersionedItem(from: item, invoice: invoice)
 
-                    modelContext.insert(versionedItem)
+                    modelContext.insert(item)
                 }
             }
 
@@ -196,18 +190,19 @@ struct InvoiceFormView: View {
                 }
             }
         } else {
-            let invoice = VersionedInvoice(from: invoiceDetails)
+            guard let business = business.first else { return }
+            let invoiceBusiness = InvoiceBusiness(from: business)
 
-            modelContext.insert(invoice)
+            let invoice = VersionedInvoice(from: invoiceDetails, customer: invoiceDetails.customer, business: invoiceBusiness)
 
             invoiceDetails.items.forEach { item in
-                let versionedItem = VersionedItem(from: item, invoice: invoice)
+                let item = VersionedItem(from: item, invoice: invoice)
 
-                modelContext.insert(versionedItem)
+                modelContext.insert(item)
             }
-        }
 
-        try? modelContext.save()
+            modelContext.insert(invoice)
+        }
     }
 
     private func deleteProduct(at indexSet: IndexSet) {

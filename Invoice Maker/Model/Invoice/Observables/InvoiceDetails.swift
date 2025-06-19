@@ -22,11 +22,12 @@ class InvoiceDetails {
     var customerDetails: String?
     var customerPhone: String?
     var customerEmail: String?
-    var businessName: String
-    var businessPhone: String
-    var businessAddress: String?
-    var businessEmail: String?
-    var businessWebsite: String?
+
+    var customer: InvoiceCustomer? {
+        guard let customerId, let customerName else { return nil }
+
+        return InvoiceCustomer(id: customerId, name: customerName, phone: customerPhone, email: customerEmail, address: customerAddress, details: customerDetails)
+    }
 
     var isInvalid: Bool {
         number.isEmpty || customerId == nil || items.isEmpty
@@ -44,12 +45,7 @@ class InvoiceDetails {
          customerAddress: String? = nil,
          customerDetails: String? = nil,
          customerPhone: String? = nil,
-         customerEmail: String? = nil,
-         businessName: String = "",
-         businessPhone: String = "",
-         businessAddress: String? = nil,
-         businessEmail: String? = nil,
-         businessWebsite: String? = nil) {
+         customerEmail: String? = nil,) {
         self.number = number
         self.type = type
         self.currency = currency
@@ -63,11 +59,6 @@ class InvoiceDetails {
         self.customerDetails = customerDetails
         self.customerPhone = customerPhone
         self.customerEmail = customerEmail
-        self.businessName = businessName
-        self.businessPhone = businessPhone
-        self.businessAddress = businessAddress
-        self.businessEmail = businessEmail
-        self.businessWebsite = businessWebsite
     }
 
     convenience init(from invoice: VersionedInvoice) {
@@ -78,27 +69,12 @@ class InvoiceDetails {
                   note: invoice.note,
                   status: invoice.status,
                   items: invoice.items.map { item in ItemDetails(from: item) },
-                  customerId: invoice.customerId,
-                  customerName: invoice.customerName,
-                  customerAddress: invoice.customerAddress,
-                  customerDetails: invoice.customerDetails,
-                  customerPhone: invoice.customerPhone,
-                  customerEmail: invoice.customerEmail,
-                  businessName: invoice.businessName,
-                  businessPhone: invoice.businessPhone,
-                  businessAddress: invoice.businessAddress,
-                  businessEmail: invoice.businessEmail,
-                  businessWebsite: invoice.businessWebsite)
-    }
-
-    convenience init(with business: Business, currency: String) {
-        self.init(
-            currency: currency,
-            businessName: business.name,
-            businessPhone: business.phone,
-            businessAddress: business.address,
-            businessEmail: business.email,
-            businessWebsite: business.website,)
+                  customerId: invoice.customer?.id,
+                  customerName: invoice.customer?.name,
+                  customerAddress: invoice.customer?.address,
+                  customerDetails: invoice.customer?.details,
+                  customerPhone: invoice.customer?.phone,
+                  customerEmail: invoice.customer?.email,)
     }
 }
 
@@ -118,12 +94,7 @@ extension InvoiceDetails: Equatable {
             lhs.customerAddress == rhs.customerAddress &&
             lhs.customerDetails == rhs.customerDetails &&
             lhs.customerPhone == rhs.customerPhone &&
-            lhs.customerEmail == rhs.customerEmail &&
-            lhs.businessName == rhs.businessName &&
-            lhs.businessPhone == rhs.businessPhone &&
-            lhs.businessAddress == rhs.businessAddress &&
-            lhs.businessEmail == rhs.businessEmail &&
-            lhs.businessWebsite == rhs.businessWebsite
+            lhs.customerEmail == rhs.customerEmail
     }
 }
 
@@ -141,10 +112,5 @@ extension InvoiceDetails: Hashable {
         hasher.combine(customerDetails)
         hasher.combine(customerPhone)
         hasher.combine(customerEmail)
-        hasher.combine(businessName)
-        hasher.combine(businessPhone)
-        hasher.combine(businessAddress)
-        hasher.combine(businessEmail)
-        hasher.combine(businessWebsite)
     }
 }
