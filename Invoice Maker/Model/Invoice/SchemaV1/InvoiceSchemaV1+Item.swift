@@ -42,14 +42,13 @@ extension InvoiceSchemaV1 {
                       quantity: item.quantity)
         }
 
-        convenience init(from item: ItemDetails, invoice: VersionedInvoice) {
+        convenience init(from item: ItemDetails) {
             self.init(productCode: item.productCode,
                       productName: item.productName,
                       productPrice: item.productPrice,
                       productCurrency: item.productCurrency,
                       productDetails: item.productDetails,
-                      quantity: item.quantity,
-                      invoice: invoice)
+                      quantity: item.quantity)
         }
     }
 }

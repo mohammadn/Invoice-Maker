@@ -62,18 +62,18 @@ struct InvoiceDetailView: View {
             }
 
             Section(isExpanded: $showBusinessSection) {
-                LabeledContent("نام", value: invoice.business.name)
-                LabeledContent("شماره تماس", value: invoice.business.phone)
-                LabeledContent("ایمیل", value: invoice.business.email ?? "-")
-                LabeledContent("وب سایت", value: invoice.business.website ?? "-")
-                LabeledContent("آدرس", value: invoice.business.address ?? "-")
+                LabeledContent("نام", value: invoice.business?.name ?? "-")
+                LabeledContent("شماره تماس", value: invoice.business?.phone ?? "-")
+                LabeledContent("ایمیل", value: invoice.business?.email ?? "-")
+                LabeledContent("وب سایت", value: invoice.business?.website ?? "-")
+                LabeledContent("آدرس", value: invoice.business?.address ?? "-")
             } header: {
                 HStack {
                     Text("کسب و کار")
 
                     if let business, business != invoice.getBusiness {
                         ButtonWithPopover(text: "اطلاعات کسب و کار تغییر کرده است. در صورت نیاز می توانید اطلاعات را بروزرسانی کنید.") {
-                            invoice.business.update(with: business)
+                            invoice.business?.update(with: business)
 
                             generatePDF()
                         }

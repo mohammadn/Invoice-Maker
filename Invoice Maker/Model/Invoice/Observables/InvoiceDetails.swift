@@ -23,12 +23,6 @@ class InvoiceDetails {
     var customerPhone: String?
     var customerEmail: String?
 
-    var customer: InvoiceCustomer? {
-        guard let customerId, let customerName else { return nil }
-
-        return InvoiceCustomer(id: customerId, name: customerName, phone: customerPhone, email: customerEmail, address: customerAddress, details: customerDetails)
-    }
-
     var isInvalid: Bool {
         number.isEmpty || customerId == nil || items.isEmpty
     }

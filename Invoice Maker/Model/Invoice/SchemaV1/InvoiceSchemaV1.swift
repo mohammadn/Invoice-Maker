@@ -26,7 +26,7 @@ enum InvoiceSchemaV1: VersionedSchema {
         var status: Status
         @Relationship(deleteRule: .cascade, inverse: \VersionedItem.invoice) var items: [VersionedItem]
         @Relationship(deleteRule: .cascade, inverse: \InvoiceCustomer.invoice) var customer: InvoiceCustomer?
-        @Relationship(deleteRule: .cascade, inverse: \InvoiceBusiness.invoice) var business: InvoiceBusiness
+        @Relationship(deleteRule: .cascade, inverse: \InvoiceBusiness.invoice) var business: InvoiceBusiness?
         var createdDate: Date = Date.now
 
         var isInvalid: Bool {
@@ -43,8 +43,10 @@ enum InvoiceSchemaV1: VersionedSchema {
             return Customer(id: customerId, name: customerName, address: customer?.address, details: customer?.details, phone: customer?.phone, email: customer?.email)
         }
 
-        var getBusiness: Business {
-            Business(name: business.name, address: business.address, phone: business.phone, email: business.email, website: business.website)
+        var getBusiness: Business? {
+            guard let businessName = business?.name, let businessPhone = business?.phone else { return nil }
+
+            return Business(name: businessName, phone: businessPhone, email: business?.email, website: business?.website, address: business?.address)
         }
 
         init(number: String,
@@ -80,7 +82,7 @@ enum InvoiceSchemaV1: VersionedSchema {
                       business: business)
         }
 
-        convenience init(from invoiceDetails: InvoiceDetails, customer: InvoiceCustomer, business: InvoiceBusiness) {
+        convenience init(from invoiceDetails: InvoiceDetails, customer: InvoiceCustomer? = nil, business: InvoiceBusiness) {
             self.init(number: invoiceDetails.number,
                       type: invoiceDetails.type,
                       currency: invoiceDetails.currency,
@@ -88,7 +90,7 @@ enum InvoiceSchemaV1: VersionedSchema {
                       note: invoiceDetails.note,
                       status: invoiceDetails.status,
                       items: [],
-                      customer: nil,
+                      customer: customer,
                       business: business)
         }
     }

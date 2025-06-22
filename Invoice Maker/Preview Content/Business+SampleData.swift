@@ -10,8 +10,8 @@ import Foundation
 extension Business {
     @MainActor
     static let sampleData = Business(name: "نمونه شرکت",
-                                     address: "تهران، ایران",
-                                     phone: "۰۲۱۲۲۲۲۲۲۲۲",
-                                     email: "test@example.com",
-                                     website: "www.example.com")
+                                     phone: "تهران، ایران",
+                                     email: "۰۲۱۲۲۲۲۲۲۲۲",
+                                     website: "test@example.com",
+                                     address: "www.example.com")
 }

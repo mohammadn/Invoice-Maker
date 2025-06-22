@@ -178,9 +178,8 @@ struct InvoiceFormView: View {
                 if let existingItem = invoice.items.first(where: { $0.productCode == item.productCode }) {
                     existingItem.update(with: item)
                 } else {
-                    let item = VersionedItem(from: item, invoice: invoice)
-
-                    modelContext.insert(item)
+                    let item = VersionedItem(from: item)
+                    invoice.items.append(item)
                 }
             }
 
@@ -191,18 +190,20 @@ struct InvoiceFormView: View {
             }
         } else {
             guard let business = business.first else { return }
+            let invoiceCustomer = InvoiceCustomer(from: invoiceDetails)
             let invoiceBusiness = InvoiceBusiness(from: business)
 
-            let invoice = VersionedInvoice(from: invoiceDetails, customer: invoiceDetails.customer, business: invoiceBusiness)
+            let invoice = VersionedInvoice(from: invoiceDetails, customer: invoiceCustomer, business: invoiceBusiness)
 
-            invoiceDetails.items.forEach { item in
-                let item = VersionedItem(from: item, invoice: invoice)
-
-                modelContext.insert(item)
+            invoiceDetails.items.forEach {
+                let item = VersionedItem(from: $0)
+                invoice.items.append(item)
             }
 
             modelContext.insert(invoice)
         }
+
+        try? modelContext.save()
     }
 
     private func deleteProduct(at indexSet: IndexSet) {

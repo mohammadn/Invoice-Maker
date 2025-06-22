@@ -36,6 +36,20 @@ extension InvoiceSchemaV1 {
                       address: customer.address,
                       details: customer.details)
         }
+
+        convenience init?(from invoiceDetails: InvoiceDetails) {
+            guard let customerId = invoiceDetails.customerId,
+                  let customerName = invoiceDetails.customerName else {
+                return nil
+            }
+            
+            self.init(id: customerId,
+                      name: customerName,
+                      phone: invoiceDetails.customerPhone,
+                      email: invoiceDetails.customerEmail,
+                      address: invoiceDetails.customerAddress,
+                      details: invoiceDetails.customerDetails)
+        }
     }
 }
 

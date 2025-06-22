@@ -18,7 +18,7 @@ struct PDF {
 
         // Document Info
         document.info.title = "Invoice \(invoice.number)"
-        document.info.author = invoice.business.name
+        document.info.author = invoice.business?.name ?? "-"
 
         // Title Section
         let attributedTitle = NSMutableAttributedString(string: invoice.type.label, attributes: [.font: UIFont.systemFont(ofSize: .init(30), weight: .bold)])
@@ -94,22 +94,22 @@ struct PDF {
 
         // Business Details
         let businessDetails = NSMutableAttributedString()
-        businessDetails.append(createAttributedString(label: "نام", value: invoice.business.name))
+        businessDetails.append(createAttributedString(label: "نام", value: invoice.business?.name ?? "-"))
 
         businessDetails.append(comma)
-        businessDetails.append(createAttributedString(label: "تلفن", value: invoice.business.phone))
+        businessDetails.append(createAttributedString(label: "تلفن", value: invoice.business?.phone ?? "-"))
 
-        if let website = invoice.business.website, !website.isEmpty {
+        if let website = invoice.business?.website, !website.isEmpty {
             businessDetails.append(comma)
             businessDetails.append(createAttributedString(label: "وب سایت", value: website))
         }
 
-        if let email = invoice.business.email, !email.isEmpty {
+        if let email = invoice.business?.email, !email.isEmpty {
             businessDetails.append(comma)
             businessDetails.append(createAttributedString(label: "ایمیل", value: email))
         }
 
-        if let address = invoice.business.address, !address.isEmpty {
+        if let address = invoice.business?.address, !address.isEmpty {
             businessDetails.append(comma)
             businessDetails.append(createAttributedString(label: "آدرس", value: address))
         }

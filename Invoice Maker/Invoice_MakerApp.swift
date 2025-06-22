@@ -8,6 +8,16 @@
 import SwiftData
 import SwiftUI
 
+extension ModelContext {
+    var sqliteCommand: String {
+        if let url = container.configurations.first?.url.path(percentEncoded: false) {
+            "sqlite3 \"\(url)\""
+        } else {
+            "No SQLite database found."
+        }
+    }
+}
+
 @main
 struct Invoice_MakerApp: App {
     @State private var storeManager = ContactStoreManager()
@@ -36,6 +46,8 @@ struct Invoice_MakerApp: App {
                 .environment(storeManager)
                 .onAppear {
                     storeManager.fetchAuthorizationStatus()
+                    
+              
                 }
         }
     }

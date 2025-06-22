@@ -19,15 +19,15 @@ class BusinessDetails {
         name.isEmpty || phone.isEmpty
     }
 
-    init(name: String = "", address: String? = nil, phone: String = "", email: String? = nil, website: String? = nil) {
+    init(name: String = "", phone: String = "", email: String? = nil, website: String? = nil, address: String? = nil) {
         self.name = name
-        self.address = address
         self.phone = phone
         self.email = email
         self.website = website
+        self.address = address
     }
 
     convenience init(from business: Business) {
-        self.init(name: business.name, address: business.address, phone: business.phone, email: business.email, website: business.website)
+        self.init(name: business.name, phone: business.phone, email: business.email, website: business.website, address: business.address)
     }
 }
