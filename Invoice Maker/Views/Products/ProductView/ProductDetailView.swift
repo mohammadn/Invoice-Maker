@@ -34,8 +34,8 @@ struct ProductDetailView: View {
 
             Section {
                 LabeledContent("نام", value: product.name)
-                LabeledContent("قیمت", value: product.price, format: .currency(code: product.currency))
-                LabeledContent("نوع ارز", value: Locale.current.localizedString(forCurrencyCode: product.currency) ?? "-")
+                LabeledContent("قیمت", value: product.price, format: .currencyFormatter(code: product.currency))
+                LabeledContent("نوع ارز", value: product.currency.label)
             }
 
             Section {
@@ -52,7 +52,7 @@ struct ProductDetailView: View {
 
                             Spacer()
 
-                            Text(invoice.total, format: .currency(code: invoice.currency))
+                            Text(invoice.total, format: .currencyFormatter(code: invoice.currency))
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                                 .lineLimit(1)

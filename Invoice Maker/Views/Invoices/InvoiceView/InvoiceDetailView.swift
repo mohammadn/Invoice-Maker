@@ -26,7 +26,7 @@ struct InvoiceDetailView: View {
             Section {
                 LabeledContent("شماره فاکتور", value: invoice.number)
                 LabeledContent("نوع فاکتور", value: invoice.type.label)
-                LabeledContent("نوع ارز", value: Locale.current.localizedString(forCurrencyCode: invoice.currency) ?? "-")
+                LabeledContent("نوع ارز", value: invoice.currency.label)
                 LabeledContent("تاریخ", value: invoice.date, format: .dateTime)
                 LabeledContent("توضیحات", value: invoice.note.isEmpty ? "-" : invoice.note)
             }
@@ -105,7 +105,7 @@ struct InvoiceDetailView: View {
                                 .foregroundColor(.secondary)
                         }
 
-                        Text(item.productPrice, format: .currency(code: item.productCurrency))
+                        Text(item.productPrice, format: .currencyFormatter(code:  item.productCurrency))
                             .font(.subheadline)
                             .foregroundStyle(.gray)
                             .lineLimit(1)

@@ -11,7 +11,7 @@ import Foundation
 class InvoiceDetails {
     var number: String
     var type: Invoice.InvoiceType
-    var currency: String
+    var currency: Currency
     var date: Date
     var note: String
     var status: VersionedInvoice.Status
@@ -29,7 +29,7 @@ class InvoiceDetails {
 
     init(number: String = "",
          type: Invoice.InvoiceType = .sale,
-         currency: String = "IRR",
+         currency: Currency = .IRR,
          date: Date = .now,
          note: String = "",
          status: VersionedInvoice.Status = .pending,

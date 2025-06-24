@@ -16,14 +16,6 @@ struct InvoiceProductSelection: View {
 
     @Binding var items: [ItemDetails]
 
-    init(items: Binding<[ItemDetails]>, currency: String) {
-        _items = items
-
-        let predicate = #Predicate<VersionedProduct> { $0.currency == currency }
-
-        _products = Query(filter: predicate, sort: \.name)
-    }
-
     var body: some View {
         NavigationStack {
             List(selection: $selectedProducts) {

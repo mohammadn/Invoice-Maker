@@ -14,16 +14,18 @@ extension InvoiceSchemaV1 {
         var productCode: Int
         var productName: String
         var productPrice: Decimal
-        var productCurrency: String
+        var productCurrency: Currency
         var productDetails: String?
         var quantity: Int
         var invoice: VersionedInvoice?
+
+        var total: Decimal { productPrice * Decimal(quantity) }
 
         var product: VersionedProduct {
             VersionedProduct(code: productCode, name: productName, price: productPrice, currency: productCurrency, details: productDetails)
         }
 
-        init(productCode: Int, productName: String, productPrice: Decimal, productCurrency: String, productDetails: String? = nil, quantity: Int = 1, invoice: VersionedInvoice? = nil) {
+        init(productCode: Int, productName: String, productPrice: Decimal, productCurrency: Currency, productDetails: String? = nil, quantity: Int = 1, invoice: VersionedInvoice? = nil) {
             self.productCode = productCode
             self.productName = productName
             self.productPrice = productPrice
@@ -37,7 +39,7 @@ extension InvoiceSchemaV1 {
             self.init(productCode: item.product.code,
                       productName: item.product.name,
                       productPrice: Decimal(Double(item.product.price)),
-                      productCurrency: "IRR",
+                      productCurrency: .IRR,
                       productDetails: item.product.details,
                       quantity: item.quantity)
         }
@@ -64,5 +66,20 @@ extension InvoiceSchemaV1.VersionedItem {
         productPrice = product.price
         productCurrency = product.currency
         productDetails = product.details
+    }
+
+    func total(in targetCurrency: Currency) -> Decimal {
+        return productPrice(in: targetCurrency) * Decimal(quantity)
+    }
+
+    func productPrice(in targetCurrency: Currency) -> Decimal {
+        switch (productCurrency, targetCurrency) {
+        case (.IRR_Toman, .IRR):
+            return productPrice * 10
+        case (.IRR, .IRR_Toman):
+            return (productPrice / 10).rounded()
+        default:
+            return productPrice
+        }
     }
 }

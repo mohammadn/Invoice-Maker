@@ -29,8 +29,9 @@ struct InvoiceFormView: View {
             _invoiceDetails = State(initialValue: InvoiceDetails(from: invoice))
         } else {
             let defaultCurrency = UserDefaults.standard.string(forKey: "defaultCurrency") ?? "IRR"
+            let currency = Currency(rawValue: defaultCurrency) ?? .IRR
 
-            _invoiceDetails = State(initialValue: InvoiceDetails(currency: defaultCurrency))
+            _invoiceDetails = State(initialValue: InvoiceDetails(currency: currency))
         }
     }
 
@@ -47,11 +48,10 @@ struct InvoiceFormView: View {
                 }
 
                 Picker("نوع ارز", selection: $invoiceDetails.currency) {
-                    ForEach(Locale.commonISOCurrencyCodes.sorted(), id: \.self) { currency in
-                        Text((Locale.current.localizedString(forCurrencyCode: currency) ?? "-") + " (" + currency + ")").tag(currency)
+                    ForEach(Currency.allCases, id: \.self) { currency in
+                        Text(currency.label).tag(currency)
                     }
                 }
-                .disabled(invoiceDetails.items.count > 0)
 
                 DatePicker("تاریخ", selection: $invoiceDetails.date)
             }
@@ -164,7 +164,7 @@ struct InvoiceFormView: View {
             }
         }
         .sheet(isPresented: $showInvoiceProductSelection) {
-            InvoiceProductSelection(items: $invoiceDetails.items, currency: invoiceDetails.currency)
+            InvoiceProductSelection(items: $invoiceDetails.items)
         }
     }
 

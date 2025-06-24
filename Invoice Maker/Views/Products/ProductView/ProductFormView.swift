@@ -23,12 +23,13 @@ struct ProductFormView: View {
         self.product = product
         self.dismissAction = dismissAction
 
-        let defaultCurrency = UserDefaults.standard.string(forKey: "defaultCurrency") ?? "IRR"
-
         if let product {
             _productDetails = State(initialValue: ProductDetails(from: product))
         } else {
-            _productDetails = State(initialValue: ProductDetails(currency: defaultCurrency))
+            let defaultCurrency = UserDefaults.standard.string(forKey: "defaultCurrency") ?? "IRR"
+            let currency = Currency(rawValue: defaultCurrency) ?? .IRR
+
+            _productDetails = State(initialValue: ProductDetails(currency: currency))
         }
     }
 
@@ -47,12 +48,12 @@ struct ProductFormView: View {
 
             Section {
                 TextField("نام محصول*", text: $productDetails.name)
-                TextField("قیمت*", value: $productDetails.price, format: .number.locale(Locale(identifier: "en_US")).precision(.fractionLength(2)))
+                TextField("قیمت*", value: $productDetails.price, format: .number)
                     .keyboardType(.decimalPad)
 
                 Picker("نوع ارز", selection: $productDetails.currency) {
-                    ForEach(Locale.commonISOCurrencyCodes.sorted(), id: \.self) { currency in
-                        Text((Locale.current.localizedString(forCurrencyCode: currency) ?? "-") + " (" + currency + ")").tag(currency)
+                    ForEach(Currency.allCases, id: \.self) { currency in
+                        Text(currency.label).tag(currency)
                     }
                 }
             }

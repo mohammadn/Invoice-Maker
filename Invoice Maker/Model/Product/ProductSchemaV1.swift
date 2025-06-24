@@ -20,11 +20,11 @@ enum ProductSchemaV1: VersionedSchema {
         @Attribute(.unique) var code: Int
         var name: String
         var price: Decimal
-        var currency: String
+        var currency: Currency
         var details: String?
         var createdDate: Date = Date.now
 
-        init(code: Int, name: String, price: Decimal, currency: String, details: String?) {
+        init(code: Int, name: String, price: Decimal, currency: Currency, details: String?) {
             self.code = code
             self.name = name
             self.price = price
@@ -36,7 +36,7 @@ enum ProductSchemaV1: VersionedSchema {
             self.init(code: product.code,
                       name: product.name,
                       price: Decimal(Double(product.price)),
-                      currency: "IRR",
+                      currency: .IRR,
                       details: product.details)
         }
 

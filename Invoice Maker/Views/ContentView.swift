@@ -46,8 +46,6 @@ struct ContentView: View {
             OnboardingSheetView(business: business.first)
         }
         .onAppear {
-            print(modelContext.sqliteCommand)
-            
             products.forEach { product in
                 let versionedProduct = VersionedProduct(from: product)
                 modelContext.insert(versionedProduct)

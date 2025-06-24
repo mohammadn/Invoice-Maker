@@ -20,9 +20,15 @@ struct NavigationLazyView<Content: View>: View {
 }
 
 struct SettingsView: View {
-    @AppStorage("defaultCurrency") var defaultCurrency: String = "IRR"
+    @AppStorage("defaultCurrency") var defaultCurrencyRawValue: String = Currency.IRR.rawValue
     @Environment(\.openURL) var openURL
     @Query private var business: [Business]
+    private var defaultCurrency: Binding<Currency> {
+        Binding<Currency>(
+            get: { Currency(rawValue: defaultCurrencyRawValue) ?? .IRR },
+            set: { defaultCurrencyRawValue = $0.rawValue }
+        )
+    }
 
     var body: some View {
         NavigationStack {
@@ -34,9 +40,9 @@ struct SettingsView: View {
                 }
 
                 Section("پیش‌ فرض‌") {
-                    Picker("نوع ارز", selection: $defaultCurrency) {
-                        ForEach(Locale.commonISOCurrencyCodes.sorted(), id: \.self) { currency in
-                            Text((Locale.current.localizedString(forCurrencyCode: currency) ?? "-") + " (" + currency + ")").tag(currency)
+                    Picker("نوع ارز", selection: defaultCurrency) {
+                        ForEach(Currency.allCases, id: \.self) { currency in
+                            Text(currency.label).tag(currency)
                         }
                     }
                 }

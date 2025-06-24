@@ -8,6 +8,8 @@
 import Foundation
 import SwiftData
 
+
+
 enum InvoiceSchemaV1: VersionedSchema {
     static var versionIdentifier: Schema.Version { Schema.Version(1, 0, 0) }
 
@@ -20,7 +22,7 @@ enum InvoiceSchemaV1: VersionedSchema {
     class VersionedInvoice {
         var number: String
         var type: Invoice.InvoiceType
-        var currency: String
+        var currency: Currency
         var date: Date
         var note: String
         var status: Status
@@ -34,7 +36,20 @@ enum InvoiceSchemaV1: VersionedSchema {
         }
 
         var total: Decimal {
-            items.reduce(0) { $0 + (Decimal($1.quantity) * $1.productPrice) }
+            let total: Decimal = items.reduce(0) { result, item in
+                let itemTotal = Decimal(item.quantity) * item.productPrice
+                // Convert item currency to match invoice currency
+                switch (item.productCurrency, currency) {
+                case (.IRR_Toman, .IRR):
+                    return result + (itemTotal * 10)
+                case (.IRR, .IRR_Toman):
+                    return result + (itemTotal / 10)
+                default:
+                    return result + itemTotal
+                }
+            }
+            
+            return total.rounded()
         }
 
         var getCustomer: Customer? {
@@ -51,7 +66,7 @@ enum InvoiceSchemaV1: VersionedSchema {
 
         init(number: String,
              type: Invoice.InvoiceType,
-             currency: String,
+             currency: Currency,
              date: Date,
              note: String,
              status: Status,
@@ -73,7 +88,7 @@ enum InvoiceSchemaV1: VersionedSchema {
         convenience init(from invoice: Invoice, items: [VersionedItem], customer: InvoiceCustomer? = nil, business: InvoiceBusiness) {
             self.init(number: invoice.number,
                       type: invoice.type,
-                      currency: "IRR",
+                      currency: .IRR,
                       date: invoice.date,
                       note: invoice.note,
                       status: .pending,
