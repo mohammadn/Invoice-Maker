@@ -80,7 +80,7 @@ struct PDF {
         let table = createItemsTable()
         document.add(table: table)
         document.add(space: 20)
-print(invoice.total)
+
         // Summary Section
         let lastRow = table.size.rows - 1
         table[lastRow, 1].content = try? PDFTableContent(content: "جمع کل (\(invoice.currency.label))")

@@ -17,10 +17,16 @@ struct CurrencyFormatStyle: FormatStyle {
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 0
             formatter.groupingSeparator = ","
+            formatter.locale = Locale(identifier: "fa")
             let formatted = formatter.string(from: NSDecimalNumber(decimal: value)) ?? "0"
             return "تومان \(formatted)"
         default:
-            return value.formatted(.currency(code: currency.rawValue))
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .currency
+            formatter.currencyCode = currency.rawValue
+            formatter.locale = Locale(identifier: "fa")
+            let formatted = formatter.string(from: NSDecimalNumber(decimal: value)) ?? "0"
+            return formatted
         }
     }
 }

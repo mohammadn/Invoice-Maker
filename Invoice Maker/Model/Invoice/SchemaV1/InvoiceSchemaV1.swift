@@ -8,8 +8,6 @@
 import Foundation
 import SwiftData
 
-
-
 enum InvoiceSchemaV1: VersionedSchema {
     static var versionIdentifier: Schema.Version { Schema.Version(1, 0, 0) }
 
@@ -48,7 +46,7 @@ enum InvoiceSchemaV1: VersionedSchema {
                     return result + itemTotal
                 }
             }
-            
+
             return total.rounded()
         }
 

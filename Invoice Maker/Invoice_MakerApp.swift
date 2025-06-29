@@ -8,7 +8,7 @@
 import SwiftData
 import SwiftUI
 
-//extension ModelContext {
+// extension ModelContext {
 //    var sqliteCommand: String {
 //        if let url = container.configurations.first?.url.path(percentEncoded: false) {
 //            "sqlite3 \"\(url)\""
@@ -16,7 +16,7 @@ import SwiftUI
 //            "No SQLite database found."
 //        }
 //    }
-//}
+// }
 
 @main
 struct Invoice_MakerApp: App {
@@ -42,7 +42,7 @@ struct Invoice_MakerApp: App {
             ContentView()
                 .modelContainer(container)
                 .environment(\.calendar, persianCalendar)
-//                .environment(\.locale, Locale(identifier: "fa"))
+                .environment(\.locale, Locale(identifier: "fa"))
                 .environment(storeManager)
                 .onAppear {
                     storeManager.fetchAuthorizationStatus()
