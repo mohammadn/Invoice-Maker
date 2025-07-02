@@ -8,40 +8,39 @@
 import SwiftData
 import SwiftUI
 
-enum TabItems: Hashable {
-    case settings, products, customers, invoices
-}
-
 struct ContentView: View {
     @AppStorage("isWelcomeSheetShowing") var isWelcomeSheetShowing = true
     @Environment(\.modelContext) private var modelContext
     @Query private var business: [Business]
     @Query private var products: [Product]
-    @State private var selectedTab: TabItems = .invoices
+    @State private var tabViewModel = TabViewModel()
+    @State private var invoiceViewModel = InvoiceViewModel()
 
     var body: some View {
-        TabView(selection: $selectedTab) {
+        TabView(selection: $tabViewModel.selectedTab) {
             SettingsView()
                 .tabItem {
                     Label("تنظیمات", systemImage: "gearshape")
                 }
-                .tag(TabItems.settings)
+                .tag(TabViewModel.Tabs.settings)
             ProductsView()
                 .tabItem {
                     Label("محصولات", systemImage: "list.dash")
                 }
-                .tag(TabItems.products)
+                .tag(TabViewModel.Tabs.products)
             CustomersView()
                 .tabItem {
                     Label("مشتریان", systemImage: "person.2")
                 }
-                .tag(TabItems.customers)
+                .tag(TabViewModel.Tabs.customers)
             InvoicesView()
                 .tabItem {
                     Label("فاکتورها", systemImage: "doc.text")
                 }
-                .tag(TabItems.invoices)
+                .tag(TabViewModel.Tabs.invoices)
         }
+        .environment(tabViewModel)
+        .environment(invoiceViewModel)
         .sheet(isPresented: $isWelcomeSheetShowing) {
             OnboardingSheetView(business: business.first)
         }

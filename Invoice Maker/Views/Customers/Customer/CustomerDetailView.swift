@@ -10,6 +10,7 @@ import SwiftUI
 
 struct CustomerDetailView: View {
     @Query private var invoices: [VersionedInvoice]
+    @State private var selectedInvoice: VersionedInvoice?
     var customer: Customer
 
     @Binding var isEditing: Bool
@@ -30,7 +31,7 @@ struct CustomerDetailView: View {
         List {
             Section {
                 LabeledContent("نام", value: customer.name)
-                LabeledContent("تلفن", value: customer.phone?.toPersian() ?? "-")
+                LabeledContent("شماره تماس", value: customer.phone?.toPersian() ?? "-")
             }
 
             Section {
@@ -44,24 +45,10 @@ struct CustomerDetailView: View {
 
             Section {
                 ForEach(invoices) { invoice in
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text(invoice.number)
-                                .lineLimit(1)
-                                .foregroundColor(.primary)
-
-                            Spacer()
-
-                            Text(invoice.total, format: .currencyFormatter(code: invoice.currency))
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                                .lineLimit(1)
-                        }
-
-                        Text(invoice.date, style: .date)
-                            .font(.subheadline)
-                            .foregroundStyle(.gray)
-                            .lineLimit(1)
+                    Button {
+                        selectedInvoice = invoice
+                    } label: {
+                        InvoiceRowView(invoice: invoice)
                     }
                 }
             } header: {
@@ -81,6 +68,9 @@ struct CustomerDetailView: View {
         }
         .navigationTitle(customer.name)
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(item: $selectedInvoice) { invoice in
+            InvoiceSummaryView(invoice: invoice)
+        }
         .toolbar {
             ToolbarItemGroup {
                 Button("ویرایش") {

@@ -10,6 +10,7 @@ import SwiftUI
 
 struct InvoicesView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(InvoiceViewModel.self) private var invoiceViewModel
     @Query private var business: [Business]
     @Query private var oldInvoices: [Invoice]
     @Query(sort: \VersionedInvoice.createdDate, order: .reverse) private var invoices: [VersionedInvoice]
@@ -26,7 +27,8 @@ struct InvoicesView: View {
 
     var body: some View {
         NavigationSplitView {
-            List(selection: $selectedInvoice) {
+            @Bindable var invoiceViewModel = invoiceViewModel
+            List(selection: $invoiceViewModel.selectedInvoice) {
                 if !invalidInvoices.isEmpty {
                     Section {
                         ForEach(invalidInvoices) { invoice in
@@ -38,16 +40,16 @@ struct InvoicesView: View {
 
                                         Spacer()
 
-                                        Text(invoice.date, style: .date)
+                                        Text(invoice.total, format: .currencyFormatter(code: invoice.currency))
                                             .font(.subheadline)
                                             .foregroundColor(.secondary)
+                                            .lineLimit(1)
                                     }
                                 }
 
-                                Text(invoice.customer?.name ?? "-")
+                                Text(invoice.date, style: .date)
                                     .font(.subheadline)
-                                    .foregroundStyle(.gray)
-                                    .lineLimit(1)
+                                    .foregroundColor(.secondary)
                             }
                         }
                         .onDelete(perform: deleteInvalidInvoice)
@@ -68,16 +70,16 @@ struct InvoicesView: View {
 
                                     Spacer()
 
-                                    Text(invoice.date, style: .date)
+                                    Text(invoice.total, format: .currencyFormatter(code: invoice.currency))
                                         .font(.subheadline)
                                         .foregroundColor(.secondary)
+                                        .lineLimit(1)
                                 }
                             }
 
-                            Text(invoice.customer?.name ?? "-")
+                            Text(invoice.date, style: .date)
                                 .font(.subheadline)
-                                .foregroundStyle(.gray)
-                                .lineLimit(1)
+                                .foregroundColor(.secondary)
                         }
                     }
                     .onDelete(perform: deleteValidInvoice)
@@ -138,7 +140,7 @@ struct InvoicesView: View {
                 }
             }
         } detail: {
-            if let invoice = selectedInvoice {
+            if let invoice = invoiceViewModel.selectedInvoice {
                 InvoiceView(invoice: invoice)
             } else {
                 Text("یک فاکتور را انتخاب کنید")

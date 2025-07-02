@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ProductDetailView: View {
     @Query private var invoices: [VersionedInvoice]
+    @State private var selectedInvoice: VersionedInvoice?
     var product: VersionedProduct
 
     @Binding var isEditing: Bool
@@ -44,24 +45,10 @@ struct ProductDetailView: View {
 
             Section {
                 ForEach(invoices) { invoice in
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text(invoice.number)
-                                .lineLimit(1)
-                                .foregroundColor(.primary)
-
-                            Spacer()
-
-                            Text(invoice.total, format: .currencyFormatter(code: invoice.currency))
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                                .lineLimit(1)
-                        }
-
-                        Text(invoice.date, style: .date)
-                            .font(.subheadline)
-                            .foregroundStyle(.gray)
-                            .lineLimit(1)
+                    Button {
+                        selectedInvoice = invoice
+                    } label: {
+                        InvoiceRowView(invoice: invoice)
                     }
                 }
             } header: {
@@ -81,6 +68,9 @@ struct ProductDetailView: View {
         }
         .navigationTitle(product.name)
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(item: $selectedInvoice) { invoice in
+            InvoiceSummaryView(invoice: invoice)
+        }
         .toolbar {
             ToolbarItemGroup {
                 Button("ویرایش") {

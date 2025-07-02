@@ -31,7 +31,7 @@ struct CustomerFormView: View {
         Form {
             Section {
                 TextField("نام*", text: $customerDetails.name)
-                TextField("تلفن", text: $customerDetails.phone ?? "")
+                TextField("شماره تماس", text: $customerDetails.phone ?? "")
                     .keyboardType(.phonePad)
             }
 
