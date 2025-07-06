@@ -48,7 +48,6 @@ struct CustomerFormView: View {
             }
         }
         .navigationBarTitle(customer == nil ? "افزودن مشتری" : "ویرایش مشتری")
-        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

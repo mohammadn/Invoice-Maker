@@ -64,7 +64,6 @@ struct ProductFormView: View {
             }
         }
         .navigationBarTitle(product == nil ? "افزودن محصول" : "ویرایش محصول")
-        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

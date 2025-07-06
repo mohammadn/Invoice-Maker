@@ -48,7 +48,6 @@ struct SettingsBusinessDetailsView: View {
 //            }
         }
         .navigationTitle("اطلاعات کسب و کار")
-        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem {
                 Button("ذخیره") {

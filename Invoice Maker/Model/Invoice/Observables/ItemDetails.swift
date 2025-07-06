@@ -1,5 +1,5 @@
 //
-//  Item.swift
+//  ItemDetails.swift
 //  Invoice Maker
 //
 //  Created by Mohammad Najafzadeh on 15/02/2024.

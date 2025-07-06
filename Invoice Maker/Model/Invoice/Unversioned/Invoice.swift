@@ -57,7 +57,7 @@ extension Invoice {
     }
 }
 
-//extension Invoice {
+// extension Invoice {
 //    func update(with invoiceDetails: InvoiceDetails) {
 //        guard let customer = invoiceDetails.customer else { return }
 //
@@ -68,4 +68,4 @@ extension Invoice {
 //        type = invoiceDetails.type
 //        items = invoiceDetails.items.map { Item(product: $0.product, quantity: $0.quantity) }
 //    }
-//}
+// }

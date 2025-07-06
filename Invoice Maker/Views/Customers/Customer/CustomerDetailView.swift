@@ -67,7 +67,6 @@ struct CustomerDetailView: View {
             }
         }
         .navigationTitle(customer.name)
-        .navigationBarTitleDisplayMode(.inline)
         .sheet(item: $selectedInvoice) { invoice in
             InvoiceSummaryView(invoice: invoice)
         }

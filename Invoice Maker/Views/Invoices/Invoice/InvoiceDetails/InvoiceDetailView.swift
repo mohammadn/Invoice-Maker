@@ -73,7 +73,6 @@ struct InvoiceDetailView: View {
             }
         }
         .navigationTitle(invoice.number)
-        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup {
                 Menu {
@@ -82,7 +81,7 @@ struct InvoiceDetailView: View {
                     }
 
                     if let generatedPDF {
-                        ShareLink("پرینت", item: generatedPDF)
+                        ShareLink("اشتراک گذاری", item: generatedPDF)
                     }
                 } label: {
                     Image(systemName: "ellipsis.circle")
