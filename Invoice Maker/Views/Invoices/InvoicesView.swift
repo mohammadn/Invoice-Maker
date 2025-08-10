@@ -12,16 +12,15 @@ struct InvoicesView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(InvoiceViewModel.self) private var invoiceViewModel
     @Query private var business: [Business]
-    @Query private var oldInvoices: [Invoice]
-    @Query(sort: \VersionedInvoice.createdDate, order: .reverse) private var invoices: [VersionedInvoice]
+    @Query(sort: \Invoice.createdDate, order: .reverse) private var invoices: [Invoice]
     @State private var showInvoiceFormView: Bool = false
-    @State private var selectedInvoice: VersionedInvoice?
+    @State private var selectedInvoice: Invoice?
 
-    var invalidInvoices: [VersionedInvoice] {
+    var invalidInvoices: [Invoice] {
         invoices.filter { $0.isInvalid }
     }
 
-    var validInvoices: [VersionedInvoice] {
+    var validInvoices: [Invoice] {
         invoices.filter { !$0.isInvalid }
     }
 
@@ -105,38 +104,6 @@ struct InvoicesView: View {
                     } description: {
                         Text("برای افزودن فاکتور جدید روی دکمه + کلیک کنید")
                     }
-                }
-            }
-            .onAppear {
-                oldInvoices.forEach { invoice in
-                    let items: [VersionedItem] = invoice.items.compactMap { item in
-                        let productModelID = item.product.persistentModelID
-                        let descriptor = FetchDescriptor<Product>(predicate: #Predicate { product in product.persistentModelID == productModelID })
-                        let results = try? modelContext.fetch(descriptor)
-
-                        if results?.isEmpty ?? true {
-                            return nil
-                        } else {
-                            return VersionedItem(from: item)
-                        }
-                    }
-
-                    let customerModelID = invoice.customer.persistentModelID
-                    let descriptor = FetchDescriptor<Customer>(predicate: #Predicate { customer in customer.persistentModelID == customerModelID })
-                    let results = try? modelContext.fetch(descriptor)
-
-                    guard let business = business.first else { return }
-
-                    let invoiceBusiness = InvoiceBusiness(from: business)
-                    let invoiceCustomer = InvoiceCustomer(from: invoice.customer)
-
-                    let versionedInvoice = VersionedInvoice(from: invoice,
-                                                            items: items,
-                                                            customer: results?.isEmpty ?? true ? nil : invoiceCustomer,
-                                                            business: invoiceBusiness)
-
-                    modelContext.insert(versionedInvoice)
-                    modelContext.delete(invoice)
                 }
             }
         } detail: {

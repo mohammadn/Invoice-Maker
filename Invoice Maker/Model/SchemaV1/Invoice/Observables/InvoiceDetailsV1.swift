@@ -1,5 +1,5 @@
 //
-//  InvoiceDetails.swift
+//  InvoiceDetailsV1.swift
 //  Invoice Maker
 //
 //  Created by Mohammad Najafzadeh on 25/02/2024.
@@ -8,14 +8,18 @@
 import Foundation
 
 @Observable
-class InvoiceDetails {
+class InvoiceDetailsV1 {
     var number: String
-    var type: Invoice.InvoiceType
+    var type: SchemaV1.Invoice.InvoiceType
     var currency: Currency
     var date: Date
+    var dueDate: Date
+    var tax: Decimal
+    var discount: Decimal
     var note: String
-    var status: VersionedInvoice.Status
-    var items: [ItemDetails]
+    var status: SchemaV1.Invoice.Status
+    var options: [SchemaV1.Invoice.Options]
+    var items: [ItemDetailsV1]
     var customerId: UUID?
     var customerName: String?
     var customerAddress: String?
@@ -28,12 +32,16 @@ class InvoiceDetails {
     }
 
     init(number: String = "",
-         type: Invoice.InvoiceType = .sale,
+         type: SchemaV1.Invoice.InvoiceType = .sale,
          currency: Currency = .IRR,
          date: Date = .now,
+         dueDate: Date = .now,
+         tax: Decimal = 0,
+         discount: Decimal = 0,
          note: String = "",
-         status: VersionedInvoice.Status = .pending,
-         items: [ItemDetails] = [],
+         status: SchemaV1.Invoice.Status = .pending,
+         options: [SchemaV1.Invoice.Options] = [.date],
+         items: [ItemDetailsV1] = [],
          customerId: UUID? = nil,
          customerName: String? = nil,
          customerAddress: String? = nil,
@@ -44,8 +52,12 @@ class InvoiceDetails {
         self.type = type
         self.currency = currency
         self.date = date
+        self.dueDate = dueDate
+        self.tax = tax
+        self.discount = discount
         self.note = note
         self.status = status
+        self.options = options
         self.items = items
         self.customerId = customerId
         self.customerName = customerName
@@ -55,14 +67,18 @@ class InvoiceDetails {
         self.customerEmail = customerEmail
     }
 
-    convenience init(from invoice: VersionedInvoice) {
+    convenience init(from invoice: SchemaV1.Invoice) {
         self.init(number: invoice.number,
                   type: invoice.type,
                   currency: invoice.currency,
                   date: invoice.date,
+                  dueDate: invoice.dueDate,
+                  tax: invoice.tax,
+                  discount: invoice.discount,
                   note: invoice.note,
                   status: invoice.status,
-                  items: invoice.items.map { item in ItemDetails(from: item) },
+                  options: invoice.options,
+                  items: invoice.items.map { item in ItemDetailsV1(from: item) },
                   customerId: invoice.customer?.id,
                   customerName: invoice.customer?.name,
                   customerAddress: invoice.customer?.address,
@@ -72,16 +88,20 @@ class InvoiceDetails {
     }
 }
 
-extension InvoiceDetails: Equatable {
-    static func == (lhs: InvoiceDetails, rhs: InvoiceDetails) -> Bool {
+extension InvoiceDetailsV1: Equatable {
+    static func == (lhs: InvoiceDetailsV1, rhs: InvoiceDetailsV1) -> Bool {
         let areItemsEqual: Bool = lhs.items.elementsEqual(rhs.items) { $0.productCode == $1.productCode && $0.quantity == $1.quantity }
 
         return lhs.number == rhs.number &&
             lhs.type == rhs.type &&
             lhs.currency == rhs.currency &&
             lhs.date == rhs.date &&
+            lhs.dueDate == rhs.dueDate &&
+            lhs.tax == rhs.tax &&
+            lhs.discount == rhs.discount &&
             lhs.note == rhs.note &&
             lhs.status == rhs.status &&
+            lhs.options == rhs.options &&
             areItemsEqual &&
             lhs.customerId == rhs.customerId &&
             lhs.customerName == rhs.customerName &&
@@ -92,14 +112,18 @@ extension InvoiceDetails: Equatable {
     }
 }
 
-extension InvoiceDetails: Hashable {
+extension InvoiceDetailsV1: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(number)
         hasher.combine(type)
         hasher.combine(currency)
         hasher.combine(date)
+        hasher.combine(dueDate)
+        hasher.combine(tax)
+        hasher.combine(discount)
         hasher.combine(note)
         hasher.combine(status)
+        hasher.combine(options)
         hasher.combine(customerId)
         hasher.combine(customerName)
         hasher.combine(customerAddress)

@@ -8,15 +8,9 @@
 import Foundation
 import SwiftData
 
-enum ProductSchemaV1: VersionedSchema {
-    static var versionIdentifier: Schema.Version { Schema.Version(1, 0, 0) }
-
-    static var models: [any PersistentModel.Type] {
-        [ProductSchemaV1.VersionedProduct.self]
-    }
-
+extension SchemaV1 {
     @Model
-    class VersionedProduct {
+    class Product {
         @Attribute(.unique) var code: Int
         var name: String
         var price: Decimal
@@ -32,15 +26,7 @@ enum ProductSchemaV1: VersionedSchema {
             self.details = details
         }
 
-        convenience init(from product: Invoice_Maker.Product) {
-            self.init(code: product.code,
-                      name: product.name,
-                      price: Decimal(Double(product.price)),
-                      currency: .IRR,
-                      details: product.details)
-        }
-
-        convenience init(from productDetails: ProductDetails) {
+        convenience init(from productDetails: ProductDetailsV1) {
             self.init(code: productDetails.code ?? 0,
                       name: productDetails.name,
                       price: productDetails.price ?? 0,
@@ -50,8 +36,8 @@ enum ProductSchemaV1: VersionedSchema {
     }
 }
 
-extension ProductSchemaV1.VersionedProduct {
-    func update(with productDetails: ProductDetails) {
+extension SchemaV1.Product {
+    func update(with productDetails: ProductDetailsV1) {
         code = productDetails.code ?? 0
         name = productDetails.name
         price = productDetails.price ?? 0
@@ -60,8 +46,8 @@ extension ProductSchemaV1.VersionedProduct {
     }
 }
 
-extension ProductSchemaV1.VersionedProduct: Equatable {
-    static func == (lhs: ProductSchemaV1.VersionedProduct, rhs: ProductSchemaV1.VersionedProduct) -> Bool {
+extension SchemaV1.Product: Equatable {
+    static func == (lhs: SchemaV1.Product, rhs: SchemaV1.Product) -> Bool {
         lhs.code == rhs.code &&
             lhs.name == rhs.name &&
             lhs.price == rhs.price &&
@@ -70,7 +56,7 @@ extension ProductSchemaV1.VersionedProduct: Equatable {
     }
 }
 
-extension ProductSchemaV1.VersionedProduct: Hashable {
+extension SchemaV1.Product: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(code)
         hasher.combine(name)

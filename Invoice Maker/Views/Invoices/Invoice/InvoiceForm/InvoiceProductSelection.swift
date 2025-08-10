@@ -10,9 +10,9 @@ import SwiftUI
 
 struct InvoiceProductSelection: View {
     @Environment(\.dismiss) private var dismiss
-    @Query private var products: [VersionedProduct]
+    @Query private var products: [Product]
     @State private var showProductFormView: Bool = false
-    @State private var selectedProducts: Set<VersionedProduct> = []
+    @State private var selectedProducts: Set<Product> = []
 
     @Binding var items: [ItemDetails]
 
@@ -61,7 +61,7 @@ struct InvoiceProductSelection: View {
         }
     }
 
-    func updateItems(with selectedProducts: Set<VersionedProduct>) {
+    func updateItems(with selectedProducts: Set<Product>) {
         let itemProductCodes = Set(items.map { $0.productCode })
 
         selectedProducts.forEach { product in

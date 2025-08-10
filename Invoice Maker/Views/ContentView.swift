@@ -12,7 +12,6 @@ struct ContentView: View {
     @AppStorage("isWelcomeSheetShowing") var isWelcomeSheetShowing = true
     @Environment(\.modelContext) private var modelContext
     @Query private var business: [Business]
-    @Query private var products: [Product]
     @State private var tabViewModel = TabViewModel()
     @State private var invoiceViewModel = InvoiceViewModel()
 
@@ -43,13 +42,6 @@ struct ContentView: View {
         .environment(invoiceViewModel)
         .sheet(isPresented: $isWelcomeSheetShowing) {
             OnboardingSheetView(business: business.first)
-        }
-        .onAppear {
-            products.forEach { product in
-                let versionedProduct = VersionedProduct(from: product)
-                modelContext.insert(versionedProduct)
-                modelContext.delete(product)
-            }
         }
     }
 }

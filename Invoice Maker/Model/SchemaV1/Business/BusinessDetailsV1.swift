@@ -1,5 +1,5 @@
 //
-//  BusinessDetails.swift
+//  BusinessDetailsV1.swift
 //  Invoice Maker
 //
 //  Created by Mohammad Najafzadeh on 12/02/2024.
@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class BusinessDetails {
+class BusinessDetailsV1 {
     var name: String
     var phone: String
     var email: String?
@@ -27,7 +27,7 @@ class BusinessDetails {
         self.address = address
     }
 
-    convenience init(from business: Business) {
+    convenience init(from business: SchemaV1.Business) {
         self.init(name: business.name, phone: business.phone, email: business.email, website: business.website, address: business.address)
     }
 }

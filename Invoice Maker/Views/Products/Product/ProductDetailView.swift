@@ -9,18 +9,18 @@ import SwiftData
 import SwiftUI
 
 struct ProductDetailView: View {
-    @Query private var invoices: [VersionedInvoice]
-    @State private var selectedInvoice: VersionedInvoice?
-    var product: VersionedProduct
+    @Query private var invoices: [Invoice]
+    @State private var selectedInvoice: Invoice?
+    var product: Product
 
     @Binding var isEditing: Bool
 
-    init(product: VersionedProduct, isEditing: Binding<Bool>) {
+    init(product: Product, isEditing: Binding<Bool>) {
         self.product = product
         _isEditing = isEditing
 
         let productCode = product.code
-        let predicate = #Predicate<VersionedInvoice> {
+        let predicate = #Predicate<Invoice> {
             $0.items.contains { $0.productCode == productCode }
         }
 

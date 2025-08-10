@@ -11,15 +11,14 @@ import SwiftUI
 struct ProductFormView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
-    @Query private var products: [VersionedProduct]
+    @Query private var products: [Product]
     @State private var productDetails: ProductDetails
     @State private var duplicateCode: Bool = false
-    //    @State private var showDismissAlert: Bool = false
 
-    var product: VersionedProduct?
+    var product: Product?
     var dismissAction: (() -> Void)?
 
-    init(product: VersionedProduct? = nil, dismissAction: (() -> Void)? = nil) {
+    init(product: Product? = nil, dismissAction: (() -> Void)? = nil) {
         self.product = product
         self.dismissAction = dismissAction
 
@@ -77,19 +76,8 @@ struct ProductFormView: View {
 
             ToolbarItem(placement: .navigationBarLeading) {
                 Button("انصراف") {
-                    //                        showDismissAlert.toggle()
                     dismissAction?() ?? dismiss()
                 }
-                //                    .alert("آیا مطمئن هستید؟", isPresented: $showDismissAlert) {
-                //                        Button("انصراف", role: .cancel) {
-                //                            showDismissAlert.toggle()
-                //                        }
-                //                        Button("بازگشت") {
-                //                            dismiss()
-                //                        }
-                //                    } message: {
-                //                        Text("در صورت بازگشت به صفحه قبل اطلاعات محصول ذخیره نخواهد شد.")
-                //                    }
             }
         }
     }
@@ -104,7 +92,7 @@ struct ProductFormView: View {
         if let product {
             product.update(with: productDetails)
         } else {
-            let product = VersionedProduct(from: productDetails)
+            let product = Product(from: productDetails)
 
             modelContext.insert(product)
         }

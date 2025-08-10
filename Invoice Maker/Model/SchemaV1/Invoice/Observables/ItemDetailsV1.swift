@@ -1,5 +1,5 @@
 //
-//  ItemDetails.swift
+//  ItemDetailsV1.swift
 //  Invoice Maker
 //
 //  Created by Mohammad Najafzadeh on 15/02/2024.
@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @Observable
-class ItemDetails: Identifiable {
+class ItemDetailsV1: Identifiable {
     var id: UUID = UUID()
     var productCode: Int
     var productName: String
@@ -27,7 +27,7 @@ class ItemDetails: Identifiable {
         self.quantity = quantity
     }
 
-    convenience init(from item: VersionedItem) {
+    convenience init(from item: SchemaV1.InvoiceItem) {
         self.init(productCode: item.productCode,
                   productName: item.productName,
                   productPrice: item.productPrice,
@@ -36,7 +36,7 @@ class ItemDetails: Identifiable {
                   quantity: item.quantity)
     }
 
-    convenience init(from product: VersionedProduct, quantity: Int) {
+    convenience init(from product: Product, quantity: Int) {
         self.init(productCode: product.code,
                   productName: product.name,
                   productPrice: product.price,
@@ -46,8 +46,8 @@ class ItemDetails: Identifiable {
     }
 }
 
-extension ItemDetails: Equatable {
-    static func == (lhs: ItemDetails, rhs: ItemDetails) -> Bool {
+extension ItemDetailsV1: Equatable {
+    static func == (lhs: ItemDetailsV1, rhs: ItemDetailsV1) -> Bool {
         lhs.productCode == rhs.productCode &&
             lhs.productName == rhs.productName &&
             lhs.productPrice == rhs.productPrice &&
@@ -57,7 +57,7 @@ extension ItemDetails: Equatable {
     }
 }
 
-extension ItemDetails: Hashable {
+extension ItemDetailsV1: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(productCode)
         hasher.combine(productName)

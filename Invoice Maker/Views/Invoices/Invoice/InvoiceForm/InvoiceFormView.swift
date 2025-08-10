@@ -15,13 +15,14 @@ struct InvoiceFormView: View {
     @Query(sort: \Customer.name) private var customers: [Customer]
     @State private var showInvoiceProductSelection: Bool = false
     @State private var showCustomerFormView: Bool = false
+    @State private var showOptionsView: Bool = false
     @State private var invoiceDetails: InvoiceDetails
     @State private var showDismissAlert: Bool = false
 
-    let invoice: VersionedInvoice?
+    let invoice: Invoice?
     var dismissAction: (() -> Void)?
 
-    init(invoice: VersionedInvoice? = nil, dismissAction: (() -> Void)? = nil) {
+    init(invoice: Invoice? = nil, dismissAction: (() -> Void)? = nil) {
         self.invoice = invoice
         self.dismissAction = dismissAction
 
@@ -36,103 +37,129 @@ struct InvoiceFormView: View {
     }
 
     var body: some View {
-        Form {
-            Section {
-                TextField("شماره فاکتور*", text: $invoiceDetails.number)
+        ZStack(alignment: .bottom) {
+            Form {
+                Section {
+                    TextField("شماره فاکتور*", text: $invoiceDetails.number)
 
-                Picker("نوع فاکتور", selection: $invoiceDetails.type) {
-                    ForEach(Invoice.InvoiceType.allCases, id: \.self) { type in
-                        Text(type.label)
-                            .tag(type)
+                    Picker("نوع فاکتور", selection: $invoiceDetails.type) {
+                        ForEach(Invoice.InvoiceType.allCases, id: \.self) { type in
+                            Text(type.label)
+                                .tag(type)
+                        }
+                    }
+
+                    Picker("نوع ارز", selection: $invoiceDetails.currency) {
+                        ForEach(Currency.allCases, id: \.self) { currency in
+                            Text(currency.label).tag(currency)
+                        }
+                    }
+
+//                    if invoiceDetails.options.contains(.date) {
+//                    DatePicker("تاریخ صدور", selection: $invoiceDetails.date)
+                    ////                    }
+                    ////
+                    ////                    if invoiceDetails.options.contains(.dueDate) {
+//                    DatePicker("تاریخ صدور", selection: $invoiceDetails.dueDate)
+                    ////                    }
+                    ////
+                    ////                    if invoiceDetails.options.contains(.tax) {
+//                    TextField("مالیات", value: $invoiceDetails.tax, format: .number)
+                    ////                    }
+//
+                    ////                    if invoiceDetails.options.contains(.discount) {
+//                    TextField("تخفیف", value: $invoiceDetails.discount, format: .number)
+//                    }
+
+//                    Button("افزودن مشتری", systemImage: "plus") {
+//                        showOptionsView.toggle()
+//                    }
+                }
+
+                Section {
+                    Picker("مشتری", selection: $invoiceDetails.customerId) {
+                        Text("انتخاب کنید")
+                            .tag(nil as UUID?)
+                        ForEach(customers) { customer in
+                            Text(customer.name)
+                                .tag(customer.id as UUID?)
+                        }
+                    }
+                    .pickerStyle(.navigationLink)
+                    .disabled(customers.isEmpty)
+                    .onChange(of: invoiceDetails.customerId) {
+                        let customer = customers.first { $0.id == invoiceDetails.customerId }
+
+                        if let customer {
+                            invoiceDetails.customerName = customer.name
+                            invoiceDetails.customerAddress = customer.address
+                            invoiceDetails.customerDetails = customer.details
+                            invoiceDetails.customerPhone = customer.phone
+                            invoiceDetails.customerEmail = customer.email
+                        } else {
+                            invoiceDetails.customerName = nil
+                            invoiceDetails.customerAddress = nil
+                            invoiceDetails.customerDetails = nil
+                            invoiceDetails.customerPhone = nil
+                            invoiceDetails.customerEmail = nil
+                        }
+                    }
+
+                    Button("افزودن مشتری", systemImage: "plus") {
+                        showCustomerFormView.toggle()
                     }
                 }
 
-                Picker("نوع ارز", selection: $invoiceDetails.currency) {
-                    ForEach(Currency.allCases, id: \.self) { currency in
-                        Text(currency.label).tag(currency)
+                Section {
+                    TextField("توضیحات", text: $invoiceDetails.note, axis: .vertical)
+                        .lineLimit(2 ... 4)
+                }
+
+                Section {
+                    ForEach($invoiceDetails.items) { $item in
+                        Stepper {
+                            Text(item.productName)
+                            Text(item.quantity.description)
+                        } onIncrement: {
+                            item.quantity += 1
+                        } onDecrement: {
+                            if item.quantity > 0 {
+                                item.quantity -= 1
+                            }
+                        }
                     }
-                }
-
-                DatePicker("تاریخ", selection: $invoiceDetails.date)
-            }
-
-            Section {
-                Picker("مشتری", selection: $invoiceDetails.customerId) {
-                    Text("انتخاب کنید")
-                        .tag(nil as UUID?)
-                    ForEach(customers) { customer in
-                        Text(customer.name)
-                            .tag(customer.id as UUID?)
-                    }
-                }
-                .pickerStyle(.navigationLink)
-                .disabled(customers.isEmpty)
-                .onChange(of: invoiceDetails.customerId) {
-                    let customer = customers.first { $0.id == invoiceDetails.customerId }
-
-                    if let customer {
-                        invoiceDetails.customerName = customer.name
-                        invoiceDetails.customerAddress = customer.address
-                        invoiceDetails.customerDetails = customer.details
-                        invoiceDetails.customerPhone = customer.phone
-                        invoiceDetails.customerEmail = customer.email
-                    } else {
-                        invoiceDetails.customerName = nil
-                        invoiceDetails.customerAddress = nil
-                        invoiceDetails.customerDetails = nil
-                        invoiceDetails.customerPhone = nil
-                        invoiceDetails.customerEmail = nil
-                    }
-                }
-
-                Button("افزودن مشتری", systemImage: "plus") {
-                    showCustomerFormView.toggle()
-                }
-            }
-
-            Section {
-                TextField("توضیحات", text: $invoiceDetails.note, axis: .vertical)
-                    .lineLimit(2 ... 4)
-            }
-
-            Section {
-                ForEach($invoiceDetails.items) { $item in
-                    Stepper {
-                        Text(item.productName)
-                        Text(item.quantity.description)
-                    } onIncrement: {
-                        item.quantity += 1
-                    } onDecrement: {
-                        if item.quantity > 0 {
-                            item.quantity -= 1
+                    .onDelete(perform: deleteProduct)
+                } header: {
+                    HStack {
+                        Text("محصولات")
+                        Spacer()
+                        Button("افزودن", systemImage: "plus") {
+                            showInvoiceProductSelection.toggle()
                         }
                     }
                 }
-                .onDelete(perform: deleteProduct)
-            } header: {
-                HStack {
-                    Text("محصولات")
-                    Spacer()
-                    Button("افزودن", systemImage: "plus") {
-                        showInvoiceProductSelection.toggle()
-                    }
-                }
             }
+
+            Button {
+                save()
+
+                dismissAction?() ?? dismiss()
+            } label: {
+                Label("ذخیره فاکتور", systemImage: "checkmark.circle.fill")
+                    .font(.headline)
+                    .padding(.vertical, 8)
+                    .cornerRadius(10)
+                    .frame(maxWidth: .infinity)
+            }
+            .padding(.vertical)
+            .padding(.horizontal, 20)
+            .buttonStyle(.borderedProminent)
+            .disabled(invoiceDetails.isInvalid)
         }
         .navigationBarTitle(invoice == nil ? "فاکتور جدید" : "ویرایش فاکتور")
-        .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .interactiveDismissDisabled()
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("ذخیره") {
-                    save()
-
-                    dismissAction?() ?? dismiss()
-                }
-                .disabled(invoiceDetails.isInvalid)
-            }
-
             ToolbarItem(placement: .navigationBarLeading) {
                 Button("انصراف") {
                     guard let invoice else {
@@ -178,7 +205,7 @@ struct InvoiceFormView: View {
                 if let existingItem = invoice.items.first(where: { $0.productCode == item.productCode }) {
                     existingItem.update(with: item)
                 } else {
-                    let item = VersionedItem(from: item)
+                    let item = InvoiceItem(from: item)
                     invoice.items.append(item)
                 }
             }
@@ -193,10 +220,10 @@ struct InvoiceFormView: View {
             let invoiceCustomer = InvoiceCustomer(from: invoiceDetails)
             let invoiceBusiness = InvoiceBusiness(from: business)
 
-            let invoice = VersionedInvoice(from: invoiceDetails, customer: invoiceCustomer, business: invoiceBusiness)
+            let invoice = Invoice(from: invoiceDetails, customer: invoiceCustomer, business: invoiceBusiness)
 
             invoiceDetails.items.forEach {
-                let item = VersionedItem(from: $0)
+                let item = InvoiceItem(from: $0)
                 invoice.items.append(item)
             }
 

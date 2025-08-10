@@ -11,7 +11,7 @@ struct InvoiceSummaryView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(TabViewModel.self) private var tabViewModel
     @Environment(InvoiceViewModel.self) private var invoiceViewModel
-    let invoice: VersionedInvoice
+    let invoice: Invoice
 
     var body: some View {
         NavigationStack {

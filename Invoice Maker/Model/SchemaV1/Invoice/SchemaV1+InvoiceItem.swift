@@ -1,5 +1,5 @@
 //
-//  InvoiceSchemaV1+Item.swift
+//  SchemaV1+InvoiceItem.swift
 //  Invoice Maker
 //
 //  Created by Mohammad Najafzadeh on 11/06/2025.
@@ -8,24 +8,24 @@
 import Foundation
 import SwiftData
 
-extension InvoiceSchemaV1 {
+extension SchemaV1 {
     @Model
-    class VersionedItem {
+    class InvoiceItem {
         var productCode: Int
         var productName: String
         var productPrice: Decimal
         var productCurrency: Currency
         var productDetails: String?
         var quantity: Int
-        var invoice: VersionedInvoice?
+        var invoice: SchemaV1.Invoice?
 
         var total: Decimal { productPrice * Decimal(quantity) }
 
-        var product: VersionedProduct {
-            VersionedProduct(code: productCode, name: productName, price: productPrice, currency: productCurrency, details: productDetails)
+        var product: SchemaV1.Product {
+            Product(code: productCode, name: productName, price: productPrice, currency: productCurrency, details: productDetails)
         }
 
-        init(productCode: Int, productName: String, productPrice: Decimal, productCurrency: Currency, productDetails: String? = nil, quantity: Int = 1, invoice: VersionedInvoice? = nil) {
+        init(productCode: Int, productName: String, productPrice: Decimal, productCurrency: Currency, productDetails: String? = nil, quantity: Int = 1, invoice: SchemaV1.Invoice? = nil) {
             self.productCode = productCode
             self.productName = productName
             self.productPrice = productPrice
@@ -35,16 +35,16 @@ extension InvoiceSchemaV1 {
             self.invoice = invoice
         }
 
-        convenience init(from item: Item) {
-            self.init(productCode: item.product.code,
-                      productName: item.product.name,
-                      productPrice: Decimal(Double(item.product.price)),
-                      productCurrency: .IRR,
-                      productDetails: item.product.details,
+        convenience init(from item: ItemDetailsV1) {
+            self.init(productCode: item.productCode,
+                      productName: item.productName,
+                      productPrice: item.productPrice,
+                      productCurrency: item.productCurrency,
+                      productDetails: item.productDetails,
                       quantity: item.quantity)
         }
 
-        convenience init(from item: ItemDetails) {
+        convenience init(from item: SchemaV1.InvoiceItem) {
             self.init(productCode: item.productCode,
                       productName: item.productName,
                       productPrice: item.productPrice,
@@ -55,12 +55,12 @@ extension InvoiceSchemaV1 {
     }
 }
 
-extension InvoiceSchemaV1.VersionedItem {
-    func update(with itemDetails: ItemDetails) {
+extension SchemaV1.InvoiceItem {
+    func update(with itemDetails: ItemDetailsV1) {
         quantity = itemDetails.quantity
     }
 
-    func update(with product: VersionedProduct) {
+    func update(with product: SchemaV1.Product) {
         productCode = product.code
         productName = product.name
         productPrice = product.price

@@ -13,9 +13,9 @@ struct InvoiceDetailView: View {
     @State private var generatedPDF: URL?
     @State private var customer: Customer?
     @State private var business: Business?
-    @State private var products: [VersionedProduct] = []
+    @State private var products: [Product] = []
 
-    let invoice: VersionedInvoice
+    let invoice: Invoice
     @Binding var isEditing: Bool
 
     var body: some View {
@@ -101,8 +101,8 @@ struct InvoiceDetailView: View {
             business = (try? modelContext.fetch(businessDescriptor))?.first
 
             let productCodes = invoice.items.map { $0.productCode }
-            let productDescriptor = FetchDescriptor<VersionedProduct>(
-                predicate: #Predicate<VersionedProduct> { productCodes.contains($0.code) },
+            let productDescriptor = FetchDescriptor<Product>(
+                predicate: #Predicate<Product> { productCodes.contains($0.code) },
                 sortBy: [SortDescriptor(\.createdDate, order: .reverse)]
             )
             products = (try? modelContext.fetch(productDescriptor)) ?? []

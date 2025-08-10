@@ -10,7 +10,7 @@ import SwiftUI
 struct ProductView: View {
     @State var isEditing: Bool = false
 
-    var product: VersionedProduct
+    var product: Product
 
     var body: some View {
         NavigationStack {

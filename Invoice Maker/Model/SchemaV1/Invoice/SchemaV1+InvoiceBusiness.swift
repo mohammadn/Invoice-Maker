@@ -1,5 +1,5 @@
 //
-//  InvoiceSchemaV1+Business.swift
+//  SchemaV1+InvoiceBusiness.swift
 //  Invoice Maker
 //
 //  Created by Mohammad Najafzadeh on 11/06/2025.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-extension InvoiceSchemaV1 {
+extension SchemaV1 {
     @Model
     class InvoiceBusiness {
         var name: String
@@ -16,9 +16,9 @@ extension InvoiceSchemaV1 {
         var email: String?
         var website: String?
         var address: String?
-        var invoice: VersionedInvoice?
+        var invoice: SchemaV1.Invoice?
 
-        init(name: String, phone: String, email: String? = nil, website: String? = nil, address: String? = nil, invoice: VersionedInvoice? = nil) {
+        init(name: String, phone: String, email: String? = nil, website: String? = nil, address: String? = nil, invoice: SchemaV1.Invoice? = nil) {
             self.name = name
             self.phone = phone
             self.email = email
@@ -27,7 +27,7 @@ extension InvoiceSchemaV1 {
             self.invoice = invoice
         }
 
-        convenience init(from business: Business) {
+        convenience init(from business: SchemaV1.Business) {
             self.init(name: business.name,
                       phone: business.phone,
                       email: business.email,
@@ -37,8 +37,8 @@ extension InvoiceSchemaV1 {
     }
 }
 
-extension InvoiceSchemaV1.InvoiceBusiness {
-    func update(with business: Business) {
+extension SchemaV1.InvoiceBusiness {
+    func update(with business: SchemaV1.Business) {
         name = business.name
         phone = business.phone
         email = business.email

@@ -1,5 +1,5 @@
 //
-//  InvoiceSchemaV1+Customer.swift
+//  SchemaV1+InvoiceCustomer.swift
 //  Invoice Maker
 //
 //  Created by Mohammad Najafzadeh on 11/06/2025.
@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-extension InvoiceSchemaV1 {
+extension SchemaV1 {
     @Model
     class InvoiceCustomer {
         var id: UUID
@@ -17,7 +17,7 @@ extension InvoiceSchemaV1 {
         var email: String?
         var address: String?
         var details: String?
-        var invoice: VersionedInvoice?
+        var invoice: SchemaV1.Invoice?
 
         init(id: UUID, name: String, phone: String? = nil, email: String? = nil, address: String? = nil, details: String? = nil) {
             self.id = id
@@ -28,7 +28,7 @@ extension InvoiceSchemaV1 {
             self.details = details
         }
 
-        convenience init(from customer: Customer) {
+        convenience init(from customer: SchemaV1.Customer) {
             self.init(id: customer.id,
                       name: customer.name,
                       phone: customer.phone,
@@ -37,12 +37,12 @@ extension InvoiceSchemaV1 {
                       details: customer.details)
         }
 
-        convenience init?(from invoiceDetails: InvoiceDetails) {
+        convenience init?(from invoiceDetails: InvoiceDetailsV1) {
             guard let customerId = invoiceDetails.customerId,
                   let customerName = invoiceDetails.customerName else {
                 return nil
             }
-            
+
             self.init(id: customerId,
                       name: customerName,
                       phone: invoiceDetails.customerPhone,
@@ -53,8 +53,8 @@ extension InvoiceSchemaV1 {
     }
 }
 
-extension InvoiceSchemaV1.InvoiceCustomer {
-    func update(with customer: Customer) {
+extension SchemaV1.InvoiceCustomer {
+    func update(with customer: SchemaV1.Customer) {
         id = customer.id
         name = customer.name
         phone = customer.phone

@@ -9,8 +9,8 @@ import SwiftData
 import SwiftUI
 
 struct CustomerDetailView: View {
-    @Query private var invoices: [VersionedInvoice]
-    @State private var selectedInvoice: VersionedInvoice?
+    @Query private var invoices: [Invoice]
+    @State private var selectedInvoice: Invoice?
     var customer: Customer
 
     @Binding var isEditing: Bool
@@ -20,7 +20,7 @@ struct CustomerDetailView: View {
         _isEditing = isEditing
 
         let customerId = customer.id
-        let predicate = #Predicate<VersionedInvoice> {
+        let predicate = #Predicate<Invoice> {
             $0.customer?.id != nil && $0.customer?.id == customerId
         }
 

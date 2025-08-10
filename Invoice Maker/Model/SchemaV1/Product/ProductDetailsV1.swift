@@ -1,5 +1,5 @@
 //
-//  ProductDetails.swift
+//  ProductDetailsV1.swift
 //  Invoice Maker
 //
 //  Created by Mohammad Najafzadeh on 12/02/2024.
@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class ProductDetails {
+class ProductDetailsV1 {
     var code: Int?
     var name: String
     var price: Decimal?
@@ -27,7 +27,7 @@ class ProductDetails {
         self.details = details
     }
 
-    convenience init(from product: VersionedProduct) {
+    convenience init(from product: SchemaV1.Product) {
         self.init(code: product.code, name: product.name, price: product.price, currency: product.currency, details: product.details)
     }
 }

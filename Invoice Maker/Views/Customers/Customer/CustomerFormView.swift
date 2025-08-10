@@ -11,7 +11,6 @@ struct CustomerFormView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @State private var customerDetails: CustomerDetails
-//    @State private var showDismissAlert: Bool = false
 
     var customer: Customer?
     var dismissAction: (() -> Void)?
@@ -63,16 +62,6 @@ struct CustomerFormView: View {
                 Button("انصراف") {
                     dismissAction?() ?? dismiss()
                 }
-//                    .alert("آیا مطمئن هستید؟", isPresented: $showDismissAlert) {
-//                        Button("انصراف", role: .cancel) {
-//                            showDismissAlert.toggle()
-//                        }
-//                        Button("بازگشت") {
-//                            dismiss()
-//                        }
-//                    } message: {
-//                        Text("در صورت بازگشت به صفحه قبل اطلاعات مشتری ذخیره نخواهد شد.")
-//                    }
             }
         }
     }
