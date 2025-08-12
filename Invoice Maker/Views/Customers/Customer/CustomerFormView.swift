@@ -46,10 +46,10 @@ struct CustomerFormView: View {
                     .lineLimit(2 ... 4)
             }
         }
-        .navigationBarTitle(customer == nil ? "افزودن مشتری" : "ویرایش مشتری")
+        .navigationTitle(customer == nil ? "افزودن مشتری" : "ویرایش مشتری")
         .navigationBarBackButtonHidden(true)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .topBarTrailing) {
                 Button("ذخیره") {
                     save()
 
@@ -58,7 +58,7 @@ struct CustomerFormView: View {
                 .disabled(customerDetails.isInvalid)
             }
 
-            ToolbarItem(placement: .navigationBarLeading) {
+            ToolbarItem(placement: .topBarLeading) {
                 Button("انصراف") {
                     dismissAction?() ?? dismiss()
                 }

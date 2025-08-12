@@ -62,10 +62,10 @@ struct ProductFormView: View {
                     .lineLimit(2 ... 4)
             }
         }
-        .navigationBarTitle(product == nil ? "افزودن محصول" : "ویرایش محصول")
+        .navigationTitle(product == nil ? "افزودن محصول" : "ویرایش محصول")
         .navigationBarBackButtonHidden(true)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .topBarTrailing) {
                 Button("ذخیره") {
                     save()
 
@@ -74,7 +74,7 @@ struct ProductFormView: View {
                 .disabled(productDetails.isInvalid || duplicateCode)
             }
 
-            ToolbarItem(placement: .navigationBarLeading) {
+            ToolbarItem(placement: .topBarLeading) {
                 Button("انصراف") {
                     dismissAction?() ?? dismiss()
                 }

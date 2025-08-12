@@ -26,15 +26,23 @@ struct PDF {
                                                          attributes: [
                                                              .font: UIFont.systemFont(ofSize: .init(14)),
                                                          ])
-        let attributedDate = NSMutableAttributedString(string: "تاریخ:  " + formattedDate(invoice.date),
+        let attributedDate = NSMutableAttributedString(string: "تاریخ صدور:  " + formattedDate(invoice.date),
                                                        attributes: [
                                                            .font: UIFont.systemFont(ofSize: .init(14)),
                                                        ])
+
+        let attributedDueDate = NSMutableAttributedString(string: "تاریخ سررسید:  " + formattedDate(invoice.dueDate),
+                                                          attributes: [
+                                                              .font: UIFont.systemFont(ofSize: .init(14)),
+                                                          ])
 
         document.add(.headerRight, attributedText: attributedTitle)
 
         document.add(.headerLeft, attributedText: attributedNumber)
         document.add(.headerLeft, attributedText: attributedDate)
+        if invoice.options.contains(.dueDate) {
+            document.add(.headerLeft, attributedText: attributedDueDate)
+        }
 
         document.add(space: 20)
 
@@ -81,13 +89,6 @@ struct PDF {
         document.add(table: table)
         document.add(space: 20)
 
-        // Summary Section
-        let lastRow = table.size.rows - 1
-        table[lastRow, 1].content = try? PDFTableContent(content: "جمع کل (\(invoice.currency.label))")
-        table[lastRow, 0].content = try? PDFTableContent(content: "\(formattedNumber(invoice.total))")
-        table[rows: lastRow, columns: 1 ... 3].merge()
-        document.add(space: 20)
-
         // Notes and Terms
         document.add(.contentRight, text: "توضیحات:")
         document.add(.contentRight, text: invoice.note)
@@ -130,30 +131,9 @@ struct PDF {
         }
     }
 
-    // Helper Functions
-    private func formattedDate(_ date: Date) -> String {
-        var formatStyle = Date.FormatStyle.dateTime
-        formatStyle.locale = Locale(identifier: "fa")
-        formatStyle.calendar = Calendar(identifier: .persian)
-
-        return date.formatted(formatStyle)
-    }
-
-    private func formattedNumber(_ input: Int) -> String {
-        return input.formatted(.number.grouping(.automatic).locale(Locale(identifier: "fa")))
-    }
-
-    private func formattedNumber(_ input: Decimal) -> String {
-        return input.formatted(.number.grouping(.automatic).locale(Locale(identifier: "fa")))
-    }
-
-//    private func symbol(of code: String) -> String {
-//        let locale = NSLocale(localeIdentifier: code)
-//        return locale.displayName(forKey: NSLocale.Key.currencySymbol, value: code) ?? code
-//    }
-
     private func createItemsTable() -> PDFTable {
-        let table = PDFTable(rows: invoice.items.count + 2, columns: 5)
+        let rowsCounter = invoice.items.count + 5
+        let table = PDFTable(rows: rowsCounter, columns: 5)
         table.widths = [0.25, 0.25, 0.1, 0.3, 0.1]
         table.padding = 5
 
@@ -175,6 +155,30 @@ struct PDF {
             table[row, 4].content = try? PDFTableContent(content: formattedNumber(row))
         }
 
+        // Summary Section
+        let netTotalRow = invoice.items.count + 1
+//        table[netTotalRow, 1].style = PDFTableCellStyle(borders: PDFTableCellBorders(top: PDFLineStyle(type: .full, color: .black, width: 10)))
+        table[netTotalRow, 1].content = try? PDFTableContent(content: "جمع کل (\(invoice.currency.label))")
+        table[netTotalRow, 0].content = try? PDFTableContent(content: "\(formattedNumber(invoice.total))")
+        table[rows: netTotalRow, columns: 1 ... 4].merge()
+
+        let discountRow = netTotalRow + 1
+        table[discountRow, 2].content = try? PDFTableContent(content: "تخفیف")
+        table[discountRow, 1].content = try? PDFTableContent(content: formattedNumber(invoice.discount) + " %")
+        table[discountRow, 0].content = try? PDFTableContent(content: "-\(formattedNumber(invoice.discountAmount))")
+        table[rows: discountRow, columns: 2 ... 4].merge()
+
+        let vatRow = discountRow + 1
+        table[vatRow, 2].content = try? PDFTableContent(content: "ارزش افزوده")
+        table[vatRow, 1].content = try? PDFTableContent(content: formattedNumber(invoice.vat) + " %")
+        table[vatRow, 0].content = try? PDFTableContent(content: "+\(formattedNumber(invoice.vatAmount))")
+        table[rows: vatRow, columns: 2 ... 4].merge()
+
+        let totalRow = vatRow + 1
+        table[totalRow, 1].content = try? PDFTableContent(content: "مبلغ نهایی (\(invoice.currency.label))")
+        table[totalRow, 0].content = try? PDFTableContent(content: "\(formattedNumber(invoice.totalWithVAT))")
+        table[rows: totalRow, columns: 1 ... 4].merge()
+
         return table
     }
 
@@ -186,4 +190,35 @@ struct PDF {
         label.append(value)
         return label
     }
+
+    // Helper Functions
+    private func formattedDate(_ date: Date) -> String {
+        var formatStyle = Date.FormatStyle.dateTime
+        formatStyle.locale = Locale(identifier: "fa")
+        formatStyle.calendar = Calendar(identifier: .persian)
+
+        return date.formatted(formatStyle)
+    }
+
+    private func formattedNumber(_ input: Int) -> String {
+        return input.formatted(.number.grouping(.automatic).locale(Locale(identifier: "fa")))
+    }
+
+//    private func formattedNumber(_ input: Decimal) -> String {
+//        return input.formatted(.number.grouping(.automatic).locale(Locale(identifier: "fa")))
+//    }
+
+    private func formattedNumber(_ input: Decimal) -> String {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "fa")
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = "٬" // U+066C ARABIC THOUSANDS SEPARATOR
+        formatter.decimalSeparator = "." // U+066B ARABIC DECIMAL SEPARATOR
+        return formatter.string(from: input as NSDecimalNumber) ?? "\(input)"
+    }
+
+    //    private func symbol(of code: String) -> String {
+    //        let locale = NSLocale(localeIdentifier: code)
+    //        return locale.displayName(forKey: NSLocale.Key.currencySymbol, value: code) ?? code
+    //    }
 }

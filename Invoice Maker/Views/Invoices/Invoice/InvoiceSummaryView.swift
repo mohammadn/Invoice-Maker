@@ -34,7 +34,7 @@ struct InvoiceSummaryView: View {
             .presentationDetents([.medium, .large])
             .presentationDragIndicator(.visible)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button("مشاهده در فاکتورها") {
                         Task {
                             await viewInvoice()
@@ -42,7 +42,7 @@ struct InvoiceSummaryView: View {
                     }
                 }
 
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button("بستن") {
                         dismiss()
                     }

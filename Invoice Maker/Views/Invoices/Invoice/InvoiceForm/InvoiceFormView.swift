@@ -13,9 +13,9 @@ struct InvoiceFormView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var business: [Business]
     @Query(sort: \Customer.name) private var customers: [Customer]
-    @State private var showInvoiceProductSelection: Bool = false
+    @State private var showProductSelectionView: Bool = false
     @State private var showCustomerFormView: Bool = false
-    @State private var showOptionsView: Bool = false
+    @State private var showOptionSelectionView: Bool = false
     @State private var invoiceDetails: InvoiceDetails
     @State private var showDismissAlert: Bool = false
 
@@ -55,25 +55,15 @@ struct InvoiceFormView: View {
                         }
                     }
 
-//                    if invoiceDetails.options.contains(.date) {
-//                    DatePicker("تاریخ صدور", selection: $invoiceDetails.date)
-                    ////                    }
-                    ////
-                    ////                    if invoiceDetails.options.contains(.dueDate) {
-//                    DatePicker("تاریخ صدور", selection: $invoiceDetails.dueDate)
-                    ////                    }
-                    ////
-                    ////                    if invoiceDetails.options.contains(.tax) {
-//                    TextField("مالیات", value: $invoiceDetails.tax, format: .number)
-                    ////                    }
-//
-                    ////                    if invoiceDetails.options.contains(.discount) {
-//                    TextField("تخفیف", value: $invoiceDetails.discount, format: .number)
-//                    }
+                    DatePicker("تاریخ صدور", selection: $invoiceDetails.date)
 
-//                    Button("افزودن مشتری", systemImage: "plus") {
-//                        showOptionsView.toggle()
-//                    }
+                    if invoiceDetails.options.contains(.dueDate) {
+                        DatePicker("تاریخ سررسید", selection: $invoiceDetails.dueDate)
+                    }
+
+                    TextField("تخفیف (٪)*", value: $invoiceDetails.discount, format: .number)
+
+                    TextField("ارزش افزوده (٪)*", value: $invoiceDetails.vat, format: .number)
                 }
 
                 Section {
@@ -134,7 +124,7 @@ struct InvoiceFormView: View {
                         Text("محصولات")
                         Spacer()
                         Button("افزودن", systemImage: "plus") {
-                            showInvoiceProductSelection.toggle()
+                            showProductSelectionView.toggle()
                         }
                     }
                 }
@@ -153,14 +143,14 @@ struct InvoiceFormView: View {
             }
             .padding(.vertical)
             .padding(.horizontal, 20)
-            .buttonStyle(.borderedProminent)
             .disabled(invoiceDetails.isInvalid)
+            .buttonStyle(.borderedProminent)
         }
-        .navigationBarTitle(invoice == nil ? "فاکتور جدید" : "ویرایش فاکتور")
+        .navigationTitle(invoice == nil ? "فاکتور جدید" : "ویرایش فاکتور")
         .navigationBarBackButtonHidden(true)
         .interactiveDismissDisabled()
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
+            ToolbarItem(placement: .topBarLeading) {
                 Button("انصراف") {
                     guard let invoice else {
                         showDismissAlert.toggle()
@@ -184,14 +174,23 @@ struct InvoiceFormView: View {
                     Text("در صورت بازگشت به صفحه قبل اطلاعات فاکتور ذخیره نخواهد شد.")
                 }
             }
+
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("تنظیمات") {
+                    showOptionSelectionView.toggle()
+                }
+            }
         }
         .sheet(isPresented: $showCustomerFormView) {
             NavigationStack {
                 CustomerFormView()
             }
         }
-        .sheet(isPresented: $showInvoiceProductSelection) {
+        .sheet(isPresented: $showProductSelectionView) {
             InvoiceProductSelection(items: $invoiceDetails.items)
+        }
+        .sheet(isPresented: $showOptionSelectionView) {
+            InvoiceOptionSelectionView(options: $invoiceDetails.options)
         }
     }
 

@@ -14,8 +14,8 @@ class InvoiceDetailsV1 {
     var currency: Currency
     var date: Date
     var dueDate: Date
-    var tax: Decimal
-    var discount: Decimal
+    var vat: Decimal?
+    var discount: Decimal?
     var note: String
     var status: SchemaV1.Invoice.Status
     var options: [SchemaV1.Invoice.Options]
@@ -28,7 +28,11 @@ class InvoiceDetailsV1 {
     var customerEmail: String?
 
     var isInvalid: Bool {
-        number.isEmpty || customerId == nil || items.isEmpty
+        number.isEmpty ||
+            customerId == nil ||
+            items.isEmpty ||
+            discount == nil ||
+            vat == nil
     }
 
     init(number: String = "",
@@ -36,11 +40,11 @@ class InvoiceDetailsV1 {
          currency: Currency = .IRR,
          date: Date = .now,
          dueDate: Date = .now,
-         tax: Decimal = 0,
-         discount: Decimal = 0,
+         vat: Decimal? = nil,
+         discount: Decimal? = nil,
          note: String = "",
          status: SchemaV1.Invoice.Status = .pending,
-         options: [SchemaV1.Invoice.Options] = [.date],
+         options: [SchemaV1.Invoice.Options] = [],
          items: [ItemDetailsV1] = [],
          customerId: UUID? = nil,
          customerName: String? = nil,
@@ -53,7 +57,7 @@ class InvoiceDetailsV1 {
         self.currency = currency
         self.date = date
         self.dueDate = dueDate
-        self.tax = tax
+        self.vat = vat
         self.discount = discount
         self.note = note
         self.status = status
@@ -73,7 +77,7 @@ class InvoiceDetailsV1 {
                   currency: invoice.currency,
                   date: invoice.date,
                   dueDate: invoice.dueDate,
-                  tax: invoice.tax,
+                  vat: invoice.vat,
                   discount: invoice.discount,
                   note: invoice.note,
                   status: invoice.status,
@@ -97,7 +101,7 @@ extension InvoiceDetailsV1: Equatable {
             lhs.currency == rhs.currency &&
             lhs.date == rhs.date &&
             lhs.dueDate == rhs.dueDate &&
-            lhs.tax == rhs.tax &&
+            lhs.vat == rhs.vat &&
             lhs.discount == rhs.discount &&
             lhs.note == rhs.note &&
             lhs.status == rhs.status &&
@@ -119,7 +123,7 @@ extension InvoiceDetailsV1: Hashable {
         hasher.combine(currency)
         hasher.combine(date)
         hasher.combine(dueDate)
-        hasher.combine(tax)
+        hasher.combine(vat)
         hasher.combine(discount)
         hasher.combine(note)
         hasher.combine(status)

@@ -84,9 +84,9 @@ struct InvoicesView: View {
                     .onDelete(perform: deleteValidInvoice)
                 }
             }
-            .navigationBarTitle("فاکتورها")
+            .navigationTitle("فاکتورها")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button("افزودن فاکتور", systemImage: "plus") {
                         showInvoiceFormView.toggle()
                     }

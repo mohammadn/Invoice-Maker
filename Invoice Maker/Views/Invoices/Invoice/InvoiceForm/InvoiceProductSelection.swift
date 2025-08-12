@@ -32,9 +32,9 @@ struct InvoiceProductSelection: View {
                     }
                 }
             }
-            .navigationBarTitle("انتخاب محصول")
+            .navigationTitle("انتخاب محصول")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .topBarTrailing) {
                     Button("تا‫ئید‬") {
                         updateItems(with: selectedProducts)
 
@@ -42,7 +42,7 @@ struct InvoiceProductSelection: View {
                     }
                 }
 
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .topBarLeading) {
                     Button("انصراف") {
                         dismiss()
                     }

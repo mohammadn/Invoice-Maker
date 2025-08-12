@@ -17,6 +17,11 @@ struct InvoiceMainDetailsView: View {
             LabeledContent("جمع کل", value: invoice.total, format: .currencyFormatter(code: invoice.currency))
             LabeledContent("نوع ارز", value: invoice.currency.label)
             LabeledContent("تاریخ", value: invoice.date, format: .dateTime)
+            if invoice.options.contains(.dueDate) {
+                LabeledContent("تاریخ سررسید", value: invoice.dueDate, format: .dateTime)
+            }
+            LabeledContent("تخفیف (٪)", value: invoice.discount, format: .number)
+            LabeledContent("ارزش افزوده (٪)", value: invoice.vat, format: .number)
             LabeledContent("توضیحات", value: invoice.note.isEmpty ? "-" : invoice.note)
         }
     }

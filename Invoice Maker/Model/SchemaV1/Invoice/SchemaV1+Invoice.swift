@@ -15,12 +15,12 @@ extension SchemaV1 {
         var type: InvoiceType = InvoiceType.sale
         var currency: Currency
         var date: Date
-        var dueDate: Date = Date.now
-        var tax: Decimal = 0
-        var discount: Decimal = 0
+        var dueDate: Date
+        var vat: Decimal
+        var discount: Decimal
         var note: String
         var status: Status
-        var options: [Options] = [Options.date]
+        var options: [Options]
         @Relationship(deleteRule: .cascade, inverse: \SchemaV1.InvoiceItem.invoice) var items: [SchemaV1.InvoiceItem]
         @Relationship(deleteRule: .cascade, inverse: \SchemaV1.InvoiceCustomer.invoice) var customer: SchemaV1.InvoiceCustomer?
         @Relationship(deleteRule: .cascade, inverse: \SchemaV1.InvoiceBusiness.invoice) var business: SchemaV1.InvoiceBusiness?
@@ -47,6 +47,22 @@ extension SchemaV1 {
             return total.rounded()
         }
 
+        var discountAmount: Decimal {
+            return (total * (discount / 100)).rounded()
+        }
+
+        var totalWithDiscount: Decimal {
+            return (total - discountAmount).rounded()
+        }
+
+        var vatAmount: Decimal {
+            return (totalWithDiscount * (vat / 100)).rounded()
+        }
+
+        var totalWithVAT: Decimal {
+            return (totalWithDiscount + vatAmount).rounded()
+        }
+
         var getCustomer: SchemaV1.Customer? {
             guard let customerId = customer?.id, let customerName = customer?.name else { return nil }
 
@@ -63,12 +79,12 @@ extension SchemaV1 {
              type: InvoiceType = InvoiceType.sale,
              currency: Currency,
              date: Date,
-             dueDate: Date = .now,
-             tax: Decimal = 0,
-             discount: Decimal = 0,
+             dueDate: Date,
+             vat: Decimal,
+             discount: Decimal,
              note: String,
              status: Status,
-             options: [Options] = [.date],
+             options: [Options],
              items: [SchemaV1.InvoiceItem],
              customer: SchemaV1.InvoiceCustomer?,
              business: SchemaV1.InvoiceBusiness,
@@ -78,7 +94,7 @@ extension SchemaV1 {
             self.currency = currency
             self.date = date
             self.dueDate = dueDate
-            self.tax = tax
+            self.vat = vat
             self.discount = discount
             self.note = note
             self.status = status
@@ -94,8 +110,8 @@ extension SchemaV1 {
                       currency: invoiceDetails.currency,
                       date: invoiceDetails.date,
                       dueDate: invoiceDetails.dueDate,
-                      tax: invoiceDetails.tax,
-                      discount: invoiceDetails.discount,
+                      vat: invoiceDetails.vat ?? 0,
+                      discount: invoiceDetails.discount ?? 0,
                       note: invoiceDetails.note,
                       status: invoiceDetails.status,
                       options: invoiceDetails.options,
@@ -138,14 +154,11 @@ extension SchemaV1.Invoice {
 
 extension SchemaV1.Invoice {
     enum Options: String, Codable, CaseIterable {
-        case date, dueDate, tax, discount
+        case dueDate
 
         var label: String {
             switch self {
-            case .date: "تاریخ صدور"
             case .dueDate: "تاریخ سررسید"
-            case .tax: "مالیات"
-            case .discount: "تخفیف"
             }
         }
     }
@@ -158,8 +171,8 @@ extension SchemaV1.Invoice {
         currency = invoiceDetails.currency
         date = invoiceDetails.date
         dueDate = invoiceDetails.dueDate
-        tax = invoiceDetails.tax
-        discount = invoiceDetails.discount
+        vat = invoiceDetails.vat ?? 0
+        discount = invoiceDetails.discount ?? 0
         note = invoiceDetails.note
         status = invoiceDetails.status
         options = invoiceDetails.options
