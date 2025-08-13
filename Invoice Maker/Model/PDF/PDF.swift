@@ -24,16 +24,15 @@ struct PDF {
         let attributedTitle = NSMutableAttributedString(string: invoice.type.label, attributes: [.font: UIFont.systemFont(ofSize: .init(30), weight: .bold)])
         let attributedNumber = NSMutableAttributedString(string: "شماره فاکتور:  " + invoice.number.toPersian(),
                                                          attributes: [
-                                                             .font: UIFont.systemFont(ofSize: .init(14)),
+                                                             .font: UIFont.systemFont(ofSize: .init(12)),
                                                          ])
         let attributedDate = NSMutableAttributedString(string: "تاریخ صدور:  " + formattedDate(invoice.date),
                                                        attributes: [
-                                                           .font: UIFont.systemFont(ofSize: .init(14)),
+                                                           .font: UIFont.systemFont(ofSize: .init(12)),
                                                        ])
-
         let attributedDueDate = NSMutableAttributedString(string: "تاریخ سررسید:  " + formattedDate(invoice.dueDate),
                                                           attributes: [
-                                                              .font: UIFont.systemFont(ofSize: .init(14)),
+                                                              .font: UIFont.systemFont(ofSize: .init(12)),
                                                           ])
 
         document.add(.headerRight, attributedText: attributedTitle)
@@ -49,8 +48,8 @@ struct PDF {
         let comma = NSMutableAttributedString(string: "  ,  ", attributes: [:])
 
         // Customer Information
-        let customerDetailsTable = PDFTable(rows: 2, columns: 1)
-        customerDetailsTable.padding = 5
+        let customerDetailsTable = PDFTable(rows: 1, columns: 1)
+        customerDetailsTable.padding = 10
 
         guard let name = invoice.customer?.name, !name.isEmpty else {
             print("Error generating PDF: Customer name is empty")
@@ -58,7 +57,7 @@ struct PDF {
         }
 
         let customerDetails = NSMutableAttributedString()
-        customerDetails.append(createAttributedString(label: "نام", value: name))
+        customerDetails.append(createAttributedString(label: "خریدار", value: name))
 
         if let phone = invoice.customer?.phone, !phone.isEmpty {
             customerDetails.append(comma)
@@ -75,11 +74,12 @@ struct PDF {
             customerDetails.append(createAttributedString(label: "آدرس", value: address))
         }
 
-        customerDetailsTable[0, 0].content = try? PDFTableContent(content: "خریدار:")
-        customerDetailsTable[1, 0].content = try? PDFTableContent(content: customerDetails)
-
-        customerDetailsTable[row: 0].allCellsStyle = PDFTableCellStyle(colors: (fill: UIColor.lightGray, text: UIColor.white), font: Font.systemFont(ofSize: 14))
-        customerDetailsTable[rows: 0 ... 1].allCellsAlignment = .right
+        customerDetailsTable[0, 0].content = try? PDFTableContent(content: customerDetails)
+        customerDetailsTable[row: 0].allCellsAlignment = .right
+        customerDetailsTable.style = PDFTableStyle(
+            outline: PDFLineStyle(type: .full, color: .systemGray5, width: 1),
+            columnHeaderStyle: PDFTableCellStyle(colors: (fill: .systemGray6, text: .black)),
+        )
 
         document.add(table: customerDetailsTable)
         document.add(space: 10)
@@ -95,7 +95,7 @@ struct PDF {
 
         // Business Details
         let businessDetails = NSMutableAttributedString()
-        businessDetails.append(createAttributedString(label: "نام", value: invoice.business?.name ?? "-"))
+        businessDetails.append(createAttributedString(label: "فروشنده", value: invoice.business?.name ?? "-"))
 
         businessDetails.append(comma)
         businessDetails.append(createAttributedString(label: "تلفن", value: invoice.business?.phone ?? "-"))
@@ -132,8 +132,18 @@ struct PDF {
     }
 
     private func createItemsTable() -> PDFTable {
+        let colors = (fill: Color.systemGray6, text: Color.black)
+        let border = PDFLineStyle(type: .full, color: .lightGray, width: 1)
+        let headerStyle = PDFTableCellStyle(colors: colors, borders: PDFTableCellBorders(top: border), font: .systemFont(ofSize: 14))
+        let contentStyle = PDFTableCellStyle(borders: PDFTableCellBorders(top: border, right: border), font: .systemFont(ofSize: 12))
         let rowsCounter = invoice.items.count + 5
         let table = PDFTable(rows: rowsCounter, columns: 5)
+        table.style = PDFTableStyle(
+            outline: PDFLineStyle(type: .full, color: .systemGray5, width: 1),
+            rowHeaderStyle: contentStyle,
+            columnHeaderStyle: headerStyle,
+            contentStyle: contentStyle,
+        )
         table.widths = [0.25, 0.25, 0.1, 0.3, 0.1]
         table.padding = 5
 
@@ -143,7 +153,6 @@ struct PDF {
         table[0, 2].content = try? PDFTableContent(content: "تعداد")
         table[0, 3].content = try? PDFTableContent(content: "نام محصول")
         table[0, 4].content = try? PDFTableContent(content: "ردیف")
-        table[row: 0].allCellsStyle = PDFTableCellStyle(colors: (fill: UIColor.lightGray, text: UIColor.white), font: Font.systemFont(ofSize: 14))
 
         // Table Content
         for (index, item) in invoice.items.enumerated() {
@@ -157,27 +166,31 @@ struct PDF {
 
         // Summary Section
         let netTotalRow = invoice.items.count + 1
-//        table[netTotalRow, 1].style = PDFTableCellStyle(borders: PDFTableCellBorders(top: PDFLineStyle(type: .full, color: .black, width: 10)))
-        table[netTotalRow, 1].content = try? PDFTableContent(content: "جمع کل (\(invoice.currency.label))")
         table[netTotalRow, 0].content = try? PDFTableContent(content: "\(formattedNumber(invoice.total))")
+        table[netTotalRow, 1].content = try? PDFTableContent(content: "جمع کل (\(invoice.currency.label))")
         table[rows: netTotalRow, columns: 1 ... 4].merge()
+        table[netTotalRow, 1].style = headerStyle
 
         let discountRow = netTotalRow + 1
-        table[discountRow, 2].content = try? PDFTableContent(content: "تخفیف")
-        table[discountRow, 1].content = try? PDFTableContent(content: formattedNumber(invoice.discount) + " %")
         table[discountRow, 0].content = try? PDFTableContent(content: "-\(formattedNumber(invoice.discountAmount))")
+        table[discountRow, 1].content = try? PDFTableContent(content: formattedNumber(invoice.discount) + " %")
+        table[discountRow, 2].content = try? PDFTableContent(content: "تخفیف")
         table[rows: discountRow, columns: 2 ... 4].merge()
+        table[discountRow, 2].style = headerStyle
 
         let vatRow = discountRow + 1
-        table[vatRow, 2].content = try? PDFTableContent(content: "ارزش افزوده")
-        table[vatRow, 1].content = try? PDFTableContent(content: formattedNumber(invoice.vat) + " %")
         table[vatRow, 0].content = try? PDFTableContent(content: "+\(formattedNumber(invoice.vatAmount))")
+        table[vatRow, 1].content = try? PDFTableContent(content: formattedNumber(invoice.vat) + " %")
+        table[vatRow, 2].content = try? PDFTableContent(content: "ارزش افزوده")
         table[rows: vatRow, columns: 2 ... 4].merge()
+        table[vatRow, 2].style = headerStyle
 
         let totalRow = vatRow + 1
-        table[totalRow, 1].content = try? PDFTableContent(content: "مبلغ نهایی (\(invoice.currency.label))")
         table[totalRow, 0].content = try? PDFTableContent(content: "\(formattedNumber(invoice.totalWithVAT))")
+        table[totalRow, 1].content = try? PDFTableContent(content: "مبلغ نهایی (\(invoice.currency.label))")
         table[rows: totalRow, columns: 1 ... 4].merge()
+        table[totalRow, 0].style = PDFTableCellStyle(borders: PDFTableCellBorders(top: border, right: border), font: .systemFont(ofSize: 14, weight: .bold))
+        table[totalRow, 1].style = PDFTableCellStyle(colors: colors, borders: PDFTableCellBorders(top: border), font: .systemFont(ofSize: 14, weight: .bold))
 
         return table
     }
