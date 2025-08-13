@@ -16,7 +16,7 @@ struct InvoiceMainDetailsView: View {
             LabeledContent("نوع فاکتور", value: invoice.type.label)
             LabeledContent("جمع کل", value: invoice.total, format: .currencyFormatter(code: invoice.currency))
             LabeledContent("نوع ارز", value: invoice.currency.label)
-            LabeledContent("تاریخ", value: invoice.date, format: .dateTime)
+            LabeledContent("تاریخ صدور", value: invoice.date, format: .dateTime)
             if invoice.options.contains(.dueDate) {
                 LabeledContent("تاریخ سررسید", value: invoice.dueDate, format: .dateTime)
             }

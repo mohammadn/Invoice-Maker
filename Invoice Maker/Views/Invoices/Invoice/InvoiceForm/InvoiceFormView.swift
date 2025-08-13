@@ -129,6 +129,7 @@ struct InvoiceFormView: View {
                     }
                 }
             }
+            .safeAreaPadding(.bottom, 70)
 
             Button {
                 save()
