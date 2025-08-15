@@ -1,5 +1,5 @@
 //
-//  currentProduct.swift
+//  CurrentCustomer.swift
 //  Invoice Maker
 //
 //  Created by Mohammad Najafzadeh on 04/06/2025.

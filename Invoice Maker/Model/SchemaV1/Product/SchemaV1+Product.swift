@@ -1,5 +1,5 @@
 //
-//  ProductSchemaV1.swift
+//  SchemaV1+Product.swift
 //  Invoice Maker
 //
 //  Created by Mohammad Najafzadeh on 11/02/2024.

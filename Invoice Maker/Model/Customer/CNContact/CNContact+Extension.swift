@@ -1,9 +1,9 @@
-/*
- See the LICENSE.txt file for this sample’s licensing information.
-
- Abstract:
- Extends the contact class.
- */
+//
+//  CNContant+Extension.swift
+//  Invoice Maker
+//
+//  Created by Mohammad Najafzadeh on 04/06/2025.
+//
 
 import Contacts
 
