@@ -48,11 +48,7 @@ struct InvoiceOptionSelectionView: View {
     }
 
     func updateOptions(with selectedOptions: Set<Invoice.Options>) {
-        selectedOptions.forEach { option in
-            if !options.contains(option) {
-                options.append(option)
-            }
-        }
+        options = Array(selectedOptions)
     }
 }
 
