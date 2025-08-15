@@ -53,10 +53,11 @@ struct InvoiceSummaryView: View {
 
     private func viewInvoice() async {
         dismiss()
+        invoiceViewModel.selectedInvoices.removeAll()
         try? await Task.sleep(nanoseconds: 300000000)
         tabViewModel.selectedTab = .invoices
         try? await Task.sleep(nanoseconds: 300000000)
-        invoiceViewModel.selectedInvoice = invoice
+        invoiceViewModel.selectedInvoices.insert(invoice)
     }
 }
 

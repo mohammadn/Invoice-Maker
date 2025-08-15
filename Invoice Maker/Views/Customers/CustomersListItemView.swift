@@ -8,24 +8,28 @@
 import SwiftUI
 
 struct CustomersListItemView: View {
-    @Binding var selectedCustomer: Customer?
     let customer: Customer
+
+    @Binding var editMode: EditMode
 
     var body: some View {
         VStack(alignment: .leading) {
-            NavigationLink(value: customer) {
-                HStack {
-                    Text(customer.name)
-                        .lineLimit(1)
-                        .truncationMode(.tail)
+            HStack {
+                Text(customer.name)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
 
-                    Spacer()
+                Spacer()
 
-                    Text(customer.phone?.toPersian() ?? "-")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                        .lineLimit(1)
-                }
+                Text(customer.phone?.toPersian() ?? "-")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                    .lineLimit(1)
+                    .padding(.trailing, editMode.isEditing ? 0 : 20)
+            }
+            .background {
+                NavigationLink(value: customer) { EmptyView() }
+                    .opacity(editMode.isEditing ? 0 : 1)
             }
 
             Text(customer.email ?? "-")

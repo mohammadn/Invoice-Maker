@@ -14,7 +14,7 @@ struct InvoicesView: View {
     @Query private var business: [Business]
     @Query(sort: \Invoice.createdDate, order: .reverse) private var invoices: [Invoice]
     @State private var showInvoiceFormView: Bool = false
-    @State private var selectedInvoice: Invoice?
+    @State private var editMode: EditMode = .inactive
 
     var invalidInvoices: [Invoice] {
         invoices.filter { $0.isInvalid }
@@ -27,42 +27,11 @@ struct InvoicesView: View {
     var body: some View {
         NavigationSplitView {
             @Bindable var invoiceViewModel = invoiceViewModel
-            List(selection: $invoiceViewModel.selectedInvoice) {
+            List(selection: $invoiceViewModel.selectedInvoices) {
                 if !invalidInvoices.isEmpty {
                     Section {
                         ForEach(invalidInvoices) { invoice in
                             VStack(alignment: .leading) {
-                                NavigationLink(value: invoice) {
-                                    HStack {
-                                        Text(invoice.number)
-                                            .lineLimit(1)
-
-                                        Spacer()
-
-                                        Text(invoice.total, format: .currencyFormatter(code: invoice.currency))
-                                            .font(.subheadline)
-                                            .foregroundColor(.secondary)
-                                            .lineLimit(1)
-                                    }
-                                }
-
-                                Text(invoice.date, style: .date)
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                        .onDelete(perform: deleteInvalidInvoice)
-                    } header: {
-                        Text("نامعتبر")
-                    } footer: {
-                        Text("این فاکتورها به دلیل عدم وجود اطلاعات مشتری یا محصول نامعتبر هستند.")
-                    }
-                }
-
-                Section {
-                    ForEach(validInvoices) { invoice in
-                        VStack(alignment: .leading) {
-                            NavigationLink(value: invoice) {
                                 HStack {
                                     Text(invoice.number)
                                         .lineLimit(1)
@@ -74,21 +43,83 @@ struct InvoicesView: View {
                                         .foregroundColor(.secondary)
                                         .lineLimit(1)
                                 }
+                                .background {
+                                    NavigationLink(value: invoice) { EmptyView() }
+                                        .opacity(editMode.isEditing ? 0 : 1)
+                                }
+
+                                Text(invoice.date, style: .date)
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            }
+                            .swipeActions {
+                                Button("حذف", role: .destructive) {
+                                    delete(invoice: invoice)
+                                }
+                            }
+                        }
+                    } header: {
+                        Text("نامعتبر")
+                    } footer: {
+                        Text("این فاکتورها به دلیل عدم وجود اطلاعات مشتری یا محصول نامعتبر هستند.")
+                    }
+                }
+
+                Section {
+                    ForEach(validInvoices, id: \.self) { invoice in
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text(invoice.number)
+                                    .lineLimit(1)
+
+                                Spacer()
+
+                                Text(invoice.total, format: .currencyFormatter(code: invoice.currency))
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                    .lineLimit(1)
+                                    .padding(.trailing, editMode.isEditing ? 0 : 20)
+                            }
+                            .background {
+                                NavigationLink(value: invoice) { EmptyView() }
+                                    .opacity(editMode.isEditing ? 0 : 1)
                             }
 
                             Text(invoice.date, style: .date)
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                         }
+                        .swipeActions {
+                            Button("حذف", role: .destructive) {
+                                delete(invoice: invoice)
+                            }
+                        }
                     }
-                    .onDelete(perform: deleteValidInvoice)
                 }
             }
+            .environment(\.editMode, $editMode)
             .navigationTitle("فاکتورها")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("افزودن فاکتور", systemImage: "plus") {
-                        showInvoiceFormView.toggle()
+                    if editMode.isEditing {
+                        Button("حذف") {
+                            delete(invoices: invoiceViewModel.selectedInvoices)
+                            editMode = .inactive
+                        }
+                        .disabled(invoiceViewModel.selectedInvoices.isEmpty)
+                    } else {
+                        Button("افزودن", systemImage: "plus") {
+                            showInvoiceFormView.toggle()
+                        }
+                    }
+                }
+
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(editMode.isEditing ? "پایان" : "ویرایش") {
+                        withAnimation {
+                            editMode = editMode.isEditing ? .inactive : .active
+                            invoiceViewModel.selectedInvoices.removeAll()
+                        }
                     }
                 }
             }
@@ -107,24 +138,28 @@ struct InvoicesView: View {
                 }
             }
         } detail: {
-            if let invoice = invoiceViewModel.selectedInvoice {
-                InvoiceView(invoice: invoice)
-            } else {
-                Text("یک فاکتور را انتخاب کنید")
+            switch invoiceViewModel.selectedInvoices.count {
+            case 0:
+                Text("یک فاکتور انتخاب کنید")
+                    .font(.title)
+            case 1:
+                if let invoice = invoiceViewModel.selectedInvoices.first {
+                    InvoiceView(invoice: invoice)
+                }
+            default:
+                Text("\(invoiceViewModel.selectedInvoices.count) فاکتور انتخاب شده است")
                     .font(.title)
             }
         }
     }
 
-    private func deleteInvalidInvoice(at offsets: IndexSet) {
-        for index in offsets {
-            modelContext.delete(invalidInvoices[index])
-        }
+    private func delete(invoice: Invoice) {
+        modelContext.delete(invoice)
     }
 
-    private func deleteValidInvoice(at offsets: IndexSet) {
-        for index in offsets {
-            modelContext.delete(validInvoices[index])
+    private func delete(invoices: Set<Invoice>) {
+        for invoice in invoices {
+            modelContext.delete(invoice)
         }
     }
 }

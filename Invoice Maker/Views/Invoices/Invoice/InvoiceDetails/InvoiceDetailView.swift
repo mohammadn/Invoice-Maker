@@ -74,7 +74,7 @@ struct InvoiceDetailView: View {
         }
         .navigationTitle(invoice.number)
         .toolbar {
-            ToolbarItemGroup {
+            ToolbarItem(placement: .topBarTrailing) {
                 Menu {
                     Button("ویرایش", systemImage: "pencil") {
                         isEditing.toggle()

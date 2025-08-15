@@ -16,8 +16,9 @@ struct CustomersView: View {
     @State private var showCustomerFormView: Bool = false
     @State private var showContactsPicker: Bool = false
     @State private var showContactsPermissionAlert: Bool = false
-    @State private var selectedCustomer: Customer?
+    @State private var selectedCustomers: Set<Customer> = []
     @State private var searchText: String = ""
+    @State private var editMode: EditMode = .inactive
 
     var filteredCustomers: [Customer] {
         if searchText.isEmpty {
@@ -35,31 +36,53 @@ struct CustomersView: View {
 
     var body: some View {
         NavigationSplitView {
-            List(selection: $selectedCustomer) {
-                ForEach(filteredCustomers) { customer in
-                    CustomersListItemView(selectedCustomer: $selectedCustomer, customer: customer)
+            List(selection: $selectedCustomers) {
+                ForEach(filteredCustomers, id: \.self) { customer in
+                    CustomersListItemView(customer: customer, editMode: $editMode)
+                        .swipeActions {
+                            Button("حذف", role: .destructive) {
+                                delete(customer: customer)
+                            }
+                        }
                 }
-                .onDelete(perform: delete)
 
                 if !searchText.isEmpty && storeManager.authorizationStatus != .authorized {
                     CustomersContactView(searchText: $searchText)
                 }
             }
+            .environment(\.editMode, $editMode)
             .navigationTitle("مشتریان")
             .searchable(text: $searchText, prompt: "جستجو")
             .animation(.default, value: filteredCustomers)
             .toolbar {
-                ToolbarItemGroup {
-                    Menu {
-                        Button("افزودن مشتری", systemImage: "plus") {
-                            showCustomerFormView.toggle()
+                ToolbarItem(placement: .topBarTrailing) {
+                    if editMode.isEditing {
+                        Button("حذف") {
+                            delete(customers: selectedCustomers)
+                            editMode = .inactive
                         }
+                        .disabled(selectedCustomers.isEmpty)
+                    } else {
+                        Menu {
+                            Button("افزودن", systemImage: "plus") {
+                                showCustomerFormView.toggle()
+                            }
 
-                        Button("افزودن از مخاطبین", systemImage: "person.crop.circle.badge.plus") {
-                            handleContactAuthorization()
+                            Button("افزودن از مخاطبین", systemImage: "person.crop.circle.badge.plus") {
+                                handleContactAuthorization()
+                            }
+                        } label: {
+                            Image(systemName: "plus")
                         }
-                    } label: {
-                        Image(systemName: "plus")
+                    }
+                }
+
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(editMode.isEditing ? "پایان" : "ویرایش") {
+                        withAnimation {
+                            editMode = editMode.isEditing ? .inactive : .active
+                            selectedCustomers.removeAll()
+                        }
                     }
                 }
             }
@@ -96,10 +119,16 @@ struct CustomersView: View {
                 }
             }
         } detail: {
-            if let customer = selectedCustomer {
-                CustomerView(customer: customer)
-            } else {
-                Text("یک مشتری را انتخاب کنید")
+            switch selectedCustomers.count {
+            case 0:
+                Text("یک مشتری انتخاب کنید")
+                    .font(.title)
+            case 1:
+                if let customer = selectedCustomers.first {
+                    CustomerView(customer: customer)
+                }
+            default:
+                Text("\(selectedCustomers.count) مشتری انتخاب شده است")
                     .font(.title)
             }
         }
@@ -148,19 +177,13 @@ struct CustomersView: View {
         modelContext.insert(customer)
     }
 
-    private func delete(at indexSet: IndexSet) {
-        if searchText.isEmpty {
-            indexSet.forEach { index in
-                modelContext.delete(customers[index])
-            }
-        } else {
-            indexSet.forEach { index in
-                let customerToDelete = filteredCustomers[index]
+    private func delete(customer: Customer) {
+        modelContext.delete(customer)
+    }
 
-                if let customer = customers.first(where: { $0.id == customerToDelete.id }) {
-                    modelContext.delete(customer)
-                }
-            }
+    private func delete(customers: Set<Customer>) {
+        for customer in customers {
+            modelContext.delete(customer)
         }
     }
 }

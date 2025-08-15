@@ -11,9 +11,10 @@ import SwiftUI
 struct ProductsView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Product.createdDate) private var products: [Product]
-    @State private var isProductFormViewPresented: Bool = false
-    @State private var selectedProduct: Product?
+    @State private var showProductFormView: Bool = false
+    @State private var selectedProducts: Set<Product> = []
     @State private var searchText: String = ""
+    @State private var editMode: EditMode = .inactive
 
     var filteredProducts: [Product] {
         if searchText.isEmpty {
@@ -30,41 +31,65 @@ struct ProductsView: View {
 
     var body: some View {
         NavigationSplitView {
-            List(selection: $selectedProduct) {
-                ForEach(filteredProducts) { product in
+            List(selection: $selectedProducts) {
+                ForEach(filteredProducts, id: \.self) { product in
                     VStack(alignment: .leading) {
-                        NavigationLink(value: product) {
-                            HStack {
-                                Text(product.name)
-                                    .lineLimit(1)
-                                    .truncationMode(.tail)
+                        HStack {
+                            Text(product.name)
+                                .lineLimit(1)
+                                .truncationMode(.tail)
 
-                                Spacer()
+                            Spacer()
 
-                                Text(product.price, format: .currencyFormatter(code: product.currency))
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                    .lineLimit(1)
-                            }
+                            Text(product.price, format: .currencyFormatter(code: product.currency))
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .lineLimit(1)
+                                .padding(.trailing, editMode.isEditing ? 0 : 20)
+                        }
+                        .background {
+                            NavigationLink(value: product) { EmptyView() }
+                                .opacity(editMode.isEditing ? 0 : 1)
                         }
 
                         Text(product.details?.isEmpty == false ? product.details! : "-").font(.subheadline)
                             .foregroundStyle(.gray)
                             .lineLimit(1)
                     }
-                }
-                .onDelete(perform: delete)
-            }
-            .navigationTitle("محصولات")
-            .searchable(text: $searchText, prompt: "جستجو")
-            .toolbar {
-                ToolbarItemGroup {
-                    Button("افزودن محصول", systemImage: "plus") {
-                        isProductFormViewPresented.toggle()
+                    .swipeActions {
+                        Button("حذف", role: .destructive) {
+                            delete(product: product)
+                        }
                     }
                 }
             }
-            .sheet(isPresented: $isProductFormViewPresented) {
+            .environment(\.editMode, $editMode)
+            .navigationTitle("محصولات")
+            .searchable(text: $searchText, prompt: "جستجو")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    if editMode.isEditing {
+                        Button("حذف") {
+                            delete(products: selectedProducts)
+                            editMode = .inactive
+                        }
+                        .disabled(selectedProducts.isEmpty)
+                    } else {
+                        Button("افزودن", systemImage: "plus") {
+                            showProductFormView.toggle()
+                        }
+                    }
+                }
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(editMode.isEditing ? "پایان" : "ویرایش") {
+                        withAnimation {
+                            editMode = editMode.isEditing ? .inactive : .active
+                            selectedProducts.removeAll()
+                        }
+                    }
+                }
+            }
+            .sheet(isPresented: $showProductFormView) {
                 NavigationStack {
                     ProductFormView()
                 }
@@ -87,28 +112,28 @@ struct ProductsView: View {
                 }
             }
         } detail: {
-            if let product = selectedProduct {
-                ProductView(product: product)
-            } else {
-                Text("یک محصول را انتخاب کنید")
+            switch selectedProducts.count {
+            case 0:
+                Text("یک محصول انتخاب کنید")
+                    .font(.title)
+            case 1:
+                if let product = selectedProducts.first {
+                    ProductView(product: product)
+                }
+            default:
+                Text("\(selectedProducts.count) محصول انتخاب شده است")
                     .font(.title)
             }
         }
     }
 
-    private func delete(at indexSet: IndexSet) {
-        if searchText.isEmpty {
-            indexSet.forEach { index in
-                modelContext.delete(products[index])
-            }
-        } else {
-            indexSet.forEach { index in
-                let productToDelete = filteredProducts[index]
+    private func delete(product: Product) {
+        modelContext.delete(product)
+    }
 
-                if let product = products.first(where: { $0.id == productToDelete.id }) {
-                    modelContext.delete(product)
-                }
-            }
+    private func delete(products: Set<Product>) {
+        for product in products {
+            modelContext.delete(product)
         }
     }
 }

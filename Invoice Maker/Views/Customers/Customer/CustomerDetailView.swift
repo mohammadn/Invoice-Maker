@@ -71,7 +71,7 @@ struct CustomerDetailView: View {
             InvoiceSummaryView(invoice: invoice)
         }
         .toolbar {
-            ToolbarItemGroup {
+            ToolbarItem(placement: .topBarTrailing) {
                 Button("ویرایش") {
                     isEditing.toggle()
                 }
