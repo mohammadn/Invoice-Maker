@@ -398,8 +398,8 @@
 		A6ACF59C2B7AC77800D4727B /* Product */ = {
 			isa = PBXGroup;
 			children = (
-				A6E205032DEB8C84009BEF4A /* SchemaV1+Product.swift */,
 				A6ACF59A2B7AB4DB00D4727B /* ProductDetailsV1.swift */,
+				A6E205032DEB8C84009BEF4A /* SchemaV1+Product.swift */,
 			);
 			path = Product;
 			sourceTree = "<group>";

@@ -175,6 +175,7 @@ final class DataMigrationManager {
                 // Migrate invoice items
                 for oldItem in oldInvoice.items {
                     let newItem = InvoiceItem(
+                        productId: UUID(),
                         productCode: oldItem.productCode,
                         productName: oldItem.productName,
                         productPrice: oldItem.productPrice,

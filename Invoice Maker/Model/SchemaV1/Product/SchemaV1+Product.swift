@@ -10,7 +10,8 @@ import SwiftData
 
 extension SchemaV1 {
     @Model
-    class Product {
+    class Product: Identifiable {
+        var id: UUID
         @Attribute(.unique) var code: Int
         var name: String
         var price: Decimal
@@ -18,7 +19,8 @@ extension SchemaV1 {
         var details: String?
         var createdDate: Date = Date.now
 
-        init(code: Int, name: String, price: Decimal, currency: Currency, details: String?) {
+        init(id: UUID = UUID(), code: Int, name: String, price: Decimal, currency: Currency, details: String?) {
+            self.id = id
             self.code = code
             self.name = name
             self.price = price
@@ -49,7 +51,8 @@ extension SchemaV1.Product {
 
 extension SchemaV1.Product: Equatable {
     static func == (lhs: SchemaV1.Product, rhs: SchemaV1.Product) -> Bool {
-        lhs.code == rhs.code &&
+        lhs.id == rhs.id &&
+            lhs.code == rhs.code &&
             lhs.name == rhs.name &&
             lhs.price == rhs.price &&
             lhs.currency == rhs.currency &&
@@ -59,6 +62,6 @@ extension SchemaV1.Product: Equatable {
 
 extension SchemaV1.Product: Hashable {
     func hash(into hasher: inout Hasher) {
-        hasher.combine(code)
+        hasher.combine(id)
     }
 }

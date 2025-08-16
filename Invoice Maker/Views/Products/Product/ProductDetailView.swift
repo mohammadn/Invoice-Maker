@@ -19,10 +19,8 @@ struct ProductDetailView: View {
         self.product = product
         _isEditing = isEditing
 
-        let productCode = product.code
-        let predicate = #Predicate<InvoiceN> {
-            $0.items.contains { $0.productCode == productCode }
-        }
+        let productId = product.id
+        let predicate = #Predicate<InvoiceN> { $0.items.contains { $0.productId == productId } }
 
         _invoices = Query(filter: predicate, sort: \.createdDate, order: .reverse)
     }

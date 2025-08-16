@@ -202,7 +202,7 @@ struct InvoiceFormView: View {
             invoice.update(with: invoiceDetails)
 
             invoiceDetails.items.forEach { item in
-                if let existingItem = invoice.items.first(where: { $0.productCode == item.productCode }) {
+                if let existingItem = invoice.items.first(where: { $0.productId == item.productId }) {
                     existingItem.update(with: item)
                 } else {
                     let item = InvoiceItem(from: item)
@@ -211,7 +211,7 @@ struct InvoiceFormView: View {
             }
 
             invoice.items.forEach { item in
-                if (!invoiceDetails.items.contains { $0.productCode == item.productCode }) {
+                if (!invoiceDetails.items.contains { $0.productId == item.productId }) {
                     modelContext.delete(item)
                 }
             }

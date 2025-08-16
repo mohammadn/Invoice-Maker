@@ -96,7 +96,7 @@ class InvoiceDetailsV1 {
 
 extension InvoiceDetailsV1: Equatable {
     static func == (lhs: InvoiceDetailsV1, rhs: InvoiceDetailsV1) -> Bool {
-        let areItemsEqual: Bool = lhs.items.elementsEqual(rhs.items) { $0.productCode == $1.productCode && $0.quantity == $1.quantity }
+        let areItemsEqual: Bool = lhs.items.elementsEqual(rhs.items)
 
         return lhs.number == rhs.number &&
             lhs.type == rhs.type &&
