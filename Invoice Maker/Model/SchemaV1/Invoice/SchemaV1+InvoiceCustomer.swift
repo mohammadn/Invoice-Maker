@@ -34,7 +34,8 @@ extension SchemaV1 {
                       phone: customer.phone,
                       email: customer.email,
                       address: customer.address,
-                      details: customer.details)
+                      details: customer.details
+            )
         }
 
         convenience init?(from invoiceDetails: InvoiceDetailsV1) {
@@ -48,7 +49,8 @@ extension SchemaV1 {
                       phone: invoiceDetails.customerPhone,
                       email: invoiceDetails.customerEmail,
                       address: invoiceDetails.customerAddress,
-                      details: invoiceDetails.customerDetails)
+                      details: invoiceDetails.customerDetails
+            )
         }
     }
 }

@@ -67,13 +67,24 @@ extension SchemaV1 {
         var getCustomer: SchemaV1.Customer? {
             guard let customerId = customer?.id, let customerName = customer?.name else { return nil }
 
-            return SchemaV1.Customer(id: customerId, name: customerName, address: customer?.address, details: customer?.details, phone: customer?.phone, email: customer?.email)
+            return SchemaV1.Customer(id: customerId,
+                                     name: customerName,
+                                     phone: customer?.phone,
+                                     email: customer?.email,
+                                     address: customer?.address,
+                                     details: customer?.details
+            )
         }
 
         var getBusiness: SchemaV1.Business? {
             guard let businessName = business?.name, let businessPhone = business?.phone else { return nil }
 
-            return SchemaV1.Business(name: businessName, phone: businessPhone, email: business?.email, website: business?.website, address: business?.address)
+            return SchemaV1.Business(name: businessName,
+                                     phone: businessPhone,
+                                     email: business?.email,
+                                     website: business?.website,
+                                     address: business?.address
+            )
         }
 
         init(number: String,
@@ -88,7 +99,7 @@ extension SchemaV1 {
              options: [Option],
              items: [SchemaV1.InvoiceItem],
              customer: SchemaV1.InvoiceCustomer?,
-             business: SchemaV1.InvoiceBusiness?,
+             business: SchemaV1.InvoiceBusiness?
         ) {
             self.number = number
             self.type = type
@@ -118,7 +129,8 @@ extension SchemaV1 {
                       options: invoiceDetails.options,
                       items: [],
                       customer: customer,
-                      business: business)
+                      business: business
+            )
         }
     }
 }

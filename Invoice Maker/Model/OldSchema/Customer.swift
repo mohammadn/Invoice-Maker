@@ -22,10 +22,10 @@ class Customer: Identifiable {
     init(id: UUID = UUID(), name: String, address: String?, details: String?, phone: String?, email: String?) {
         self.id = id
         self.name = name
-        self.address = address
-        self.details = details
         self.phone = phone
         self.email = email
+        self.address = address
+        self.details = details
     }
 }
 

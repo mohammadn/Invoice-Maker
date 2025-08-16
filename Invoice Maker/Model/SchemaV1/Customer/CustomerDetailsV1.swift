@@ -20,21 +20,22 @@ class CustomerDetailsV1 {
         name.isEmpty
     }
 
-    init(id: UUID = UUID(), name: String = "", address: String? = nil, details: String? = nil, phone: String? = nil, email: String? = nil) {
+    init(id: UUID = UUID(), name: String = "", phone: String? = nil, email: String? = nil, address: String? = nil, details: String? = nil) {
         self.id = id
         self.name = name
-        self.address = address
-        self.details = details
         self.phone = phone
         self.email = email
+        self.address = address
+        self.details = details
     }
 
     convenience init(from customer: SchemaV1.Customer) {
         self.init(id: customer.id,
                   name: customer.name,
-                  address: customer.address,
-                  details: customer.details,
                   phone: customer.phone,
-                  email: customer.email)
+                  email: customer.email,
+                  address: customer.address,
+                  details: customer.details
+        )
     }
 }

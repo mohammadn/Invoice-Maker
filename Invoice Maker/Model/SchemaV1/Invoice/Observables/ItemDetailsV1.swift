@@ -33,7 +33,8 @@ class ItemDetailsV1: Identifiable {
                   productPrice: item.productPrice,
                   productCurrency: item.productCurrency,
                   productDetails: item.productDetails,
-                  quantity: item.quantity)
+                  quantity: item.quantity
+        )
     }
 
     convenience init(from product: Product, quantity: Int) {
@@ -42,7 +43,8 @@ class ItemDetailsV1: Identifiable {
                   productPrice: product.price,
                   productCurrency: product.currency,
                   productDetails: product.details,
-                  quantity: quantity)
+                  quantity: quantity
+        )
     }
 }
 

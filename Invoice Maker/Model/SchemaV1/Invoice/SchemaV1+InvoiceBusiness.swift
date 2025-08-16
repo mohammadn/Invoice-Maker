@@ -32,7 +32,8 @@ extension SchemaV1 {
                       phone: business.phone,
                       email: business.email,
                       website: business.website,
-                      address: business.address)
+                      address: business.address
+            )
         }
     }
 }

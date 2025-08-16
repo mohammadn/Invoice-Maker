@@ -31,7 +31,8 @@ extension SchemaV1 {
                       name: productDetails.name,
                       price: productDetails.price ?? 0,
                       currency: productDetails.currency,
-                      details: productDetails.details)
+                      details: productDetails.details
+            )
         }
     }
 }

@@ -73,7 +73,7 @@ struct CustomerFormView: View {
             customer.update(with: customerDetails)
         } else {
             let customer = CustomerN(from: customerDetails)
-            print(1)
+
             modelContext.insert(customer)
         }
 

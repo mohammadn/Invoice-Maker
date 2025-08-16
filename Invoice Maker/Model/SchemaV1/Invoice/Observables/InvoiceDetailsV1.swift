@@ -51,7 +51,8 @@ class InvoiceDetailsV1 {
          customerAddress: String? = nil,
          customerDetails: String? = nil,
          customerPhone: String? = nil,
-         customerEmail: String? = nil,) {
+         customerEmail: String? = nil,
+    ) {
         self.number = number
         self.type = type
         self.currency = currency
@@ -88,7 +89,8 @@ class InvoiceDetailsV1 {
                   customerAddress: invoice.customer?.address,
                   customerDetails: invoice.customer?.details,
                   customerPhone: invoice.customer?.phone,
-                  customerEmail: invoice.customer?.email,)
+                  customerEmail: invoice.customer?.email,
+        )
     }
 }
 

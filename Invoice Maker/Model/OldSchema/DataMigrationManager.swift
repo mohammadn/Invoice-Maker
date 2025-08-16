@@ -73,10 +73,10 @@ final class DataMigrationManager {
             let newCustomer = CustomerN(
                 id: oldCustomer.id,
                 name: oldCustomer.name,
-                address: oldCustomer.phone,
-                details: oldCustomer.email,
-                phone: oldCustomer.address,
-                email: oldCustomer.details
+                phone: oldCustomer.phone,
+                email: oldCustomer.email,
+                address: oldCustomer.address,
+                details: oldCustomer.details
             )
             mainContext.insert(newCustomer)
         }

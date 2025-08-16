@@ -20,7 +20,7 @@ extension SchemaV1 {
         var details: String?
         var createdDate: Date = Date.now
 
-        init(id: UUID = UUID(), name: String, address: String?, details: String?, phone: String?, email: String?) {
+        init(id: UUID = UUID(), name: String, phone: String?, email: String?, address: String?, details: String?) {
             self.id = id
             self.name = name
             self.address = address
@@ -32,18 +32,20 @@ extension SchemaV1 {
         convenience init(from customerDetails: CustomerDetailsV1) {
             self.init(id: customerDetails.id,
                       name: customerDetails.name,
-                      address: customerDetails.address,
-                      details: customerDetails.details,
                       phone: customerDetails.phone,
-                      email: customerDetails.email)
+                      email: customerDetails.email,
+                      address: customerDetails.address,
+                      details: customerDetails.details
+            )
         }
 
         convenience init(from contact: CNContact) {
             self.init(name: contact.formattedName,
-                      address: contact.address,
-                      details: nil,
                       phone: contact.phone,
-                      email: contact.email)
+                      email: contact.email,
+                      address: contact.address,
+                      details: nil
+            )
         }
     }
 }
@@ -51,10 +53,10 @@ extension SchemaV1 {
 extension SchemaV1.Customer {
     func update(with customerDetails: CustomerDetailsV1) {
         name = customerDetails.name
-        address = customerDetails.address
-        details = customerDetails.details
         phone = customerDetails.phone
         email = customerDetails.email
+        address = customerDetails.address
+        details = customerDetails.details
     }
 }
 
@@ -62,10 +64,10 @@ extension SchemaV1.Customer: Equatable {
     static func == (lhs: SchemaV1.Customer, rhs: SchemaV1.Customer) -> Bool {
         lhs.id == rhs.id &&
             lhs.name == rhs.name &&
-            lhs.address == rhs.address &&
-            lhs.details == rhs.details &&
             lhs.phone == rhs.phone &&
-            lhs.email == rhs.email
+            lhs.email == rhs.email &&
+            lhs.address == rhs.address &&
+            lhs.details == rhs.details
     }
 }
 
