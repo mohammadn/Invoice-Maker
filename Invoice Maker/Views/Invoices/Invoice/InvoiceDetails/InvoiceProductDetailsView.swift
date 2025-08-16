@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct InvoiceProductDetailsView: View {
-    let invoice: Invoice
+    let invoice: InvoiceN
 
     var body: some View {
         ForEach(invoice.items) { item in

@@ -9,5 +9,5 @@ import Foundation
 
 @Observable
 class InvoiceViewModel {
-    var selectedInvoices: Set<Invoice> = []
+    var selectedInvoices: Set<InvoiceN> = []
 }

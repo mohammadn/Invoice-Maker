@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct InvoiceMainDetailsView: View {
-    let invoice: Invoice
+    let invoice: InvoiceN
 
     var body: some View {
         Section {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct InvoiceRowView: View {
-    let invoice: Invoice
+    let invoice: InvoiceN
 
     var body: some View {
         VStack(alignment: .leading) {

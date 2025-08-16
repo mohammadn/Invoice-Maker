@@ -12,15 +12,15 @@ import SwiftUI
 struct CustomersView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(ContactStoreManager.self) private var storeManager
-    @Query(sort: \Customer.name) private var customers: [Customer]
+    @Query(sort: \CustomerN.name) private var customers: [CustomerN]
     @State private var showCustomerFormView: Bool = false
     @State private var showContactsPicker: Bool = false
     @State private var showContactsPermissionAlert: Bool = false
-    @State private var selectedCustomers: Set<Customer> = []
+    @State private var selectedCustomers: Set<CustomerN> = []
     @State private var searchText: String = ""
     @State private var editMode: EditMode = .inactive
 
-    var filteredCustomers: [Customer] {
+    var filteredCustomers: [CustomerN] {
         if searchText.isEmpty {
             return customers
         } else {
@@ -172,16 +172,16 @@ struct CustomersView: View {
     }
 
     private func addCustomer(from contact: CNContact) {
-        let customer = Customer(from: contact)
+        let customer = CustomerN(from: contact)
 
         modelContext.insert(customer)
     }
 
-    private func delete(customer: Customer) {
+    private func delete(customer: CustomerN) {
         modelContext.delete(customer)
     }
 
-    private func delete(customers: Set<Customer>) {
+    private func delete(customers: Set<CustomerN>) {
         for customer in customers {
             modelContext.delete(customer)
         }

@@ -14,9 +14,9 @@ struct SettingsBusinessDetailsView: View {
     @State private var businessDetails: BusinessDetails
 //    @State private var logo: String = ""
 
-    var business: Business?
+    var business: BusinessN?
 
-    init(business: Business? = nil) {
+    init(business: BusinessN? = nil) {
         self.business = business
 
         if let business {
@@ -54,7 +54,7 @@ struct SettingsBusinessDetailsView: View {
                     if let business {
                         business.update(with: businessDetails)
                     } else {
-                        let business = Business(from: businessDetails)
+                        let business = BusinessN(from: businessDetails)
 
                         modelContext.insert(business)
                     }

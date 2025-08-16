@@ -10,7 +10,7 @@ import SwiftUI
 struct CustomerView: View {
     @State var isEditing: Bool = false
 
-    var customer: Customer
+    var customer: CustomerN
 
     var body: some View {
         NavigationStack {

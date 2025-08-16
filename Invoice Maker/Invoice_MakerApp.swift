@@ -8,21 +8,12 @@
 import SwiftData
 import SwiftUI
 
-// extension ModelContext {
-//    var sqliteCommand: String {
-//        if let url = container.configurations.first?.url.path(percentEncoded: false) {
-//            "sqlite3 \"\(url)\""
-//        } else {
-//            "No SQLite database found."
-//        }
-//    }
-// }
-
 @main
 struct Invoice_MakerApp: App {
     @State private var storeManager = ContactStoreManager()
 
     private let container: ModelContainer
+    private let oldContainer: ModelContainer?
     private var persianCalendar: Calendar {
         var calendar = Calendar(identifier: .persian)
         calendar.firstWeekday = 7
@@ -30,10 +21,19 @@ struct Invoice_MakerApp: App {
     }
 
     init() {
+        let mainStoreURL = URL.documentsDirectory.appending(path: "main.store")
+        let mainConfig = ModelConfiguration(schema: Schema([BusinessN.self, InvoiceN.self, Product.self, CustomerN.self]), url: mainStoreURL)
         do {
-            container = try ModelContainer(for: Business.self, Invoice.self, Product.self, Customer.self, migrationPlan: MigrationPlan.self)
+            container = try ModelContainer(for: BusinessN.self, InvoiceN.self, Product.self, CustomerN.self, migrationPlan: MigrationPlan.self, configurations: mainConfig)
         } catch {
-            fatalError("Failed to initialize model container.")
+            fatalError("Failed to initialize main model container.")
+        }
+
+        do {
+            oldContainer = try ModelContainer(for: Business.self, InvoiceSchemaV1.VersionedInvoice.self, ProductSchemaV1.VersionedProduct.self, Customer.self)
+        } catch {
+            print("Failed to initialize old model container. Assuming fresh install.")
+            oldContainer = nil
         }
     }
 
@@ -47,6 +47,28 @@ struct Invoice_MakerApp: App {
                 .onAppear {
                     storeManager.fetchAuthorizationStatus()
                 }
+                .task {
+                    await performMigration()
+                }
+        }
+    }
+
+    @MainActor
+    private func performMigration() async {
+        // Check if we need to migrate
+        guard let oldContainer = oldContainer else {
+            return
+        }
+
+        let migrationManager = DataMigrationManager(
+            mainContainer: container,
+            oldContainer: oldContainer
+        )
+
+        do {
+            try await migrationManager.performMigrationIfNeeded()
+        } catch {
+            print(error)
         }
     }
 }

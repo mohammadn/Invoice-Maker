@@ -12,7 +12,7 @@ extension SchemaV1 {
     @Model
     class Invoice {
         var number: String
-        var type: InvoiceType = InvoiceType.sale
+        var type: InvoiceType
         var currency: Currency
         var date: Date
         var dueDate: Date
@@ -76,7 +76,7 @@ extension SchemaV1 {
         }
 
         init(number: String,
-             type: InvoiceType = InvoiceType.sale,
+             type: InvoiceType,
              currency: Currency,
              date: Date,
              dueDate: Date,
@@ -87,7 +87,7 @@ extension SchemaV1 {
              options: [Options],
              items: [SchemaV1.InvoiceItem],
              customer: SchemaV1.InvoiceCustomer?,
-             business: SchemaV1.InvoiceBusiness,
+             business: SchemaV1.InvoiceBusiness?,
         ) {
             self.number = number
             self.type = type
@@ -130,6 +130,15 @@ extension SchemaV1.Invoice {
             switch self {
             case .sale: "فاکتور فروش"
             case .proforma: "پیش فاکتور فروش"
+            }
+        }
+
+        init(from value: Invoice.InvoiceType) {
+            switch value {
+            case .sale:
+                self = .sale
+            case .proforma:
+                self = .proforma
             }
         }
     }

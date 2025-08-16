@@ -12,10 +12,10 @@ struct CustomerFormView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var customerDetails: CustomerDetails
 
-    var customer: Customer?
+    var customer: CustomerN?
     var dismissAction: (() -> Void)?
 
-    init(customer: Customer? = nil, dismissAction: (() -> Void)? = nil) {
+    init(customer: CustomerN? = nil, dismissAction: (() -> Void)? = nil) {
         self.customer = customer
         self.dismissAction = dismissAction
 
@@ -72,10 +72,12 @@ struct CustomerFormView: View {
         if let customer {
             customer.update(with: customerDetails)
         } else {
-            let customer = Customer(from: customerDetails)
-
+            let customer = CustomerN(from: customerDetails)
+            print(1)
             modelContext.insert(customer)
         }
+
+        try? modelContext.save()
     }
 }
 

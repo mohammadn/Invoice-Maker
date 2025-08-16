@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CustomersListItemView: View {
-    let customer: Customer
+    let customer: CustomerN
 
     @Binding var editMode: EditMode
 

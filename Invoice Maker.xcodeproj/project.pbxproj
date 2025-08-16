@@ -13,6 +13,15 @@
 		A60F7BC52E3EB3EB00649A24 /* SchemaV1+Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BC42E3EB3EB00649A24 /* SchemaV1+Customer.swift */; };
 		A60F7BD82E492A0800649A24 /* SchemaV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BD72E492A0500649A24 /* SchemaV1.swift */; };
 		A60F7BDF2E49474800649A24 /* InvoiceOptionSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BDE2E49474800649A24 /* InvoiceOptionSelectionView.swift */; };
+		A60F7BE42E4FDA8A00649A24 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BE32E4FDA8A00649A24 /* Business.swift */; };
+		A60F7BE62E4FDAA700649A24 /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BE52E4FDAA700649A24 /* Customer.swift */; };
+		A60F7BE82E4FDB1700649A24 /* ProductSchemaV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BE72E4FDB1700649A24 /* ProductSchemaV1.swift */; };
+		A60F7BED2E4FDB4C00649A24 /* InvoiceSchemaV1+Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BEA2E4FDB4C00649A24 /* InvoiceSchemaV1+Business.swift */; };
+		A60F7BEE2E4FDB4C00649A24 /* InvoiceSchemaV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BE92E4FDB4C00649A24 /* InvoiceSchemaV1.swift */; };
+		A60F7BEF2E4FDB4C00649A24 /* InvoiceSchemaV1+Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BEB2E4FDB4C00649A24 /* InvoiceSchemaV1+Customer.swift */; };
+		A60F7BF02E4FDB4C00649A24 /* InvoiceSchemaV1+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BEC2E4FDB4C00649A24 /* InvoiceSchemaV1+Item.swift */; };
+		A60F7BF22E4FEFE200649A24 /* DataMigrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BF12E4FEFDE00649A24 /* DataMigrationManager.swift */; };
+		A60F7BF42E5091A600649A24 /* Invoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BF32E5091A600649A24 /* Invoice.swift */; };
 		A61469D22E08B33300713056 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61469D12E08B32900713056 /* Currency.swift */; };
 		A6208EC22E0B4299001B4325 /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6208EC12E0B4290001B4325 /* CurrencyFormatter.swift */; };
 		A6208EC42E0B4ED6001B4325 /* Decimal+Rounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6208EC32E0B4ECE001B4325 /* Decimal+Rounded.swift */; };
@@ -80,6 +89,15 @@
 		A60F7BC42E3EB3EB00649A24 /* SchemaV1+Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SchemaV1+Customer.swift"; sourceTree = "<group>"; };
 		A60F7BD72E492A0500649A24 /* SchemaV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaV1.swift; sourceTree = "<group>"; };
 		A60F7BDE2E49474800649A24 /* InvoiceOptionSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceOptionSelectionView.swift; sourceTree = "<group>"; };
+		A60F7BE32E4FDA8A00649A24 /* Business.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
+		A60F7BE52E4FDAA700649A24 /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
+		A60F7BE72E4FDB1700649A24 /* ProductSchemaV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductSchemaV1.swift; sourceTree = "<group>"; };
+		A60F7BE92E4FDB4C00649A24 /* InvoiceSchemaV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceSchemaV1.swift; sourceTree = "<group>"; };
+		A60F7BEA2E4FDB4C00649A24 /* InvoiceSchemaV1+Business.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InvoiceSchemaV1+Business.swift"; sourceTree = "<group>"; };
+		A60F7BEB2E4FDB4C00649A24 /* InvoiceSchemaV1+Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InvoiceSchemaV1+Customer.swift"; sourceTree = "<group>"; };
+		A60F7BEC2E4FDB4C00649A24 /* InvoiceSchemaV1+Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InvoiceSchemaV1+Item.swift"; sourceTree = "<group>"; };
+		A60F7BF12E4FEFDE00649A24 /* DataMigrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMigrationManager.swift; sourceTree = "<group>"; };
+		A60F7BF32E5091A600649A24 /* Invoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invoice.swift; sourceTree = "<group>"; };
 		A61469D12E08B32900713056 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		A6208EC12E0B4290001B4325 /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
 		A6208EC32E0B4ECE001B4325 /* Decimal+Rounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decimal+Rounded.swift"; sourceTree = "<group>"; };
@@ -197,6 +215,22 @@
 				A675DCEF2E1208CA0040D855 /* InvoiceViewModel.swift */,
 			);
 			path = Invoice;
+			sourceTree = "<group>";
+		};
+		A60F7BE22E4FDA8300649A24 /* OldSchema */ = {
+			isa = PBXGroup;
+			children = (
+				A60F7BF12E4FEFDE00649A24 /* DataMigrationManager.swift */,
+				A60F7BE52E4FDAA700649A24 /* Customer.swift */,
+				A60F7BE32E4FDA8A00649A24 /* Business.swift */,
+				A60F7BF32E5091A600649A24 /* Invoice.swift */,
+				A60F7BE72E4FDB1700649A24 /* ProductSchemaV1.swift */,
+				A60F7BE92E4FDB4C00649A24 /* InvoiceSchemaV1.swift */,
+				A60F7BEA2E4FDB4C00649A24 /* InvoiceSchemaV1+Business.swift */,
+				A60F7BEB2E4FDB4C00649A24 /* InvoiceSchemaV1+Customer.swift */,
+				A60F7BEC2E4FDB4C00649A24 /* InvoiceSchemaV1+Item.swift */,
+			);
+			path = OldSchema;
 			sourceTree = "<group>";
 		};
 		A6208EC02E0B4284001B4325 /* Currency */ = {
@@ -341,6 +375,7 @@
 		A6ACF5912B798B3B00D4727B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A60F7BE22E4FDA8300649A24 /* OldSchema */,
 				A6208EC32E0B4ECE001B4325 /* Decimal+Rounded.swift */,
 				A6E205052DEB9554009BEF4A /* MigrationPlan.swift */,
 				A68456052D30577400FBD1E1 /* NullishCoalescingBinding.swift */,
@@ -360,8 +395,8 @@
 		A6ACF59C2B7AC77800D4727B /* Product */ = {
 			isa = PBXGroup;
 			children = (
-				A6ACF59A2B7AB4DB00D4727B /* ProductDetailsV1.swift */,
 				A6E205032DEB8C84009BEF4A /* SchemaV1+Product.swift */,
+				A6ACF59A2B7AB4DB00D4727B /* ProductDetailsV1.swift */,
 			);
 			path = Product;
 			sourceTree = "<group>";
@@ -536,21 +571,29 @@
 				A69BC4272DA33B2600172FE0 /* InvoiceProductSelection.swift in Sources */,
 				A6ACF5A12B7ACB9000D4727B /* Business+SampleData.swift in Sources */,
 				A675DD042E19C56A0040D855 /* SchemaV1+InvoiceItem.swift in Sources */,
+				A60F7BE42E4FDA8A00649A24 /* Business.swift in Sources */,
 				A6E2050C2DF0F064009BEF4A /* CurrentProduct.swift in Sources */,
 				A6F92F922DD12E560029F04D /* CustomerDetailView.swift in Sources */,
 				A6555A912D466936002F6537 /* CustomersContactView.swift in Sources */,
 				A6208ECE2E11F725001B4325 /* InvoiceCustomerDetailsView.swift in Sources */,
 				A6E4DFE52B8BBCEF0088BCFC /* PDF.swift in Sources */,
+				A60F7BF22E4FEFE200649A24 /* DataMigrationManager.swift in Sources */,
 				A6555A8F2D4667F7002F6537 /* CustomersListItemView.swift in Sources */,
 				A675DD032E19C56A0040D855 /* SchemaV1+InvoiceBusiness.swift in Sources */,
 				A6ACF5CB2B7C15DD00D4727B /* CustomerDetailsV1.swift in Sources */,
 				A6ACF5872B794F4400D4727B /* SettingsView.swift in Sources */,
 				A6ACF5762B7945B100D4727B /* ContentView.swift in Sources */,
 				A675DCF32E1209220040D855 /* TabViewModel+Tabs.swift in Sources */,
+				A60F7BE62E4FDAA700649A24 /* Customer.swift in Sources */,
+				A60F7BF42E5091A600649A24 /* Invoice.swift in Sources */,
 				A6F92F962DD6A0DA0029F04D /* InvoiceDetailView.swift in Sources */,
 				A675DD0A2E19C5D00040D855 /* InvoiceDetailsV1.swift in Sources */,
 				A675DD0B2E19C5D00040D855 /* ItemDetailsV1.swift in Sources */,
 				A6C772212DAF16C000315110 /* CustomerView.swift in Sources */,
+				A60F7BED2E4FDB4C00649A24 /* InvoiceSchemaV1+Business.swift in Sources */,
+				A60F7BEE2E4FDB4C00649A24 /* InvoiceSchemaV1.swift in Sources */,
+				A60F7BEF2E4FDB4C00649A24 /* InvoiceSchemaV1+Customer.swift in Sources */,
+				A60F7BF02E4FDB4C00649A24 /* InvoiceSchemaV1+Item.swift in Sources */,
 				A6ACF59B2B7AB4DB00D4727B /* ProductDetailsV1.swift in Sources */,
 				A6208ECB2E11F4E1001B4325 /* InvoiceMainDetailsView.swift in Sources */,
 				A675DD062E19C56A0040D855 /* SchemaV1+Invoice.swift in Sources */,
@@ -572,6 +615,7 @@
 				A69BC4252DA3306200172FE0 /* InvoiceFormView.swift in Sources */,
 				A6ACF5742B7945B100D4727B /* Invoice_MakerApp.swift in Sources */,
 				A60F7BDF2E49474800649A24 /* InvoiceOptionSelectionView.swift in Sources */,
+				A60F7BE82E4FDB1700649A24 /* ProductSchemaV1.swift in Sources */,
 				A6ACF58C2B79841C00D4727B /* ProductsView.swift in Sources */,
 				A60F7BC52E3EB3EB00649A24 /* SchemaV1+Customer.swift in Sources */,
 				A675DCFB2E15D28D0040D855 /* InvoiceRowView.swift in Sources */,
