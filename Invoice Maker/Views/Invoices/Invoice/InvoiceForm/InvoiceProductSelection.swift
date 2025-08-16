@@ -51,8 +51,8 @@ struct InvoiceProductSelection: View {
             .environment(\.editMode, .constant(.active))
         }
         .onAppear {
-            let itemProductCodes = Set(items.map { $0.productCode })
-            selectedProducts = Set(products.filter { itemProductCodes.contains($0.code) })
+            let itemProductIds = Set(items.map { $0.productId })
+            selectedProducts = Set(products.filter { itemProductIds.contains($0.id) })
         }
         .sheet(isPresented: $showProductFormView) {
             NavigationStack {
@@ -62,10 +62,10 @@ struct InvoiceProductSelection: View {
     }
 
     func updateItems(with selectedProducts: Set<Product>) {
-        let itemProductCodes = Set(items.map { $0.productCode })
+        let itemProductIds = Set(items.map { $0.productId })
 
         selectedProducts.forEach { product in
-            if !itemProductCodes.contains(product.code) {
+            if !itemProductIds.contains(product.id) {
                 let item = ItemDetails(from: product, quantity: 1)
 
                 items.append(item)
@@ -73,7 +73,7 @@ struct InvoiceProductSelection: View {
         }
 
         items = items.filter { item in
-            selectedProducts.contains(where: { $0.code == item.productCode })
+            selectedProducts.contains(where: { $0.id == item.productId })
         }
     }
 }

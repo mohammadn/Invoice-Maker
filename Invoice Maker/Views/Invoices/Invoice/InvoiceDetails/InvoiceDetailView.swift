@@ -59,10 +59,10 @@ struct InvoiceDetailView: View {
             } header: {
                 Text("محصولات")
 
-                if Set(invoice.items.compactMap(\.product)) != Set(products) {
+                if hasProductChanges() {
                     ButtonWithPopover(text: "اطلاعات یک یا چند محصول تغییر کرده است. در صورت نیاز می‌توانید اطلاعات را بروزرسانی کنید.") {
                         for item in invoice.items {
-                            if let product = products.first(where: { $0.code == item.productCode }) {
+                            if let product = products.first(where: { $0.id == item.productId }) {
                                 item.update(with: product)
                             }
                         }
@@ -100,14 +100,23 @@ struct InvoiceDetailView: View {
             let businessDescriptor = FetchDescriptor<BusinessN>()
             business = (try? modelContext.fetch(businessDescriptor))?.first
 
-            let productCodes = invoice.items.map { $0.productCode }
+            let productIds = invoice.items.map { $0.productId }
             let productDescriptor = FetchDescriptor<Product>(
-                predicate: #Predicate<Product> { productCodes.contains($0.code) },
+                predicate: #Predicate<Product> { productIds.contains($0.id) },
                 sortBy: [SortDescriptor(\.createdDate, order: .reverse)]
             )
             products = (try? modelContext.fetch(productDescriptor)) ?? []
 
             generatePDF()
+        }
+    }
+
+    private func hasProductChanges() -> Bool {
+        invoice.items.contains { item in
+            guard let currentProduct = products.first(where: { $0.id == item.productId }) else {
+                return false
+            }
+            return item.product != currentProduct
         }
     }
 

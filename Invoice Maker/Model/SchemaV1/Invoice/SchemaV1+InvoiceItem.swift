@@ -11,6 +11,7 @@ import SwiftData
 extension SchemaV1 {
     @Model
     class InvoiceItem {
+        var productId: UUID
         var productCode: Int
         var productName: String
         var productPrice: Decimal
@@ -22,10 +23,11 @@ extension SchemaV1 {
         var total: Decimal { productPrice * Decimal(quantity) }
 
         var product: SchemaV1.Product {
-            Product(code: productCode, name: productName, price: productPrice, currency: productCurrency, details: productDetails)
+            Product(id: productId, code: productCode, name: productName, price: productPrice, currency: productCurrency, details: productDetails)
         }
 
-        init(productCode: Int,
+        init(productId: UUID,
+             productCode: Int,
              productName: String,
              productPrice: Decimal,
              productCurrency: Currency,
@@ -33,6 +35,7 @@ extension SchemaV1 {
              quantity: Int = 1,
              invoice: SchemaV1.Invoice? = nil
         ) {
+            self.productId = productId
             self.productCode = productCode
             self.productName = productName
             self.productPrice = productPrice
@@ -43,17 +46,8 @@ extension SchemaV1 {
         }
 
         convenience init(from item: ItemDetailsV1) {
-            self.init(productCode: item.productCode,
-                      productName: item.productName,
-                      productPrice: item.productPrice,
-                      productCurrency: item.productCurrency,
-                      productDetails: item.productDetails,
-                      quantity: item.quantity
-            )
-        }
-
-        convenience init(from item: SchemaV1.InvoiceItem) {
-            self.init(productCode: item.productCode,
+            self.init(productId: item.productId,
+                      productCode: item.productCode,
                       productName: item.productName,
                       productPrice: item.productPrice,
                       productCurrency: item.productCurrency,
