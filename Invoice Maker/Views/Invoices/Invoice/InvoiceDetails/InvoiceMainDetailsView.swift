@@ -14,14 +14,15 @@ struct InvoiceMainDetailsView: View {
         Section {
             LabeledContent("شماره فاکتور", value: invoice.number)
             LabeledContent("نوع فاکتور", value: invoice.type.label)
-            LabeledContent("جمع کل", value: invoice.total, format: .currencyFormatter(code: invoice.currency))
             LabeledContent("نوع ارز", value: invoice.currency.label)
             LabeledContent("تاریخ صدور", value: invoice.date, format: .dateTime)
             if invoice.options.contains(.dueDate) {
                 LabeledContent("تاریخ سررسید", value: invoice.dueDate, format: .dateTime)
             }
+            LabeledContent("جمع کل", value: invoice.total, format: .currencyFormatter(code: invoice.currency))
             LabeledContent("تخفیف (٪)", value: invoice.discount, format: .number)
             LabeledContent("ارزش افزوده (٪)", value: invoice.vat, format: .number)
+            LabeledContent("مبلغ نهایی", value: invoice.totalWithVAT, format: .currencyFormatter(code: invoice.currency))
             LabeledContent("توضیحات", value: invoice.note.isEmpty ? "-" : invoice.note)
         }
     }
