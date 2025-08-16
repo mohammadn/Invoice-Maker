@@ -22,6 +22,9 @@
 		A60F7BF02E4FDB4C00649A24 /* InvoiceSchemaV1+Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BEC2E4FDB4C00649A24 /* InvoiceSchemaV1+Item.swift */; };
 		A60F7BF22E4FEFE200649A24 /* DataMigrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BF12E4FEFDE00649A24 /* DataMigrationManager.swift */; };
 		A60F7BF42E5091A600649A24 /* Invoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BF32E5091A600649A24 /* Invoice.swift */; };
+		A60F7BF62E50B33C00649A24 /* SchemaV1+Invoice+Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BF52E50B33A00649A24 /* SchemaV1+Invoice+Option.swift */; };
+		A60F7BF82E50B3BB00649A24 /* SchemaV1+Invoice+Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BF72E50B3B400649A24 /* SchemaV1+Invoice+Status.swift */; };
+		A60F7BFA2E50B3D700649A24 /* SchemaV1+Invoice+Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BF92E50B3D200649A24 /* SchemaV1+Invoice+Type.swift */; };
 		A61469D22E08B33300713056 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61469D12E08B32900713056 /* Currency.swift */; };
 		A6208EC22E0B4299001B4325 /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6208EC12E0B4290001B4325 /* CurrencyFormatter.swift */; };
 		A6208EC42E0B4ED6001B4325 /* Decimal+Rounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6208EC32E0B4ECE001B4325 /* Decimal+Rounded.swift */; };
@@ -98,6 +101,9 @@
 		A60F7BEC2E4FDB4C00649A24 /* InvoiceSchemaV1+Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InvoiceSchemaV1+Item.swift"; sourceTree = "<group>"; };
 		A60F7BF12E4FEFDE00649A24 /* DataMigrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMigrationManager.swift; sourceTree = "<group>"; };
 		A60F7BF32E5091A600649A24 /* Invoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Invoice.swift; sourceTree = "<group>"; };
+		A60F7BF52E50B33A00649A24 /* SchemaV1+Invoice+Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SchemaV1+Invoice+Option.swift"; sourceTree = "<group>"; };
+		A60F7BF72E50B3B400649A24 /* SchemaV1+Invoice+Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SchemaV1+Invoice+Status.swift"; sourceTree = "<group>"; };
+		A60F7BF92E50B3D200649A24 /* SchemaV1+Invoice+Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SchemaV1+Invoice+Type.swift"; sourceTree = "<group>"; };
 		A61469D12E08B32900713056 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		A6208EC12E0B4290001B4325 /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
 		A6208EC32E0B4ECE001B4325 /* Decimal+Rounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decimal+Rounded.swift"; sourceTree = "<group>"; };
@@ -220,15 +226,15 @@
 		A60F7BE22E4FDA8300649A24 /* OldSchema */ = {
 			isa = PBXGroup;
 			children = (
-				A60F7BF12E4FEFDE00649A24 /* DataMigrationManager.swift */,
-				A60F7BE52E4FDAA700649A24 /* Customer.swift */,
 				A60F7BE32E4FDA8A00649A24 /* Business.swift */,
+				A60F7BE52E4FDAA700649A24 /* Customer.swift */,
+				A60F7BF12E4FEFDE00649A24 /* DataMigrationManager.swift */,
 				A60F7BF32E5091A600649A24 /* Invoice.swift */,
-				A60F7BE72E4FDB1700649A24 /* ProductSchemaV1.swift */,
 				A60F7BE92E4FDB4C00649A24 /* InvoiceSchemaV1.swift */,
 				A60F7BEA2E4FDB4C00649A24 /* InvoiceSchemaV1+Business.swift */,
 				A60F7BEB2E4FDB4C00649A24 /* InvoiceSchemaV1+Customer.swift */,
 				A60F7BEC2E4FDB4C00649A24 /* InvoiceSchemaV1+Item.swift */,
+				A60F7BE72E4FDB1700649A24 /* ProductSchemaV1.swift */,
 			);
 			path = OldSchema;
 			sourceTree = "<group>";
@@ -375,7 +381,6 @@
 		A6ACF5912B798B3B00D4727B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				A60F7BE22E4FDA8300649A24 /* OldSchema */,
 				A6208EC32E0B4ECE001B4325 /* Decimal+Rounded.swift */,
 				A6E205052DEB9554009BEF4A /* MigrationPlan.swift */,
 				A68456052D30577400FBD1E1 /* NullishCoalescingBinding.swift */,
@@ -384,6 +389,7 @@
 				A6208EC02E0B4284001B4325 /* Currency */,
 				A60F7BD92E492B4900649A24 /* Customer */,
 				A60F7BDD2E492CE200649A24 /* Invoice */,
+				A60F7BE22E4FDA8300649A24 /* OldSchema */,
 				A6E4DFE62B8BBCF70088BCFC /* PDF */,
 				A60F7BDA2E492C0400649A24 /* Product */,
 				A60F7BD62E4929F600649A24 /* SchemaV1 */,
@@ -443,6 +449,9 @@
 			isa = PBXGroup;
 			children = (
 				A675DCFE2E19C56A0040D855 /* SchemaV1+Invoice.swift */,
+				A60F7BF52E50B33A00649A24 /* SchemaV1+Invoice+Option.swift */,
+				A60F7BF72E50B3B400649A24 /* SchemaV1+Invoice+Status.swift */,
+				A60F7BF92E50B3D200649A24 /* SchemaV1+Invoice+Type.swift */,
 				A675DCFF2E19C56A0040D855 /* SchemaV1+InvoiceBusiness.swift */,
 				A675DD002E19C56A0040D855 /* SchemaV1+InvoiceCustomer.swift */,
 				A675DD012E19C56A0040D855 /* SchemaV1+InvoiceItem.swift */,
@@ -573,6 +582,7 @@
 				A675DD042E19C56A0040D855 /* SchemaV1+InvoiceItem.swift in Sources */,
 				A60F7BE42E4FDA8A00649A24 /* Business.swift in Sources */,
 				A6E2050C2DF0F064009BEF4A /* CurrentProduct.swift in Sources */,
+				A60F7BF62E50B33C00649A24 /* SchemaV1+Invoice+Option.swift in Sources */,
 				A6F92F922DD12E560029F04D /* CustomerDetailView.swift in Sources */,
 				A6555A912D466936002F6537 /* CustomersContactView.swift in Sources */,
 				A6208ECE2E11F725001B4325 /* InvoiceCustomerDetailsView.swift in Sources */,
@@ -595,6 +605,7 @@
 				A60F7BEF2E4FDB4C00649A24 /* InvoiceSchemaV1+Customer.swift in Sources */,
 				A60F7BF02E4FDB4C00649A24 /* InvoiceSchemaV1+Item.swift in Sources */,
 				A6ACF59B2B7AB4DB00D4727B /* ProductDetailsV1.swift in Sources */,
+				A60F7BFA2E50B3D700649A24 /* SchemaV1+Invoice+Type.swift in Sources */,
 				A6208ECB2E11F4E1001B4325 /* InvoiceMainDetailsView.swift in Sources */,
 				A675DD062E19C56A0040D855 /* SchemaV1+Invoice.swift in Sources */,
 				A6208EC42E0B4ED6001B4325 /* Decimal+Rounded.swift in Sources */,
@@ -614,6 +625,7 @@
 				A6ACF5952B798E1900D4727B /* Product+SampleData.swift in Sources */,
 				A69BC4252DA3306200172FE0 /* InvoiceFormView.swift in Sources */,
 				A6ACF5742B7945B100D4727B /* Invoice_MakerApp.swift in Sources */,
+				A60F7BF82E50B3BB00649A24 /* SchemaV1+Invoice+Status.swift in Sources */,
 				A60F7BDF2E49474800649A24 /* InvoiceOptionSelectionView.swift in Sources */,
 				A60F7BE82E4FDB1700649A24 /* ProductSchemaV1.swift in Sources */,
 				A6ACF58C2B79841C00D4727B /* ProductsView.swift in Sources */,

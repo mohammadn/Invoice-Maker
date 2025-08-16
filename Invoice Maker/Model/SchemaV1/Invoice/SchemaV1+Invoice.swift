@@ -10,7 +10,8 @@ import SwiftData
 
 extension SchemaV1 {
     @Model
-    class Invoice {
+    class Invoice: Identifiable {
+        var id: UUID = UUID()
         var number: String
         var type: InvoiceType
         var currency: Currency
@@ -20,7 +21,7 @@ extension SchemaV1 {
         var discount: Decimal
         var note: String
         var status: Status
-        var options: [Options]
+        var options: [Option]
         @Relationship(deleteRule: .cascade, inverse: \SchemaV1.InvoiceItem.invoice) var items: [SchemaV1.InvoiceItem]
         @Relationship(deleteRule: .cascade, inverse: \SchemaV1.InvoiceCustomer.invoice) var customer: SchemaV1.InvoiceCustomer?
         @Relationship(deleteRule: .cascade, inverse: \SchemaV1.InvoiceBusiness.invoice) var business: SchemaV1.InvoiceBusiness?
@@ -84,7 +85,7 @@ extension SchemaV1 {
              discount: Decimal,
              note: String,
              status: Status,
-             options: [Options],
+             options: [Option],
              items: [SchemaV1.InvoiceItem],
              customer: SchemaV1.InvoiceCustomer?,
              business: SchemaV1.InvoiceBusiness?,
@@ -123,57 +124,6 @@ extension SchemaV1 {
 }
 
 extension SchemaV1.Invoice {
-    enum InvoiceType: String, Codable, CaseIterable {
-        case sale, proforma
-
-        var label: String {
-            switch self {
-            case .sale: "فاکتور فروش"
-            case .proforma: "پیش فاکتور فروش"
-            }
-        }
-
-        init(from value: Invoice.InvoiceType) {
-            switch value {
-            case .sale:
-                self = .sale
-            case .proforma:
-                self = .proforma
-            }
-        }
-    }
-}
-
-extension SchemaV1.Invoice {
-    enum Status: String, Codable, CaseIterable {
-        case invalid, draft, expired, pending, cancelled, paid
-
-        var label: String {
-            switch self {
-            case .invalid: "نامعتبر"
-            case .draft: "پیش نویس"
-            case .expired: "منقضی"
-            case .pending: "آماده پرداخت"
-            case .cancelled: "لغو شده"
-            case .paid: "پرداخت شده"
-            }
-        }
-    }
-}
-
-extension SchemaV1.Invoice {
-    enum Options: String, Codable, CaseIterable {
-        case dueDate
-
-        var label: String {
-            switch self {
-            case .dueDate: "تاریخ سررسید"
-            }
-        }
-    }
-}
-
-extension SchemaV1.Invoice {
     func update(with invoiceDetails: InvoiceDetailsV1) {
         number = invoiceDetails.number
         type = invoiceDetails.type
@@ -185,5 +135,30 @@ extension SchemaV1.Invoice {
         note = invoiceDetails.note
         status = invoiceDetails.status
         options = invoiceDetails.options
+    }
+}
+
+extension SchemaV1.Invoice: Equatable {
+    static func == (lhs: SchemaV1.Invoice, rhs: SchemaV1.Invoice) -> Bool {
+        lhs.id == rhs.id &&
+            lhs.number == rhs.number &&
+            lhs.type == rhs.type &&
+            lhs.currency == rhs.currency &&
+            lhs.date == rhs.date &&
+            lhs.dueDate == rhs.dueDate &&
+            lhs.vat == rhs.vat &&
+            lhs.discount == rhs.discount &&
+            lhs.note == rhs.note &&
+            lhs.status == rhs.status &&
+            lhs.options == rhs.options &&
+            lhs.items == rhs.items &&
+            lhs.customer?.id == rhs.customer?.id &&
+            lhs.business?.id == rhs.business?.id
+    }
+}
+
+extension SchemaV1.Invoice: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

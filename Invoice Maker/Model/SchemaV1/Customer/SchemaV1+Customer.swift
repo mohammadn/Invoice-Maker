@@ -72,10 +72,5 @@ extension SchemaV1.Customer: Equatable {
 extension SchemaV1.Customer: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
-        hasher.combine(name)
-        hasher.combine(address)
-        hasher.combine(details)
-        hasher.combine(phone)
-        hasher.combine(email)
     }
 }

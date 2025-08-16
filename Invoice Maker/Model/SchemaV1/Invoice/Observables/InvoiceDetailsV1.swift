@@ -18,7 +18,7 @@ class InvoiceDetailsV1 {
     var discount: Decimal?
     var note: String
     var status: SchemaV1.Invoice.Status
-    var options: [SchemaV1.Invoice.Options]
+    var options: [SchemaV1.Invoice.Option]
     var items: [ItemDetailsV1]
     var customerId: UUID?
     var customerName: String?
@@ -44,7 +44,7 @@ class InvoiceDetailsV1 {
          discount: Decimal? = nil,
          note: String = "",
          status: SchemaV1.Invoice.Status = .pending,
-         options: [SchemaV1.Invoice.Options] = [],
+         options: [SchemaV1.Invoice.Option] = [],
          items: [ItemDetailsV1] = [],
          customerId: UUID? = nil,
          customerName: String? = nil,

@@ -59,9 +59,5 @@ extension SchemaV1.Product: Equatable {
 extension SchemaV1.Product: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(code)
-        hasher.combine(name)
-        hasher.combine(price)
-        hasher.combine(currency)
-        hasher.combine(details)
     }
 }
