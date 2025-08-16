@@ -134,42 +134,25 @@ final class DataMigrationManager {
 
                 // Find and link customer
                 if let oldCustomer = oldInvoice.customer {
-                    let oldCustomerId = oldCustomer.id
-                    let customerPredicate = #Predicate<CustomerN> { customer in
-                        customer.id == oldCustomerId
-                    }
-                    let customerDescriptor = FetchDescriptor<CustomerN>(predicate: customerPredicate)
-                    if let newCustomer = try mainContext.fetch(customerDescriptor).first {
                         newInvoice.customer = InvoiceCustomer(
-                            id: newCustomer.id,
-                            name: newCustomer.name,
-                            phone: newCustomer.phone,
-                            email: newCustomer.email,
-                            address: newCustomer.address,
-                            details: newCustomer.details
+                            id: oldCustomer.id,
+                            name: oldCustomer.name,
+                            phone: oldCustomer.phone,
+                            email: oldCustomer.email,
+                            address: oldCustomer.address,
+                            details: oldCustomer.details
                         )
-                    }
                 }
 
                 // Find and link business
                 if let oldBusiness = oldInvoice.business {
-                    let oldBusinessName = oldBusiness.name
-                    let oldBusinessPhone = oldBusiness.phone
-
-                    let businessPredicate = #Predicate<BusinessN> { business in
-                        business.name == oldBusinessName &&
-                            business.phone == oldBusinessPhone
-                    }
-                    let businessDescriptor = FetchDescriptor<BusinessN>(predicate: businessPredicate)
-                    if let newBusiness = try mainContext.fetch(businessDescriptor).first {
-                        newInvoice.business = InvoiceBusiness(
-                            name: newBusiness.name,
-                            phone: newBusiness.phone,
-                            email: newBusiness.email,
-                            website: newBusiness.website,
-                            address: newBusiness.address
-                        )
-                    }
+                    newInvoice.business = InvoiceBusiness(
+                        name: oldBusiness.name,
+                        phone: oldBusiness.phone,
+                        email: oldBusiness.email,
+                        website: oldBusiness.website,
+                        address: oldBusiness.address
+                    )
                 }
 
                 // Migrate invoice items
