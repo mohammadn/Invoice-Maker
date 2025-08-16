@@ -96,6 +96,8 @@ struct ProductFormView: View {
 
             modelContext.insert(product)
         }
+        
+        try? modelContext.save()
     }
 }
 

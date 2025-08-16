@@ -11,18 +11,18 @@ import SwiftUI
 struct InvoiceFormView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
-    @Query private var business: [Business]
-    @Query(sort: \Customer.name) private var customers: [Customer]
+    @Query private var business: [BusinessN]
+    @Query(sort: \CustomerN.name) private var customers: [CustomerN]
     @State private var showProductSelectionView: Bool = false
     @State private var showCustomerFormView: Bool = false
     @State private var showOptionSelectionView: Bool = false
     @State private var invoiceDetails: InvoiceDetails
     @State private var showDismissAlert: Bool = false
 
-    let invoice: Invoice?
+    let invoice: InvoiceN?
     var dismissAction: (() -> Void)?
 
-    init(invoice: Invoice? = nil, dismissAction: (() -> Void)? = nil) {
+    init(invoice: InvoiceN? = nil, dismissAction: (() -> Void)? = nil) {
         self.invoice = invoice
         self.dismissAction = dismissAction
 
@@ -43,7 +43,7 @@ struct InvoiceFormView: View {
                     TextField("شماره فاکتور*", text: $invoiceDetails.number)
 
                     Picker("نوع فاکتور", selection: $invoiceDetails.type) {
-                        ForEach(Invoice.InvoiceType.allCases, id: \.self) { type in
+                        ForEach(InvoiceN.InvoiceType.allCases, id: \.self) { type in
                             Text(type.label)
                                 .tag(type)
                         }
@@ -220,7 +220,7 @@ struct InvoiceFormView: View {
             let invoiceCustomer = InvoiceCustomer(from: invoiceDetails)
             let invoiceBusiness = InvoiceBusiness(from: business)
 
-            let invoice = Invoice(from: invoiceDetails, customer: invoiceCustomer, business: invoiceBusiness)
+            let invoice = InvoiceN(from: invoiceDetails, customer: invoiceCustomer, business: invoiceBusiness)
 
             invoiceDetails.items.forEach {
                 let item = InvoiceItem(from: $0)

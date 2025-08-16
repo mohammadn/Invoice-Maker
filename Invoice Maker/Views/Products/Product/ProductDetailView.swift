@@ -9,8 +9,8 @@ import SwiftData
 import SwiftUI
 
 struct ProductDetailView: View {
-    @Query private var invoices: [Invoice]
-    @State private var selectedInvoice: Invoice?
+    @Query private var invoices: [InvoiceN]
+    @State private var selectedInvoice: InvoiceN?
     var product: Product
 
     @Binding var isEditing: Bool
@@ -20,7 +20,7 @@ struct ProductDetailView: View {
         _isEditing = isEditing
 
         let productCode = product.code
-        let predicate = #Predicate<Invoice> {
+        let predicate = #Predicate<InvoiceN> {
             $0.items.contains { $0.productCode == productCode }
         }
 

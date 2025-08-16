@@ -17,9 +17,9 @@ struct OnboardingSheetView: View {
     @State private var selectedTab: OnboardingTabItems = .introduction
     @State private var businessDetails: BusinessDetails
 
-    var business: Business?
+    var business: BusinessN?
 
-    init(business: Business? = nil) {
+    init(business: BusinessN? = nil) {
         self.business = business
 
         if let business {
@@ -155,7 +155,7 @@ struct OnboardingSheetView: View {
         if let business {
             business.update(with: businessDetails)
         } else {
-            let business = Business(from: businessDetails)
+            let business = BusinessN(from: businessDetails)
 
             context.insert(business)
         }

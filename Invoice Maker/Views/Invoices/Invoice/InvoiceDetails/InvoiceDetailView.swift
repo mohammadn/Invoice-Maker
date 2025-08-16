@@ -11,11 +11,11 @@ import SwiftUI
 struct InvoiceDetailView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var generatedPDF: URL?
-    @State private var customer: Customer?
-    @State private var business: Business?
+    @State private var customer: CustomerN?
+    @State private var business: BusinessN?
     @State private var products: [Product] = []
 
-    let invoice: Invoice
+    let invoice: InvoiceN
     @Binding var isEditing: Bool
 
     var body: some View {
@@ -90,14 +90,14 @@ struct InvoiceDetailView: View {
         }
         .onAppear {
             if let customerId = invoice.customer?.id {
-                let customerDescriptor = FetchDescriptor<Customer>(
-                    predicate: #Predicate<Customer> { $0.id == customerId },
+                let customerDescriptor = FetchDescriptor<CustomerN>(
+                    predicate: #Predicate<CustomerN> { $0.id == customerId },
                     sortBy: [SortDescriptor(\.createdDate, order: .reverse)]
                 )
                 customer = (try? modelContext.fetch(customerDescriptor))?.first
             }
 
-            let businessDescriptor = FetchDescriptor<Business>()
+            let businessDescriptor = FetchDescriptor<BusinessN>()
             business = (try? modelContext.fetch(businessDescriptor))?.first
 
             let productCodes = invoice.items.map { $0.productCode }

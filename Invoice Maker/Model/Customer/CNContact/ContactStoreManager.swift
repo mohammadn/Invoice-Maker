@@ -1,9 +1,9 @@
-/*
- See the LICENSE.txt file for this sample’s licensing information.
-
- Abstract:
- An observable class that manages reading data from the contact store.
- */
+//
+//  ContactStoreManger.swift
+//  Invoice Maker
+//
+//  Created by Mohammad Najafzadeh on 04/06/2025.
+//
 
 @preconcurrency import Contacts
 import OSLog

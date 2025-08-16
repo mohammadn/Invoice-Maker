@@ -25,7 +25,14 @@ extension SchemaV1 {
             Product(code: productCode, name: productName, price: productPrice, currency: productCurrency, details: productDetails)
         }
 
-        init(productCode: Int, productName: String, productPrice: Decimal, productCurrency: Currency, productDetails: String? = nil, quantity: Int = 1, invoice: SchemaV1.Invoice? = nil) {
+        init(productCode: Int,
+             productName: String,
+             productPrice: Decimal,
+             productCurrency: Currency,
+             productDetails: String? = nil,
+             quantity: Int = 1,
+             invoice: SchemaV1.Invoice? = nil
+        ) {
             self.productCode = productCode
             self.productName = productName
             self.productPrice = productPrice
@@ -41,7 +48,8 @@ extension SchemaV1 {
                       productPrice: item.productPrice,
                       productCurrency: item.productCurrency,
                       productDetails: item.productDetails,
-                      quantity: item.quantity)
+                      quantity: item.quantity
+            )
         }
 
         convenience init(from item: SchemaV1.InvoiceItem) {
@@ -50,7 +58,8 @@ extension SchemaV1 {
                       productPrice: item.productPrice,
                       productCurrency: item.productCurrency,
                       productDetails: item.productDetails,
-                      quantity: item.quantity)
+                      quantity: item.quantity
+            )
         }
     }
 }

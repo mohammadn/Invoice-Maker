@@ -9,15 +9,15 @@ import SwiftUI
 
 struct InvoiceOptionSelectionView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var selectedOptions: Set<Invoice.Options> = []
+    @State private var selectedOptions: Set<InvoiceN.Option> = []
 
-    @Binding var options: [Invoice.Options]
+    @Binding var options: [InvoiceN.Option]
 
     var body: some View {
         NavigationStack {
             List(selection: $selectedOptions) {
                 Section("انتخاب ویژگی‌ها") {
-                    ForEach(Invoice.Options.allCases, id: \.self) { option in
+                    ForEach(InvoiceN.Option.allCases, id: \.self) { option in
                         Text(option.label)
                             .tag(option)
                     }
@@ -47,12 +47,8 @@ struct InvoiceOptionSelectionView: View {
         }
     }
 
-    func updateOptions(with selectedOptions: Set<Invoice.Options>) {
-        selectedOptions.forEach { option in
-            if !options.contains(option) {
-                options.append(option)
-            }
-        }
+    func updateOptions(with selectedOptions: Set<InvoiceN.Option>) {
+        options = Array(selectedOptions)
     }
 }
 

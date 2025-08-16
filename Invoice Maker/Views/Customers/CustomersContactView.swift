@@ -37,7 +37,7 @@ struct CustomersContactView: View {
     }
 
     private func addCustomer(from contact: CNContact) {
-        let customer = Customer(from: contact)
+        let customer = CustomerN(from: contact)
 
         modelContext.insert(customer)
     }

@@ -11,7 +11,7 @@ import SwiftUI
 struct ContentView: View {
     @AppStorage("isWelcomeSheetShowing") var isWelcomeSheetShowing = true
     @Environment(\.modelContext) private var modelContext
-    @Query private var business: [Business]
+    @Query private var business: [BusinessN]
     @State private var tabViewModel = TabViewModel()
     @State private var invoiceViewModel = InvoiceViewModel()
 

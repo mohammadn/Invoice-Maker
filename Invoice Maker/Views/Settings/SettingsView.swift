@@ -22,7 +22,7 @@ struct NavigationLazyView<Content: View>: View {
 struct SettingsView: View {
     @AppStorage("defaultCurrency") var defaultCurrencyRawValue: String = Currency.IRR.rawValue
     @Environment(\.openURL) var openURL
-    @Query private var business: [Business]
+    @Query private var business: [BusinessN]
     private var defaultCurrency: Binding<Currency> {
         Binding<Currency>(
             get: { Currency(rawValue: defaultCurrencyRawValue) ?? .IRR },

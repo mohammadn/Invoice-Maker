@@ -1,5 +1,5 @@
 //
-//  ProductSchemaV1.swift
+//  SchemaV1+Product.swift
 //  Invoice Maker
 //
 //  Created by Mohammad Najafzadeh on 11/02/2024.
@@ -31,7 +31,8 @@ extension SchemaV1 {
                       name: productDetails.name,
                       price: productDetails.price ?? 0,
                       currency: productDetails.currency,
-                      details: productDetails.details)
+                      details: productDetails.details
+            )
         }
     }
 }
@@ -59,9 +60,5 @@ extension SchemaV1.Product: Equatable {
 extension SchemaV1.Product: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(code)
-        hasher.combine(name)
-        hasher.combine(price)
-        hasher.combine(currency)
-        hasher.combine(details)
     }
 }

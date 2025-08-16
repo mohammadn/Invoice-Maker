@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct InvoiceCustomerDetailsView: View {
-    let invoice: Invoice
+    let invoice: InvoiceN
 
     var body: some View {
         LabeledContent("نام", value: invoice.customer?.name ?? "-")

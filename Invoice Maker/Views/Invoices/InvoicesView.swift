@@ -11,16 +11,15 @@ import SwiftUI
 struct InvoicesView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(InvoiceViewModel.self) private var invoiceViewModel
-    @Query private var business: [Business]
-    @Query(sort: \Invoice.createdDate, order: .reverse) private var invoices: [Invoice]
+    @Query(sort: \InvoiceN.createdDate, order: .reverse) private var invoices: [InvoiceN]
     @State private var showInvoiceFormView: Bool = false
     @State private var editMode: EditMode = .inactive
 
-    var invalidInvoices: [Invoice] {
+    var invalidInvoices: [InvoiceN] {
         invoices.filter { $0.isInvalid }
     }
 
-    var validInvoices: [Invoice] {
+    var validInvoices: [InvoiceN] {
         invoices.filter { !$0.isInvalid }
     }
 
@@ -153,11 +152,11 @@ struct InvoicesView: View {
         }
     }
 
-    private func delete(invoice: Invoice) {
+    private func delete(invoice: InvoiceN) {
         modelContext.delete(invoice)
     }
 
-    private func delete(invoices: Set<Invoice>) {
+    private func delete(invoices: Set<InvoiceN>) {
         for invoice in invoices {
             modelContext.delete(invoice)
         }

@@ -10,7 +10,7 @@ import TPPDF
 import UIKit
 
 struct PDF {
-    let invoice: Invoice
+    let invoice: InvoiceN
 
     func generatePDF() -> URL? {
         let document = PDFDocument(format: .a4)
