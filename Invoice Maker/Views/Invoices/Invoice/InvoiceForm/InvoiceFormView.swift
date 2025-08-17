@@ -117,8 +117,12 @@ struct InvoiceFormView: View {
                                 item.quantity -= 1
                             }
                         }
+                        .swipeActions {
+                            Button("حذف", role: .destructive) {
+                                delete(item: item)
+                            }
+                        }
                     }
-                    .onDelete(perform: deleteProduct)
                 } header: {
                     HStack {
                         Text("محصولات")
@@ -233,10 +237,8 @@ struct InvoiceFormView: View {
         try? modelContext.save()
     }
 
-    private func deleteProduct(at indexSet: IndexSet) {
-        indexSet.forEach { index in
-            invoiceDetails.items.remove(at: index)
-        }
+    private func delete(item: ItemDetails) {
+        invoiceDetails.items.removeAll { $0.productId == item.productId }
     }
 }
 
