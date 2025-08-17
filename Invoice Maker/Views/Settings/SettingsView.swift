@@ -76,8 +76,8 @@ struct SettingsView: View {
     }
 }
 
-// #Preview {
-//    SettingsView()
-//        .modelContainer(previewContainer)
-//        .environment(\.layoutDirection, .rightToLeft)
-// }
+ #Preview {
+    SettingsView()
+        .modelContainer(previewContainer)
+        .environment(\.layoutDirection, .rightToLeft)
+ }

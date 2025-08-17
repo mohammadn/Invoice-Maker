@@ -78,8 +78,10 @@ struct InvoiceProductSelection: View {
     }
 }
 
-// #Preview {
-//    InvoiceProductSelection(items: .constant([]))
-//        .modelContainer(previewContainer)
-//        .environment(\.layoutDirection, .rightToLeft)
-// }
+#Preview {
+    @Previewable @State var items: [ItemDetails] = []
+
+    InvoiceProductSelection(items: $items)
+        .modelContainer(previewContainer)
+        .environment(\.layoutDirection, .rightToLeft)
+}

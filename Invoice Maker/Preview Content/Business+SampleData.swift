@@ -7,11 +7,13 @@
 
 import Foundation
 
-extension Business {
+extension BusinessN {
     @MainActor
-    static let sampleData = Business(name: "نمونه شرکت",
-                                     phone: "تهران، ایران",
-                                     email: "۰۲۱۲۲۲۲۲۲۲۲",
-                                     website: "test@example.com",
-                                     address: "www.example.com")
+    static let sampleData = BusinessN(
+        name: "فروشكاه اينترنتى لباس",
+        phone: "تهران، منطقه ٢، خيابان آزادی، پلاک ۴۵",
+        email: "09121234567",
+        website: "info@cloth-shop.ir",
+        address: "www.Cloth-Shop.com"
+    )
 }

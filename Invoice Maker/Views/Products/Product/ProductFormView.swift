@@ -96,13 +96,15 @@ struct ProductFormView: View {
 
             modelContext.insert(product)
         }
-        
+
         try? modelContext.save()
     }
 }
 
-// #Preview {
-//    ProductFormView { _ in }
-//        .modelContainer(previewContainer)
-//        .environment(\.layoutDirection, .rightToLeft)
-// }
+#Preview {
+    NavigationStack {
+        ProductFormView(product: Product.sampleData.first!)
+    }
+    .modelContainer(previewContainer)
+    .environment(\.layoutDirection, .rightToLeft)
+}

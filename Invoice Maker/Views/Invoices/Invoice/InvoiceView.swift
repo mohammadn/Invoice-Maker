@@ -26,6 +26,7 @@ struct InvoiceView: View {
     }
 }
 
-// #Preview {
-//    InvoiceView()
-// }
+#Preview {
+    InvoiceView(invoice: InvoiceN.sampleData[0])
+        .modelContainer(previewContainer)
+}

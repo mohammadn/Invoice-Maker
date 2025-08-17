@@ -46,8 +46,11 @@ struct ContentView: View {
     }
 }
 
-// #Preview {
-//    ContentView()
-//        .modelContainer(previewContainer)
-//        .environment(\.layoutDirection, .rightToLeft)
-// }
+#Preview {
+    @Previewable @State var storeManager = ContactStoreManager()
+
+    ContentView()
+        .modelContainer(previewContainer)
+        .environment(\.layoutDirection, .rightToLeft)
+        .environment(storeManager)
+}

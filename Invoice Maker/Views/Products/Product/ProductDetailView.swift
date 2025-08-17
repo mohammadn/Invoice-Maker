@@ -78,6 +78,11 @@ struct ProductDetailView: View {
     }
 }
 
-// #Preview {
-//    ProductDetailView()
-// }
+#Preview {
+    @Previewable @State var isEditing: Bool = false
+
+    NavigationStack {
+        ProductDetailView(product: Product.sampleData[0], isEditing: $isEditing)
+    }
+    .modelContainer(previewContainer)
+}

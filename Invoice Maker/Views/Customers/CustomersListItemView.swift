@@ -40,6 +40,12 @@ struct CustomersListItemView: View {
     }
 }
 
-// #Preview {
-//    CustomersListItemView()
-// }
+#Preview {
+    @Previewable @State var editMode: EditMode = .inactive
+
+    NavigationStack {
+        List {
+            CustomersListItemView(customer: CustomerN.sampleData[0], editMode: $editMode)
+        }
+    }
+}

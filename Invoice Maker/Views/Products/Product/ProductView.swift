@@ -26,6 +26,7 @@ struct ProductView: View {
     }
 }
 
-// #Preview {
-//    ProductView(product: Product.sampleData[0])
-// }
+#Preview {
+    ProductView(product: Product.sampleData.first!)
+        .modelContainer(previewContainer)
+}

@@ -7,11 +7,15 @@
 
 import Foundation
 
-extension Customer {
+extension CustomerN {
     @MainActor
-    static let sampleData: [Customer] = [
-        Customer(name: "محمد علی پور", address: "تهران، ایران", details: "توضیحات مشتری", phone: "0212222222", email: "mohammad@example.com"),
-        Customer(name: "حسین صمدی", address: "مشهد، ایران", details: "توضیحات مشتری", phone: "0512222222", email: "hossein@example.com"),
-        Customer(name: "سارا محمدی", address: "اصفهان، ایران", details: "توضیحات مشتری", phone: "0312222222", email: "sara@example.com"),
+    static let sampleData: [CustomerN] = [
+        CustomerN(
+            name: "بوتیک لباس",
+            phone: "09121234567",
+            email: "info@boutique.ir",
+            address: "تهران، منطقه ه، محله پونك، خيابان ايران زمين، كوجه گلستان، پلاك ١۲",
+            details: nil
+        ),
     ]
 }

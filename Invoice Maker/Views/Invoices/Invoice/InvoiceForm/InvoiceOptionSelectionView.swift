@@ -52,6 +52,8 @@ struct InvoiceOptionSelectionView: View {
     }
 }
 
-// #Preview {
-//    InvoiceOptionSelectionView()
-// }
+#Preview {
+    @Previewable @State var options: [InvoiceN.Option] = []
+
+    InvoiceOptionSelectionView(options: $options)
+}

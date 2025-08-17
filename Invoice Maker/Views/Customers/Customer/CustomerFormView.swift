@@ -81,9 +81,10 @@ struct CustomerFormView: View {
     }
 }
 
-//
-// #Preview {
-//    CustomerFormView { _ in }
-//        .modelContainer(previewContainer)
-//        .environment(\.layoutDirection, .rightToLeft)
-// }
+#Preview {
+    NavigationStack {
+        CustomerFormView(customer: CustomerN.sampleData.first!)
+    }
+    .modelContainer(previewContainer)
+    .environment(\.layoutDirection, .rightToLeft)
+}

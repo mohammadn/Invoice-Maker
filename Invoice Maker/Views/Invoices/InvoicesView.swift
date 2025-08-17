@@ -163,8 +163,11 @@ struct InvoicesView: View {
     }
 }
 
-// #Preview {
-//    InvoicesView()
-//        .modelContainer(previewContainer)
-//        .environment(\.layoutDirection, .rightToLeft)
-// }
+#Preview {
+    @Previewable @State var invoiceViewModel = InvoiceViewModel()
+
+    InvoicesView()
+        .modelContainer(previewContainer)
+        .environment(\.layoutDirection, .rightToLeft)
+        .environment(invoiceViewModel)
+}

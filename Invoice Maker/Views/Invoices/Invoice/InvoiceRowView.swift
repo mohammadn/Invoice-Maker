@@ -35,6 +35,9 @@ struct InvoiceRowView: View {
     }
 }
 
-// #Preview {
-//    InvoiceRowView()
-// }
+#Preview {
+    List {
+        InvoiceRowView(invoice: InvoiceN.sampleData[0])
+    }
+    .modelContainer(previewContainer)
+}

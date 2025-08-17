@@ -61,6 +61,12 @@ struct InvoiceSummaryView: View {
     }
 }
 
-// #Preview {
-//    InvoiceSummaryView()
-// }
+#Preview {
+    @Previewable @State var tabViewModel = TabViewModel()
+    @Previewable @State var invoiceViewModel = InvoiceViewModel()
+
+    InvoiceSummaryView(invoice: InvoiceN.sampleData[0])
+        .modelContainer(previewContainer)
+        .environment(tabViewModel)
+        .environment(invoiceViewModel)
+}

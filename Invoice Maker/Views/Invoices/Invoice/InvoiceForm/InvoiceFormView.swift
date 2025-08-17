@@ -240,8 +240,10 @@ struct InvoiceFormView: View {
     }
 }
 
-// #Preview {
-//    InvoiceFormView { _ in }
-//        .modelContainer(previewContainer)
-//        .environment(\.layoutDirection, .rightToLeft)
-// }
+#Preview {
+    NavigationStack {
+        InvoiceFormView(invoice: InvoiceN.sampleData.first)
+    }
+    .modelContainer(previewContainer)
+    .environment(\.layoutDirection, .rightToLeft)
+}
