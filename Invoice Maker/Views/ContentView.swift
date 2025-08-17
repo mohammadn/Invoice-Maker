@@ -48,9 +48,15 @@ struct ContentView: View {
 
 #Preview {
     @Previewable @State var storeManager = ContactStoreManager()
+    var persianCalendar: Calendar {
+        var calendar = Calendar(identifier: .persian)
+        calendar.firstWeekday = 7
+        return calendar
+    }
 
     ContentView()
         .modelContainer(previewContainer)
-        .environment(\.layoutDirection, .rightToLeft)
+        .environment(\.calendar, persianCalendar)
+        .environment(\.locale, Locale(identifier: "fa"))
         .environment(storeManager)
 }

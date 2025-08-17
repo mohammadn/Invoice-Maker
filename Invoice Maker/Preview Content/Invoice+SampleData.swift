@@ -11,10 +11,10 @@ extension InvoiceN {
     @MainActor
     static let sampleData: [InvoiceN] = [
         InvoiceN(
-            number: "1",
+            number: "14040101003",
             type: .sale,
             currency: .IRR,
-            date: Date(),
+            date: Date(timeIntervalSince1970: 1742579120),
             dueDate: Date(),
             vat: 10,
             discount: 5,
