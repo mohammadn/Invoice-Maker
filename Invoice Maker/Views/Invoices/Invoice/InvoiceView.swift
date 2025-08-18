@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct InvoiceView: View {
-    @State var isEditing: Bool = false
+    @State private var isEditing: Bool = false
 
     var invoice: InvoiceN
 

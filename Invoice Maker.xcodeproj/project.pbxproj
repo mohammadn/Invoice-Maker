@@ -27,6 +27,9 @@
 		A60F7BFA2E50B3D700649A24 /* SchemaV1+Invoice+Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BF92E50B3D200649A24 /* SchemaV1+Invoice+Type.swift */; };
 		A60F7C042E51E9C900649A24 /* Invoice+SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7C032E51E9C900649A24 /* Invoice+SampleData.swift */; };
 		A60F7C062E51E9D300649A24 /* PreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7C052E51E9D300649A24 /* PreviewContainer.swift */; };
+		A60F7C0C2E53AF9E00649A24 /* StepperButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7C082E53AF9E00649A24 /* StepperButtonStyle.swift */; };
+		A60F7C0D2E53AF9E00649A24 /* StepperButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7C092E53AF9E00649A24 /* StepperButtonView.swift */; };
+		A60F7C0F2E53B2DB00649A24 /* InputStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7C0E2E53B2DA00649A24 /* InputStepper.swift */; };
 		A61469D22E08B33300713056 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61469D12E08B32900713056 /* Currency.swift */; };
 		A6208EC22E0B4299001B4325 /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6208EC12E0B4290001B4325 /* CurrencyFormatter.swift */; };
 		A6208EC42E0B4ED6001B4325 /* Decimal+Rounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6208EC32E0B4ECE001B4325 /* Decimal+Rounded.swift */; };
@@ -107,6 +110,9 @@
 		A60F7BF92E50B3D200649A24 /* SchemaV1+Invoice+Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SchemaV1+Invoice+Type.swift"; sourceTree = "<group>"; };
 		A60F7C032E51E9C900649A24 /* Invoice+SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Invoice+SampleData.swift"; sourceTree = "<group>"; };
 		A60F7C052E51E9D300649A24 /* PreviewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainer.swift; sourceTree = "<group>"; };
+		A60F7C082E53AF9E00649A24 /* StepperButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperButtonStyle.swift; sourceTree = "<group>"; };
+		A60F7C092E53AF9E00649A24 /* StepperButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperButtonView.swift; sourceTree = "<group>"; };
+		A60F7C0E2E53B2DA00649A24 /* InputStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputStepper.swift; sourceTree = "<group>"; };
 		A61469D12E08B32900713056 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		A6208EC12E0B4290001B4325 /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
 		A6208EC32E0B4ECE001B4325 /* Decimal+Rounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decimal+Rounded.swift"; sourceTree = "<group>"; };
@@ -241,6 +247,16 @@
 			path = OldSchema;
 			sourceTree = "<group>";
 		};
+		A60F7C0A2E53AF9E00649A24 /* Stepper */ = {
+			isa = PBXGroup;
+			children = (
+				A60F7C0E2E53B2DA00649A24 /* InputStepper.swift */,
+				A60F7C082E53AF9E00649A24 /* StepperButtonStyle.swift */,
+				A60F7C092E53AF9E00649A24 /* StepperButtonView.swift */,
+			);
+			path = Stepper;
+			sourceTree = "<group>";
+		};
 		A6208EC02E0B4284001B4325 /* Currency */ = {
 			isa = PBXGroup;
 			children = (
@@ -303,6 +319,7 @@
 			children = (
 				A69AC0902DDFB1C1001FAFD6 /* ButtonWithPopover.swift */,
 				A675DCFC2E15D50F0040D855 /* ExpandableSectionView.swift */,
+				A60F7C0A2E53AF9E00649A24 /* Stepper */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -610,6 +627,8 @@
 				A60F7BF02E4FDB4C00649A24 /* InvoiceSchemaV1+Item.swift in Sources */,
 				A6ACF59B2B7AB4DB00D4727B /* ProductDetailsV1.swift in Sources */,
 				A60F7BFA2E50B3D700649A24 /* SchemaV1+Invoice+Type.swift in Sources */,
+				A60F7C0C2E53AF9E00649A24 /* StepperButtonStyle.swift in Sources */,
+				A60F7C0D2E53AF9E00649A24 /* StepperButtonView.swift in Sources */,
 				A6208ECB2E11F4E1001B4325 /* InvoiceMainDetailsView.swift in Sources */,
 				A675DD062E19C56A0040D855 /* SchemaV1+Invoice.swift in Sources */,
 				A6208EC42E0B4ED6001B4325 /* Decimal+Rounded.swift in Sources */,
@@ -641,6 +660,7 @@
 				A675DCFD2E15D50F0040D855 /* ExpandableSectionView.swift in Sources */,
 				A6E205042DEB8C84009BEF4A /* SchemaV1+Product.swift in Sources */,
 				A675DCEE2E1206C00040D855 /* TabViewModel.swift in Sources */,
+				A60F7C0F2E53B2DB00649A24 /* InputStepper.swift in Sources */,
 				A6ACF5BF2B7ADA9600D4727B /* BusinessDetailsV1.swift in Sources */,
 				A6ACF5CF2B7D6BF800D4727B /* InvoicesView.swift in Sources */,
 				A60F7BC32E3EB3C200649A24 /* CurrentCustomer.swift in Sources */,

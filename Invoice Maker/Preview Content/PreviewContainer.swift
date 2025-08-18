@@ -33,17 +33,8 @@ public let previewContainer: ModelContainer = {
             context.insert(product)
         }
 
-        // Add sample invoices with relationships
+        // Add sample invoices (already have relationships)
         for invoice in InvoiceN.sampleData {
-            let invoiceBusiness = InvoiceBusiness(from: BusinessN.sampleData)
-            let invoiceCustomer = InvoiceCustomer(from: CustomerN.sampleData.first!)
-            let itemDetails = Product.sampleData.map { ItemDetails(from: $0, quantity: 1) }
-            let invoiceItems = itemDetails.map { InvoiceItem(from: $0) }
-
-            invoice.business = invoiceBusiness
-            invoice.customer = invoiceCustomer
-            invoice.items = invoiceItems
-
             context.insert(invoice)
         }
 

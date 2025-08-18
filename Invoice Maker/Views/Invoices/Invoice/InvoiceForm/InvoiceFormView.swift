@@ -107,15 +107,8 @@ struct InvoiceFormView: View {
 
                 Section {
                     ForEach($invoiceDetails.items) { $item in
-                        Stepper {
+                        InputStepper(value: $item.quantity) {
                             Text(item.productName)
-                            Text(item.quantity.description)
-                        } onIncrement: {
-                            item.quantity += 1
-                        } onDecrement: {
-                            if item.quantity > 0 {
-                                item.quantity -= 1
-                            }
                         }
                         .swipeActions {
                             Button("حذف", role: .destructive) {
@@ -244,8 +237,7 @@ struct InvoiceFormView: View {
 
 #Preview {
     NavigationStack {
-        InvoiceFormView(invoice: InvoiceN.sampleData.first)
+        InvoiceFormView(invoice: InvoiceN.sampleData[0])
     }
     .modelContainer(previewContainer)
-    .environment(\.layoutDirection, .rightToLeft)
 }

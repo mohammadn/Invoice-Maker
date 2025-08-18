@@ -9,8 +9,8 @@ import Foundation
 
 extension InvoiceN {
     @MainActor
-    static let sampleData: [InvoiceN] = [
-        InvoiceN(
+    static let sampleData: [InvoiceN] = {
+        let invoice = InvoiceN(
             number: "14040101003",
             type: .sale,
             currency: .IRR,
@@ -22,53 +22,16 @@ extension InvoiceN {
             status: .pending,
             options: [],
             items: [],
-            customer: nil,
-            business: nil
-        ),
-    ]
+            customer: InvoiceCustomer(from: CustomerN.sampleData.first!),
+            business: InvoiceBusiness(from: BusinessN.sampleData)
+        )
 
-    @MainActor
-    static let bustinessesSampleData: [InvoiceBusiness] = [
-        InvoiceBusiness(
-            name: "فروشكاه اينترنتى لباس",
-            phone: "تهران، منطقه ٢، خيابان آزادی، پلاک ۴۵",
-            email: "09121234567",
-            website: "info@cloth-shop.ir",
-            address: "www.Cloth-Shop.com"
-        ),
-    ]
+        // Add sample items
+        let itemDetails = Product.sampleData.map { ItemDetails(from: $0, quantity: 1) }
+        let invoiceItems = itemDetails.map { InvoiceItem(from: $0) }
 
-    @MainActor
-    static let customersSampleData: [InvoiceCustomer] = [
-        InvoiceCustomer(
-            id: UUID(),
-            name: "بوتیک لباس",
-            phone: "09121234567",
-            email: "info@boutique.ir",
-            address: "تهران، منطقه ه، محله پونك، خيابان ايران زمين، كوجه گلستان، پلاك ١۲",
-            details: ""
-        ),
-    ]
+        invoice.items = invoiceItems
 
-    @MainActor
-    static let itemsSampleData: [InvoiceItem] = [
-        InvoiceItem(
-            productId: UUID(),
-            productCode: 1,
-            productName: "شلوار جین زارا",
-            productPrice: 600000,
-            productCurrency: .IRR_Toman,
-            productDetails: "ابی روشن",
-            quantity: 1
-        ),
-        InvoiceItem(
-            productId: UUID(),
-            productCode: 2,
-            productName: "شومیز زارا",
-            productPrice: 1200000,
-            productCurrency: .IRR,
-            productDetails: "سفید",
-            quantity: 1
-        ),
-    ]
+        return [invoice]
+    }()
 }
