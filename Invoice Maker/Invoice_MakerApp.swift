@@ -55,20 +55,26 @@ struct Invoice_MakerApp: App {
 
     @MainActor
     private func performMigration() async {
-        // Check if we need to migrate
-        guard let oldContainer = oldContainer else {
-            return
+        // Check if we need to migrate old schema
+        if let oldContainer = oldContainer {
+            let migrationManager = DataMigrationManager(
+                mainContainer: container,
+                oldContainer: oldContainer
+            )
+
+            do {
+                try await migrationManager.performMigrationIfNeeded()
+            } catch {
+                print("Old schema migration error: \(error)")
+            }
         }
-
-        let migrationManager = DataMigrationManager(
-            mainContainer: container,
-            oldContainer: oldContainer
-        )
-
+        
+        // Always check for VAT/Discount conversion (for current schema)
+        let vatDiscountConverter = VATDiscountConverter(container: container)
         do {
-            try await migrationManager.performMigrationIfNeeded()
+            try await vatDiscountConverter.convertVATDiscountToDecimal()
         } catch {
-            print(error)
+            print("VAT/Discount conversion error: \(error)")
         }
     }
 }
