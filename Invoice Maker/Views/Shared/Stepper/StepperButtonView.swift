@@ -59,7 +59,7 @@ struct StepperButtonView<Content: View>: View {
                 try? await Task.sleep(nanoseconds: fadeDelay)
                 await MainActor.run {
                     guard !Task.isCancelled else { return }
-                    scale = 0.5
+                    scale = 0.9
                 }
             }
         }
