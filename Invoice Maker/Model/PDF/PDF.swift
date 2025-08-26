@@ -11,6 +11,8 @@ import UIKit
 
 struct PDF {
     let invoice: InvoiceN
+    let systemGray5 = UIColor(red: 216/255, green: 216/255, blue: 220/255, alpha: 1)
+    let systemGray6 = UIColor(red: 235/255, green: 235/255, blue: 240/255, alpha: 1)
 
     func generatePDF() -> URL? {
         let document = PDFDocument(format: .a4)
@@ -77,8 +79,8 @@ struct PDF {
         customerDetailsTable[0, 0].content = try? PDFTableContent(content: customerDetails)
         customerDetailsTable[row: 0].allCellsAlignment = .right
         customerDetailsTable.style = PDFTableStyle(
-            outline: PDFLineStyle(type: .full, color: .systemGray5, width: 1),
-            columnHeaderStyle: PDFTableCellStyle(colors: (fill: .systemGray6, text: .black)),
+            outline: PDFLineStyle(type: .full, color: systemGray5, width: 1),
+            columnHeaderStyle: PDFTableCellStyle(colors: (fill: systemGray6, text: UIColor.black)),
         )
 
         document.add(table: customerDetailsTable)
@@ -132,14 +134,14 @@ struct PDF {
     }
 
     private func createItemsTable() -> PDFTable {
-        let colors = (fill: Color.systemGray6, text: Color.black)
+        let colors = (fill: systemGray6, text: UIColor.black)
         let border = PDFLineStyle(type: .full, color: .lightGray, width: 1)
         let headerStyle = PDFTableCellStyle(colors: colors, borders: PDFTableCellBorders(top: border), font: .systemFont(ofSize: 14))
         let contentStyle = PDFTableCellStyle(borders: PDFTableCellBorders(top: border, right: border), font: .systemFont(ofSize: 12))
         let rowsCounter = invoice.items.count + 5
         let table = PDFTable(rows: rowsCounter, columns: 5)
         table.style = PDFTableStyle(
-            outline: PDFLineStyle(type: .full, color: .systemGray5, width: 1),
+            outline: PDFLineStyle(type: .full, color: systemGray5, width: 1),
             rowHeaderStyle: contentStyle,
             columnHeaderStyle: headerStyle,
             contentStyle: contentStyle,

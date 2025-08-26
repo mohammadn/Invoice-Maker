@@ -28,11 +28,7 @@ class InvoiceDetailsV1 {
     var customerEmail: String?
 
     var isInvalid: Bool {
-        number.isEmpty ||
-            customerId == nil ||
-            items.isEmpty ||
-            discount == nil ||
-            vat == nil
+        number.isEmpty || customerId == nil || items.isEmpty
     }
 
     init(number: String = "",

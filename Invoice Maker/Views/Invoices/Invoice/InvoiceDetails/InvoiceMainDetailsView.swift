@@ -20,8 +20,8 @@ struct InvoiceMainDetailsView: View {
                 LabeledContent("تاریخ سررسید", value: invoice.dueDate, format: .dateTime)
             }
             LabeledContent("جمع کل", value: invoice.total, format: .currencyFormatter(code: invoice.currency))
-            LabeledContent("تخفیف (٪)", value: invoice.discount, format: .number)
-            LabeledContent("ارزش افزوده (٪)", value: invoice.vat, format: .number)
+            LabeledContent("تخفیف", value: invoice.discount, format: .percent)
+            LabeledContent("ارزش افزوده", value: invoice.vat, format: .percent)
             LabeledContent("مبلغ نهایی", value: invoice.totalWithVAT, format: .currencyFormatter(code: invoice.currency))
             LabeledContent("توضیحات", value: invoice.note.isEmpty ? "-" : invoice.note)
         }
