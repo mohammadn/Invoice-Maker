@@ -49,7 +49,7 @@ extension SchemaV1 {
         }
 
         var discountAmount: Decimal {
-            return (total * (discount / 100)).rounded()
+            return (total * discount).rounded()
         }
 
         var totalWithDiscount: Decimal {
@@ -57,7 +57,7 @@ extension SchemaV1 {
         }
 
         var vatAmount: Decimal {
-            return (totalWithDiscount * (vat / 100)).rounded()
+            return (totalWithDiscount * vat).rounded()
         }
 
         var totalWithVAT: Decimal {

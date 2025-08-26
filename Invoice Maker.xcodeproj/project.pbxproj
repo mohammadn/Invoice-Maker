@@ -25,6 +25,7 @@
 		A60F7BF62E50B33C00649A24 /* SchemaV1+Invoice+Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BF52E50B33A00649A24 /* SchemaV1+Invoice+Option.swift */; };
 		A60F7BF82E50B3BB00649A24 /* SchemaV1+Invoice+Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BF72E50B3B400649A24 /* SchemaV1+Invoice+Status.swift */; };
 		A60F7BFA2E50B3D700649A24 /* SchemaV1+Invoice+Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BF92E50B3D200649A24 /* SchemaV1+Invoice+Type.swift */; };
+		A60F7C112E5E51A000649A24 /* VATDiscountConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7C102E5E51A000649A24 /* VATDiscountConverter.swift */; };
 		A61469D22E08B33300713056 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61469D12E08B32900713056 /* Currency.swift */; };
 		A6208EC22E0B4299001B4325 /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6208EC12E0B4290001B4325 /* CurrencyFormatter.swift */; };
 		A6208EC42E0B4ED6001B4325 /* Decimal+Rounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6208EC32E0B4ECE001B4325 /* Decimal+Rounded.swift */; };
@@ -103,6 +104,7 @@
 		A60F7BF52E50B33A00649A24 /* SchemaV1+Invoice+Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SchemaV1+Invoice+Option.swift"; sourceTree = "<group>"; };
 		A60F7BF72E50B3B400649A24 /* SchemaV1+Invoice+Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SchemaV1+Invoice+Status.swift"; sourceTree = "<group>"; };
 		A60F7BF92E50B3D200649A24 /* SchemaV1+Invoice+Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SchemaV1+Invoice+Type.swift"; sourceTree = "<group>"; };
+		A60F7C102E5E51A000649A24 /* VATDiscountConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VATDiscountConverter.swift; sourceTree = "<group>"; };
 		A61469D12E08B32900713056 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		A6208EC12E0B4290001B4325 /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
 		A6208EC32E0B4ECE001B4325 /* Decimal+Rounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decimal+Rounded.swift"; sourceTree = "<group>"; };
@@ -382,6 +384,7 @@
 				A6E205052DEB9554009BEF4A /* MigrationPlan.swift */,
 				A68456052D30577400FBD1E1 /* NullishCoalescingBinding.swift */,
 				A6DAE4FF2D240BBD00205A54 /* String+ToPersian.swift */,
+				A60F7C102E5E51A000649A24 /* VATDiscountConverter.swift */,
 				A60F7BDC2E492C2100649A24 /* Business */,
 				A6208EC02E0B4284001B4325 /* Currency */,
 				A60F7BD92E492B4900649A24 /* Customer */,
@@ -599,6 +602,7 @@
 				A6C772212DAF16C000315110 /* CustomerView.swift in Sources */,
 				A60F7BED2E4FDB4C00649A24 /* InvoiceSchemaV1+Business.swift in Sources */,
 				A60F7BEE2E4FDB4C00649A24 /* InvoiceSchemaV1.swift in Sources */,
+				A60F7C112E5E51A000649A24 /* VATDiscountConverter.swift in Sources */,
 				A60F7BEF2E4FDB4C00649A24 /* InvoiceSchemaV1+Customer.swift in Sources */,
 				A60F7BF02E4FDB4C00649A24 /* InvoiceSchemaV1+Item.swift in Sources */,
 				A6ACF59B2B7AB4DB00D4727B /* ProductDetailsV1.swift in Sources */,
@@ -798,7 +802,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.40.1;
+				MARKETING_VERSION = 1.40.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "MN.Invoice-Maker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -834,7 +838,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.40.1;
+				MARKETING_VERSION = 1.40.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "MN.Invoice-Maker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
