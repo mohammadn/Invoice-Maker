@@ -830,7 +830,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.40.2;
+				MARKETING_VERSION = 1.41.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "MN.Invoice-Maker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -866,7 +866,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.40.2;
+				MARKETING_VERSION = 1.41.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "MN.Invoice-Maker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
