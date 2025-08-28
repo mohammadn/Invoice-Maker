@@ -164,9 +164,11 @@ struct OnboardingSheetView: View {
     }
 }
 
-#Preview {
-    OnboardingSheetView()
-}
+#if DEBUG
+    #Preview {
+        OnboardingSheetView()
+    }
+#endif
 
 struct FeatureView: View {
     let label: String

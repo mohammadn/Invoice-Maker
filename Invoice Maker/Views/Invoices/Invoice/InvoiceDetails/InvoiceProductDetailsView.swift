@@ -33,9 +33,11 @@ struct InvoiceProductDetailsView: View {
     }
 }
 
-#Preview {
-    List {
-        InvoiceProductDetailsView(invoice: InvoiceN.sampleData.first!)
+#if DEBUG
+    #Preview {
+        List {
+            InvoiceProductDetailsView(invoice: InvoiceN.sampleData.first!)
+        }
+        .modelContainer(previewContainer)
     }
-    .modelContainer(previewContainer)
-}
+#endif

@@ -62,10 +62,12 @@ struct SettingsBusinessDetailsView: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        SettingsBusinessDetailsView(business: BusinessN.sampleData)
+#if DEBUG
+    #Preview {
+        NavigationStack {
+            SettingsBusinessDetailsView(business: BusinessN.sampleData)
+        }
+        .modelContainer(previewContainer)
+        .environment(\.layoutDirection, .rightToLeft)
     }
-    .modelContainer(previewContainer)
-    .environment(\.layoutDirection, .rightToLeft)
-}
+#endif

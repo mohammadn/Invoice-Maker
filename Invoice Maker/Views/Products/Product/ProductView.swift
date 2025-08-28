@@ -26,7 +26,9 @@ struct ProductView: View {
     }
 }
 
-#Preview {
-    ProductView(product: Product.sampleData.first!)
-        .modelContainer(previewContainer)
-}
+#if DEBUG
+    #Preview {
+        ProductView(product: Product.sampleData.first!)
+            .modelContainer(previewContainer)
+    }
+#endif

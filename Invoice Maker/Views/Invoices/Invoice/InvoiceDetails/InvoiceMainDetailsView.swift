@@ -28,9 +28,11 @@ struct InvoiceMainDetailsView: View {
     }
 }
 
-#Preview {
-    List {
-        InvoiceMainDetailsView(invoice: InvoiceN.sampleData[0])
+#if DEBUG
+    #Preview {
+        List {
+            InvoiceMainDetailsView(invoice: InvoiceN.sampleData[0])
+        }
+        .modelContainer(previewContainer)
     }
-    .modelContainer(previewContainer)
-}
+#endif

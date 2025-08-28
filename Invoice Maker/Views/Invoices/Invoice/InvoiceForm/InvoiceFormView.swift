@@ -235,9 +235,11 @@ struct InvoiceFormView: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        InvoiceFormView(invoice: InvoiceN.sampleData[0])
+#if DEBUG
+    #Preview {
+        NavigationStack {
+            InvoiceFormView(invoice: InvoiceN.sampleData[0])
+        }
+        .modelContainer(previewContainer)
     }
-    .modelContainer(previewContainer)
-}
+#endif

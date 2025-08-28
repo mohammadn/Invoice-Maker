@@ -138,8 +138,10 @@ struct ProductsView: View {
     }
 }
 
-#Preview {
-    ProductsView()
-        .modelContainer(previewContainer)
-        .environment(\.layoutDirection, .rightToLeft)
-}
+#if DEBUG
+    #Preview {
+        ProductsView()
+            .modelContainer(previewContainer)
+            .environment(\.layoutDirection, .rightToLeft)
+    }
+#endif

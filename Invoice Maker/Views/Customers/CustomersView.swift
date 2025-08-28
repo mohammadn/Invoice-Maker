@@ -188,11 +188,13 @@ struct CustomersView: View {
     }
 }
 
-#Preview {
-    @Previewable @State var storeManager = ContactStoreManager()
+#if DEBUG
+    #Preview {
+        @Previewable @State var storeManager = ContactStoreManager()
 
-    CustomersView()
-        .modelContainer(previewContainer)
-        .environment(\.layoutDirection, .rightToLeft)
-        .environment(storeManager)
-}
+        CustomersView()
+            .modelContainer(previewContainer)
+            .environment(\.layoutDirection, .rightToLeft)
+            .environment(storeManager)
+    }
+#endif

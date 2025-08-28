@@ -128,11 +128,13 @@ struct InvoiceDetailView: View {
     }
 }
 
-#Preview {
-    @Previewable @State var isEditing: Bool = false
+#if DEBUG
+    #Preview {
+        @Previewable @State var isEditing: Bool = false
 
-    NavigationStack {
-        InvoiceDetailView(invoice: InvoiceN.sampleData[0], isEditing: $isEditing)
+        NavigationStack {
+            InvoiceDetailView(invoice: InvoiceN.sampleData[0], isEditing: $isEditing)
+        }
+        .modelContainer(previewContainer)
     }
-    .modelContainer(previewContainer)
-}
+#endif

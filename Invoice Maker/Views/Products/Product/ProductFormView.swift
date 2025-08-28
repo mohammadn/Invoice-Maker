@@ -101,10 +101,12 @@ struct ProductFormView: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        ProductFormView(product: Product.sampleData.first!)
+#if DEBUG
+    #Preview {
+        NavigationStack {
+            ProductFormView(product: Product.sampleData.first!)
+        }
+        .modelContainer(previewContainer)
+        .environment(\.layoutDirection, .rightToLeft)
     }
-    .modelContainer(previewContainer)
-    .environment(\.layoutDirection, .rightToLeft)
-}
+#endif

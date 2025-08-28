@@ -80,11 +80,13 @@ struct CustomerDetailView: View {
     }
 }
 
-#Preview {
-    @Previewable @State var isEditing: Bool = false
+#if DEBUG
+    #Preview {
+        @Previewable @State var isEditing: Bool = false
 
-    NavigationStack {
-        CustomerDetailView(customer: CustomerN.sampleData.first!, isEditing: $isEditing)
+        NavigationStack {
+            CustomerDetailView(customer: CustomerN.sampleData.first!, isEditing: $isEditing)
+        }
+        .modelContainer(previewContainer)
     }
-    .modelContainer(previewContainer)
-}
+#endif
