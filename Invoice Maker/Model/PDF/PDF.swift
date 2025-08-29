@@ -11,8 +11,8 @@ import UIKit
 
 struct PDF {
     let invoice: InvoiceN
-    let systemGray5 = UIColor(red: 216/255, green: 216/255, blue: 220/255, alpha: 1)
-    let systemGray6 = UIColor(red: 235/255, green: 235/255, blue: 240/255, alpha: 1)
+    let systemGray5 = UIColor(red: 216 / 255, green: 216 / 255, blue: 220 / 255, alpha: 1)
+    let systemGray6 = UIColor(red: 235 / 255, green: 235 / 255, blue: 240 / 255, alpha: 1)
 
     func generatePDF() -> URL? {
         let document = PDFDocument(format: .a4)
@@ -174,14 +174,14 @@ struct PDF {
         table[netTotalRow, 1].style = headerStyle
 
         let discountRow = netTotalRow + 1
-        table[discountRow, 0].content = try? PDFTableContent(content: "-\(formattedNumber(invoice.discountAmount))")
+        table[discountRow, 0].content = try? PDFTableContent(content: "-\(formattedNumber(invoice.discountAmount * 100))")
         table[discountRow, 1].content = try? PDFTableContent(content: formattedNumber(invoice.discount) + " %")
         table[discountRow, 2].content = try? PDFTableContent(content: "تخفیف")
         table[rows: discountRow, columns: 2 ... 4].merge()
         table[discountRow, 2].style = headerStyle
 
         let vatRow = discountRow + 1
-        table[vatRow, 0].content = try? PDFTableContent(content: "+\(formattedNumber(invoice.vatAmount))")
+        table[vatRow, 0].content = try? PDFTableContent(content: "+\(formattedNumber(invoice.vatAmount * 100))")
         table[vatRow, 1].content = try? PDFTableContent(content: formattedNumber(invoice.vat) + " %")
         table[vatRow, 2].content = try? PDFTableContent(content: "ارزش افزوده")
         table[rows: vatRow, columns: 2 ... 4].merge()
