@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct InputStepper<Label: View>: View {
-    @Binding var value: Int
-    let minimumValue: Int
+    @Binding var value: Decimal
+    let minimumValue: Decimal
     let label: Label
 
     private let buttonSize = CGSize(width: 48, height: 34)
@@ -17,7 +17,7 @@ struct InputStepper<Label: View>: View {
     private let dividerPadding: CGFloat = 8
     private let cornerRadius: CGFloat = 8
 
-    init(value: Binding<Int>, minimumValue: Int = 1, @ViewBuilder label: () -> Label) {
+    init(value: Binding<Decimal>, minimumValue: Decimal = 1, @ViewBuilder label: () -> Label) {
         _value = value
         self.minimumValue = minimumValue
         self.label = label()
@@ -68,10 +68,11 @@ struct InputStepper<Label: View>: View {
     }
 
     private var valueTextField: some View {
-        TextField("", value: $value, format: .number)
+        TextField("", value: $value, format: .number.precision(.fractionLength(0...2)))
             .multilineTextAlignment(.center)
             .foregroundColor(.primary)
             .frame(width: textFieldWidth, height: buttonSize.height)
+            .keyboardType(.decimalPad)
     }
 
     private var divider: some View {
@@ -88,6 +89,6 @@ struct InputStepper<Label: View>: View {
 
     private func decrementValue() {
         guard canDecrement else { return }
-        value -= 1
+        value = max(minimumValue, value - 1)
     }
 }

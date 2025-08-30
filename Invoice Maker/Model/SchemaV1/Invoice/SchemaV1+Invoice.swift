@@ -33,7 +33,7 @@ extension SchemaV1 {
 
         var total: Decimal {
             let total: Decimal = items.reduce(0) { result, item in
-                let itemTotal = Decimal(item.quantity) * item.productPrice
+                let itemTotal = item.quantity * item.productPrice
                 // Convert item currency to match invoice currency
                 switch (item.productCurrency, currency) {
                 case (.IRR_Toman, .IRR):

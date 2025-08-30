@@ -17,7 +17,7 @@ class ItemDetailsV1: Identifiable {
     var productPrice: Decimal
     var productCurrency: Currency
     var productDetails: String?
-    var quantity: Int
+    var quantity: Decimal
 
     init(productId: UUID,
          productCode: Int,
@@ -25,7 +25,7 @@ class ItemDetailsV1: Identifiable {
          productPrice: Decimal,
          productCurrency: Currency,
          productDetails: String? = nil,
-         quantity: Int = 1
+         quantity: Decimal = 1
     ) {
         self.productId = productId
         self.productCode = productCode
@@ -48,7 +48,7 @@ class ItemDetailsV1: Identifiable {
         )
     }
 
-    convenience init(from product: SchemaV1.Product, quantity: Int) {
+    convenience init(from product: SchemaV1.Product, quantity: Decimal) {
         self.init(productId: product.id,
                   productCode: product.code,
                   productName: product.name,

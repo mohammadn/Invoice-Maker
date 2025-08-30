@@ -17,10 +17,10 @@ extension SchemaV1 {
         var productPrice: Decimal
         var productCurrency: Currency
         var productDetails: String?
-        var quantity: Int
+        var quantity: Decimal
         var invoice: SchemaV1.Invoice?
 
-        var total: Decimal { productPrice * Decimal(quantity) }
+        var total: Decimal { productPrice * quantity }
 
         var product: SchemaV1.Product {
             Product(id: productId, code: productCode, name: productName, price: productPrice, currency: productCurrency, details: productDetails)
@@ -32,7 +32,7 @@ extension SchemaV1 {
              productPrice: Decimal,
              productCurrency: Currency,
              productDetails: String? = nil,
-             quantity: Int = 1,
+             quantity: Decimal = 1,
              invoice: SchemaV1.Invoice? = nil
         ) {
             self.productId = productId
@@ -72,7 +72,7 @@ extension SchemaV1.InvoiceItem {
     }
 
     func total(in targetCurrency: Currency) -> Decimal {
-        return productPrice(in: targetCurrency) * Decimal(quantity)
+        return productPrice(in: targetCurrency) * quantity
     }
 
     func productPrice(in targetCurrency: Currency) -> Decimal {
