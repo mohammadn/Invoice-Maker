@@ -28,8 +28,8 @@ struct SettingsBusinessDetailsView: View {
     var body: some View {
         Form {
             Section {
-                TextField("نام کسب و کار*", text: $businessDetails.name)
-                TextField("شماره تماس*", text: $businessDetails.phone)
+                TextField("نام کسب و کار*", text: $businessDetails.name ?? "")
+                TextField("شماره تماس*", text: $businessDetails.phone ?? "")
             }
 
             Section {

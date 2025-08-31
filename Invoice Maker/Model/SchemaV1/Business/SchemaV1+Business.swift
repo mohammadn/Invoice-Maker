@@ -11,13 +11,13 @@ import Foundation
 extension SchemaV1 {
     @Model
     class Business {
-        var name: String
-        var phone: String
+        var name: String?
+        var phone: String?
         var email: String?
         var website: String?
         var address: String?
 
-        init(name: String, phone: String, email: String?, website: String?, address: String?) {
+        init(name: String?, phone: String?, email: String?, website: String?, address: String?) {
             self.name = name
             self.phone = phone
             self.email = email
