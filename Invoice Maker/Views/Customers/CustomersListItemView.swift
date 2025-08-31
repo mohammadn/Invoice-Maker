@@ -15,7 +15,7 @@ struct CustomersListItemView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(customer.name)
+                Text(customer.name ?? "-")
                     .lineLimit(1)
                     .truncationMode(.tail)
 

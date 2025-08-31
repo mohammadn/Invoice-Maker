@@ -30,7 +30,7 @@ struct CustomerDetailView: View {
     var body: some View {
         List {
             Section {
-                LabeledContent("نام", value: customer.name)
+                LabeledContent("نام", value: customer.name ?? "-")
                 LabeledContent("شماره تماس", value: customer.phone?.toPersian() ?? "-")
             }
 
@@ -66,7 +66,7 @@ struct CustomerDetailView: View {
                 }
             }
         }
-        .navigationTitle(customer.name)
+        .navigationTitle(customer.name ?? "مشتری")
         .sheet(item: $selectedInvoice) { invoice in
             InvoiceSummaryView(invoice: invoice)
         }

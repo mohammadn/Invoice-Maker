@@ -71,7 +71,7 @@ struct InvoiceFormView: View {
                         Text("انتخاب کنید")
                             .tag(nil as UUID?)
                         ForEach(customers) { customer in
-                            Text(customer.name)
+                            Text(customer.name ?? "-")
                                 .tag(customer.id as UUID?)
                         }
                     }

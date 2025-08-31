@@ -29,7 +29,7 @@ struct CustomerFormView: View {
     var body: some View {
         Form {
             Section {
-                TextField("نام*", text: $customerDetails.name)
+                TextField("نام*", text: $customerDetails.name ?? "")
                 TextField("شماره تماس", text: $customerDetails.phone ?? "")
                     .keyboardType(.phonePad)
             }

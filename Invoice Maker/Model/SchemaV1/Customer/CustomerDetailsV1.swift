@@ -10,17 +10,17 @@ import Foundation
 @Observable
 class CustomerDetailsV1 {
     var id: UUID
-    var name: String
+    var name: String?
     var phone: String?
     var email: String?
     var address: String?
     var details: String?
 
     var isInvalid: Bool {
-        name.isEmpty
+        (name ?? "").isEmpty
     }
 
-    init(id: UUID = UUID(), name: String = "", phone: String? = nil, email: String? = nil, address: String? = nil, details: String? = nil) {
+    init(id: UUID = UUID(), name: String? = nil, phone: String? = nil, email: String? = nil, address: String? = nil, details: String? = nil) {
         self.id = id
         self.name = name
         self.phone = phone
