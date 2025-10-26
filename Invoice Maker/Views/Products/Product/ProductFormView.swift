@@ -46,7 +46,7 @@ struct ProductFormView: View {
             }
 
             Section {
-                TextField("نام محصول*", text: $productDetails.name)
+                TextField("نام محصول*", text: $productDetails.name ?? "")
                 TextField("قیمت*", value: $productDetails.price, format: .number)
                     .keyboardType(.decimalPad)
 

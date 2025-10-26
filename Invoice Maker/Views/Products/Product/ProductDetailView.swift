@@ -20,7 +20,7 @@ struct ProductDetailView: View {
         _isEditing = isEditing
 
         let productId = product.id
-        let predicate = #Predicate<InvoiceN> { $0.items.contains { $0.productId == productId } }
+        let predicate = #Predicate<InvoiceN> { $0.items?.contains { $0.productId == productId } ?? false }
 
         _invoices = Query(filter: predicate, sort: \.createdDate, order: .reverse)
     }
@@ -28,13 +28,13 @@ struct ProductDetailView: View {
     var body: some View {
         List {
             Section {
-                LabeledContent("کد", value: product.code, format: .number)
+                LabeledContent("کد", value: product.code ?? 0, format: .number)
             }
 
             Section {
-                LabeledContent("نام", value: product.name)
-                LabeledContent("قیمت", value: product.price, format: .currencyFormatter(code: product.currency))
-                LabeledContent("نوع ارز", value: product.currency.label)
+                LabeledContent("نام", value: product.name ?? "-")
+                LabeledContent("قیمت", value: product.price ?? 0, format: .currencyFormatter(code: product.currency ?? .IRR))
+                LabeledContent("نوع ارز", value: product.currency?.label ?? "-")
             }
 
             Section {
@@ -64,7 +64,7 @@ struct ProductDetailView: View {
                 }
             }
         }
-        .navigationTitle(product.name)
+        .navigationTitle(product.name ?? "محصول")
         .sheet(item: $selectedInvoice) { invoice in
             InvoiceSummaryView(invoice: invoice)
         }

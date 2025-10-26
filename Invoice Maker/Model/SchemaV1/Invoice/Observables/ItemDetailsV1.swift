@@ -39,21 +39,21 @@ class ItemDetailsV1: Identifiable {
     convenience init(from item: SchemaV1.InvoiceItem) {
         self.init(
             productId: item.productId,
-            productCode: item.productCode,
-            productName: item.productName,
-            productPrice: item.productPrice,
-            productCurrency: item.productCurrency,
+            productCode: item.productCode ?? 0,
+            productName: item.productName ?? "-",
+            productPrice: item.productPrice ?? 0,
+            productCurrency: item.productCurrency ?? .IRR,
             productDetails: item.productDetails,
-            quantity: item.quantity
+            quantity: item.quantity ?? 1
         )
     }
 
     convenience init(from product: SchemaV1.Product, quantity: Decimal) {
         self.init(productId: product.id,
-                  productCode: product.code,
-                  productName: product.name,
-                  productPrice: product.price,
-                  productCurrency: product.currency,
+                  productCode: product.code ?? 0,
+                  productName: product.name ?? "-",
+                  productPrice: product.price ?? 0,
+                  productCurrency: product.currency ?? .IRR,
                   productDetails: product.details,
                   quantity: quantity
         )

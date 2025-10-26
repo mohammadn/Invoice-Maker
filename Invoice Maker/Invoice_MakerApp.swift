@@ -29,8 +29,9 @@ struct Invoice_MakerApp: App {
             fatalError("Failed to initialize main model container.")
         }
 
+        let oldConfig = ModelConfiguration(cloudKitDatabase: .none)
         do {
-            oldContainer = try ModelContainer(for: Business.self, InvoiceSchemaV1.VersionedInvoice.self, ProductSchemaV1.VersionedProduct.self, Customer.self)
+            oldContainer = try ModelContainer(for: Business.self, InvoiceSchemaV1.VersionedInvoice.self, ProductSchemaV1.VersionedProduct.self, Customer.self, configurations: oldConfig)
         } catch {
             print("Failed to initialize old model container. Assuming fresh install.")
             oldContainer = nil

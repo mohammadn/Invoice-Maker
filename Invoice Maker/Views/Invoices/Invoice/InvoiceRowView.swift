@@ -13,13 +13,13 @@ struct InvoiceRowView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(invoice.number)
+                Text(invoice.number ?? "-")
                     .lineLimit(1)
                     .foregroundColor(.primary)
 
                 Spacer()
 
-                Text(invoice.totalWithVAT, format: .currencyFormatter(code: invoice.currency))
+                Text(invoice.totalWithVAT, format: .currencyFormatter(code: invoice.currency ?? Currency.IRR))
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .lineLimit(1)
@@ -27,10 +27,16 @@ struct InvoiceRowView: View {
                 Image(systemName: "info.circle")
             }
 
-            Text(invoice.date, style: .date)
-                .font(.subheadline)
-                .foregroundStyle(.gray)
-                .lineLimit(1)
+            if let date = invoice.date {
+                Text(date, style: .date)
+                    .font(.subheadline)
+                    .foregroundStyle(.gray)
+                    .lineLimit(1)
+            } else {
+                Text("-")
+                    .font(.subheadline)
+                    .foregroundStyle(.gray)
+            }
         }
     }
 }

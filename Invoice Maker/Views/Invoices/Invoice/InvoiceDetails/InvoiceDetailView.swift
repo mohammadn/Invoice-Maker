@@ -61,7 +61,7 @@ struct InvoiceDetailView: View {
 
                 if hasProductChanges() {
                     ButtonWithPopover(text: "اطلاعات یک یا چند محصول تغییر کرده است. در صورت نیاز می‌توانید اطلاعات را بروزرسانی کنید.") {
-                        for item in invoice.items {
+                        for item in invoice.items ?? [] {
                             if let product = products.first(where: { $0.id == item.productId }) {
                                 item.update(with: product)
                             }
@@ -72,7 +72,7 @@ struct InvoiceDetailView: View {
                 }
             }
         }
-        .navigationTitle(invoice.number)
+        .navigationTitle(invoice.number ?? "فاکتور")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
@@ -100,7 +100,7 @@ struct InvoiceDetailView: View {
             let businessDescriptor = FetchDescriptor<BusinessN>()
             business = (try? modelContext.fetch(businessDescriptor))?.first
 
-            let productIds = invoice.items.map { $0.productId }
+            let productIds = invoice.items?.map { $0.productId } ?? []
             let productDescriptor = FetchDescriptor<Product>(
                 predicate: #Predicate<Product> { productIds.contains($0.id) },
                 sortBy: [SortDescriptor(\.createdDate, order: .reverse)]
@@ -112,12 +112,12 @@ struct InvoiceDetailView: View {
     }
 
     private func hasProductChanges() -> Bool {
-        invoice.items.contains { item in
+        invoice.items?.contains { item in
             guard let currentProduct = products.first(where: { $0.id == item.productId }) else {
                 return false
             }
             return item.product != currentProduct
-        }
+        } ?? false
     }
 
     private func generatePDF() {

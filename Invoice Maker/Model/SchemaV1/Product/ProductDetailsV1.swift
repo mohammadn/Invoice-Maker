@@ -10,16 +10,16 @@ import Foundation
 @Observable
 class ProductDetailsV1 {
     var code: Int?
-    var name: String
+    var name: String?
     var price: Decimal?
-    var currency: Currency
+    var currency: Currency?
     var details: String?
 
     var isInvalid: Bool {
-        code == nil || name.isEmpty || price == nil
+        code == nil || (name ?? "").isEmpty || price == nil
     }
 
-    init(code: Int? = nil, name: String = "", price: Decimal? = nil, currency: Currency = .IRR, details: String? = nil) {
+    init(code: Int? = nil, name: String? = nil, price: Decimal? = nil, currency: Currency? = .IRR, details: String? = nil) {
         self.code = code
         self.name = name
         self.price = price

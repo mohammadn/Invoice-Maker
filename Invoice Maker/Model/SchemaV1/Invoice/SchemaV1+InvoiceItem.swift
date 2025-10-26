@@ -11,28 +11,28 @@ import SwiftData
 extension SchemaV1 {
     @Model
     class InvoiceItem {
-        var productId: UUID
-        var productCode: Int
-        var productName: String
-        var productPrice: Decimal
-        var productCurrency: Currency
+        var productId: UUID = UUID()
+        var productCode: Int?
+        var productName: String?
+        var productPrice: Decimal?
+        var productCurrency: Currency?
         var productDetails: String?
-        var quantity: Decimal
+        var quantity: Decimal?
         var invoice: SchemaV1.Invoice?
 
-        var total: Decimal { productPrice * quantity }
+        var total: Decimal { (productPrice ?? 0) * (quantity ?? 0) }
 
         var product: SchemaV1.Product {
             Product(id: productId, code: productCode, name: productName, price: productPrice, currency: productCurrency, details: productDetails)
         }
 
-        init(productId: UUID,
-             productCode: Int,
-             productName: String,
-             productPrice: Decimal,
-             productCurrency: Currency,
-             productDetails: String? = nil,
-             quantity: Decimal = 1,
+        init(productId: UUID = UUID(),
+             productCode: Int?,
+             productName: String?,
+             productPrice: Decimal?,
+             productCurrency: Currency?,
+             productDetails: String?,
+             quantity: Decimal?,
              invoice: SchemaV1.Invoice? = nil
         ) {
             self.productId = productId
@@ -72,17 +72,17 @@ extension SchemaV1.InvoiceItem {
     }
 
     func total(in targetCurrency: Currency) -> Decimal {
-        return productPrice(in: targetCurrency) * quantity
+        return productPrice(in: targetCurrency) * (quantity ?? 0)
     }
 
     func productPrice(in targetCurrency: Currency) -> Decimal {
         switch (productCurrency, targetCurrency) {
         case (.IRR_Toman, .IRR):
-            return productPrice * 10
+            return (productPrice ?? 0) * 10
         case (.IRR, .IRR_Toman):
-            return (productPrice / 10).rounded()
+            return ((productPrice ?? 0) / 10).rounded()
         default:
-            return productPrice
+            return (productPrice ?? 0)
         }
     }
 }

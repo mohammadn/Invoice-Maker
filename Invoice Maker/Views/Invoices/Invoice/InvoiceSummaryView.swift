@@ -30,7 +30,7 @@ struct InvoiceSummaryView: View {
                     Text("محصولات")
                 }
             }
-            .navigationTitle(invoice.number)
+            .navigationTitle(invoice.number ?? "-")
             .presentationDetents([.medium, .large])
             .presentationDragIndicator(.visible)
             .toolbar {

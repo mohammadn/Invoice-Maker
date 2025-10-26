@@ -11,7 +11,7 @@ import SwiftData
 extension SchemaV1 {
     @Model
     class InvoiceCustomer {
-        var id: UUID
+        var id: UUID?
         var name: String?
         var phone: String?
         var email: String?
