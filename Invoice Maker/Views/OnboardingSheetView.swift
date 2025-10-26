@@ -113,11 +113,11 @@ struct OnboardingSheetView: View {
                     .foregroundStyle(.secondary)
 
                 VStack(spacing: 10) {
-                    TextField("نام کسب و کار*", text: $businessDetails.name ?? "")
+                    TextField("نام کسب و کار*", text: $businessDetails.name)
 
                     Divider()
 
-                    TextField("شماره تماس*", text: $businessDetails.phone ?? "")
+                    TextField("شماره تماس*", text: $businessDetails.phone)
                         .onSubmit {
                             if !businessDetails.isInvalid {
                                 save()

@@ -30,8 +30,7 @@ extension SchemaV1 {
         }
 
         convenience init(from customerDetails: CustomerDetailsV1) {
-            self.init(id: customerDetails.id,
-                      name: customerDetails.name,
+            self.init(name: customerDetails.name,
                       phone: customerDetails.phone,
                       email: customerDetails.email,
                       address: customerDetails.address,

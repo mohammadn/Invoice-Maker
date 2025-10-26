@@ -9,19 +9,17 @@ import Foundation
 
 @Observable
 class CustomerDetailsV1 {
-    var id: UUID
-    var name: String?
-    var phone: String?
-    var email: String?
-    var address: String?
-    var details: String?
+    var name: String
+    var phone: String
+    var email: String
+    var address: String
+    var details: String
 
     var isInvalid: Bool {
-        (name ?? "").isEmpty
+        name.isEmpty
     }
 
-    init(id: UUID = UUID(), name: String? = nil, phone: String? = nil, email: String? = nil, address: String? = nil, details: String? = nil) {
-        self.id = id
+    init(name: String = "", phone: String = "", email: String = "", address: String = "", details: String = "") {
         self.name = name
         self.phone = phone
         self.email = email
@@ -30,12 +28,11 @@ class CustomerDetailsV1 {
     }
 
     convenience init(from customer: SchemaV1.Customer) {
-        self.init(id: customer.id,
-                  name: customer.name,
-                  phone: customer.phone,
-                  email: customer.email,
-                  address: customer.address,
-                  details: customer.details
+        self.init(name: customer.name ?? "",
+                  phone: customer.phone ?? "",
+                  email: customer.email ?? "",
+                  address: customer.address ?? "",
+                  details: customer.details ?? ""
         )
     }
 }

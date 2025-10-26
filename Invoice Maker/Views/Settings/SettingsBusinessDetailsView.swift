@@ -28,17 +28,17 @@ struct SettingsBusinessDetailsView: View {
     var body: some View {
         Form {
             Section {
-                TextField("نام کسب و کار*", text: $businessDetails.name ?? "")
-                TextField("شماره تماس*", text: $businessDetails.phone ?? "")
+                TextField("نام کسب و کار*", text: $businessDetails.name)
+                TextField("شماره تماس*", text: $businessDetails.phone)
             }
 
             Section {
-                TextField("ایمیل", text: $businessDetails.email ?? "")
-                TextField("وبسایت", text: $businessDetails.website ?? "")
+                TextField("ایمیل", text: $businessDetails.email)
+                TextField("وبسایت", text: $businessDetails.website)
             }
 
             Section {
-                TextField("آدرس", text: $businessDetails.address ?? "", axis: .vertical)
+                TextField("آدرس", text: $businessDetails.address, axis: .vertical)
                     .lineLimit(3 ... 5)
             }
         }
