@@ -59,7 +59,7 @@ struct InvoiceDetailView: View {
             } header: {
                 Text("محصولات")
 
-                if hasProductChanges() {
+                if isProductChanged() {
                     ButtonWithPopover(text: "اطلاعات یک یا چند محصول تغییر کرده است. در صورت نیاز می‌توانید اطلاعات را بروزرسانی کنید.") {
                         for item in invoice.items ?? [] {
                             if let product = products.first(where: { $0.id == item.productId }) {
@@ -111,7 +111,7 @@ struct InvoiceDetailView: View {
         }
     }
 
-    private func hasProductChanges() -> Bool {
+    private func isProductChanged() -> Bool {
         invoice.items?.contains { item in
             guard let currentProduct = products.first(where: { $0.id == item.productId }) else {
                 return false

@@ -46,7 +46,7 @@ struct ProductFormView: View {
             }
 
             Section {
-                TextField("نام محصول*", text: $productDetails.name ?? "")
+                TextField("نام محصول*", text: $productDetails.name)
                 TextField("قیمت*", value: $productDetails.price, format: .number)
                     .keyboardType(.decimalPad)
 
@@ -58,7 +58,7 @@ struct ProductFormView: View {
             }
 
             Section {
-                TextField("توضیحات", text: $productDetails.details ?? "", axis: .vertical)
+                TextField("توضیحات", text: $productDetails.details, axis: .vertical)
                     .lineLimit(2 ... 4)
             }
         }
@@ -87,7 +87,7 @@ struct ProductFormView: View {
     }
 
     private func save() {
-        productDetails.details = productDetails.details?.trimmingCharacters(in: .whitespacesAndNewlines)
+        productDetails.details = productDetails.details.trimmingCharacters(in: .whitespacesAndNewlines)
 
         if let product {
             product.update(with: productDetails)

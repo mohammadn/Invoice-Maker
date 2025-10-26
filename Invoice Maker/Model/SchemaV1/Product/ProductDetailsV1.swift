@@ -10,16 +10,16 @@ import Foundation
 @Observable
 class ProductDetailsV1 {
     var code: Int?
-    var name: String?
+    var name: String
     var price: Decimal?
-    var currency: Currency?
-    var details: String?
+    var currency: Currency
+    var details: String
 
     var isInvalid: Bool {
-        code == nil || (name ?? "").isEmpty || price == nil
+        code == nil || name.isEmpty || price == nil
     }
 
-    init(code: Int? = nil, name: String? = nil, price: Decimal? = nil, currency: Currency? = .IRR, details: String? = nil) {
+    init(code: Int? = nil, name: String = "", price: Decimal? = nil, currency: Currency = .IRR, details: String = "") {
         self.code = code
         self.name = name
         self.price = price
@@ -28,6 +28,6 @@ class ProductDetailsV1 {
     }
 
     convenience init(from product: SchemaV1.Product) {
-        self.init(code: product.code, name: product.name, price: product.price, currency: product.currency, details: product.details)
+        self.init(code: product.code, name: product.name ?? "", price: product.price, currency: product.currency ?? .IRR, details: product.details ?? "")
     }
 }
