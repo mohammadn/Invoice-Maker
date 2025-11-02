@@ -29,7 +29,7 @@ struct InvoiceMainDetailsView: View {
             LabeledContent("تخفیف", value: invoice.discount ?? 0, format: .percent)
             LabeledContent("ارزش افزوده", value: invoice.vat ?? 0, format: .percent)
             LabeledContent("مبلغ نهایی", value: invoice.totalWithVAT, format: .currencyFormatter(code: invoice.currency ?? Currency.IRR))
-            LabeledContent("توضیحات", value: invoice.note ?? "-")
+            LabeledContent("توضیحات", value: invoice.note?.isEmpty == false ? invoice.note! : "-")
         }
     }
 }

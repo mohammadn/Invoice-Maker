@@ -30,13 +30,13 @@ struct CustomerDetailView: View {
     var body: some View {
         List {
             Section {
-                LabeledContent("نام", value: customer.name ?? "-")
-                LabeledContent("شماره تماس", value: customer.phone?.toPersian() ?? "-")
+                LabeledContent("نام", value: customer.name?.isEmpty == false ? customer.name! : "-")
+                LabeledContent("شماره تماس", value: customer.phone?.isEmpty == false ? customer.phone!.toPersian() : "-")
             }
 
             Section {
-                LabeledContent("ایمیل", value: customer.email ?? "-")
-                LabeledContent("آدرس", value: customer.address ?? "-")
+                LabeledContent("ایمیل", value: customer.email?.isEmpty == false ? customer.email! : "-")
+                LabeledContent("آدرس", value: customer.address?.isEmpty == false ? customer.address! : "-")
             }
 
             Section {

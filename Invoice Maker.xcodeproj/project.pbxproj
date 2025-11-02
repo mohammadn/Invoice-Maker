@@ -290,6 +290,14 @@
 			path = InvoiceDetails;
 			sourceTree = "<group>";
 		};
+		A62DFE4E2EB7CC9D00367F40 /* String */ = {
+			isa = PBXGroup;
+			children = (
+				A6DAE4FF2D240BBD00205A54 /* String+ToPersian.swift */,
+			);
+			path = String;
+			sourceTree = "<group>";
+		};
 		A6555A922D467033002F6537 /* CNContact */ = {
 			isa = PBXGroup;
 			children = (
@@ -408,7 +416,6 @@
 				A6208EC32E0B4ECE001B4325 /* Decimal+Rounded.swift */,
 				A6E205052DEB9554009BEF4A /* MigrationPlan.swift */,
 				A68456052D30577400FBD1E1 /* NullishCoalescingBinding.swift */,
-				A6DAE4FF2D240BBD00205A54 /* String+ToPersian.swift */,
 				A60F7C102E5E51A000649A24 /* VATDiscountConverter.swift */,
 				A60F7BDC2E492C2100649A24 /* Business */,
 				A6208EC02E0B4284001B4325 /* Currency */,
@@ -418,6 +425,7 @@
 				A6E4DFE62B8BBCF70088BCFC /* PDF */,
 				A60F7BDA2E492C0400649A24 /* Product */,
 				A60F7BD62E4929F600649A24 /* SchemaV1 */,
+				A62DFE4E2EB7CC9D00367F40 /* String */,
 				A675DCF12E1208F80040D855 /* TabView */,
 			);
 			path = Model;

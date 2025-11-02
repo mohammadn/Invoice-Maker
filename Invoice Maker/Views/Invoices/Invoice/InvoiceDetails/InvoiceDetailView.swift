@@ -37,11 +37,11 @@ struct InvoiceDetailView: View {
             }
 
             ExpandableSectionView {
-                LabeledContent("نام", value: invoice.business?.name ?? "-")
-                LabeledContent("شماره تماس", value: invoice.business?.phone ?? "-")
-                LabeledContent("ایمیل", value: invoice.business?.email ?? "-")
-                LabeledContent("وب سایت", value: invoice.business?.website ?? "-")
-                LabeledContent("آدرس", value: invoice.business?.address ?? "-")
+                LabeledContent("نام", value: invoice.business?.name?.isEmpty == false ? invoice.business!.name! : "-")
+                LabeledContent("شماره تماس", value: invoice.business?.phone?.isEmpty == false ? invoice.business!.phone! : "-")
+                LabeledContent("ایمیل", value: invoice.business?.email?.isEmpty == false ? invoice.business!.email! : "-")
+                LabeledContent("وب سایت", value: invoice.business?.website?.isEmpty == false ? invoice.business!.website! : "-")
+                LabeledContent("آدرس", value: invoice.business?.address?.isEmpty == false ? invoice.business!.address! : "-")
             } header: {
                 Text("کسب و کار")
 
