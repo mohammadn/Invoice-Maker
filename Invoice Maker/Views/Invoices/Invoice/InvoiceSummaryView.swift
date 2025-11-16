@@ -30,7 +30,7 @@ struct InvoiceSummaryView: View {
                     Text("محصولات")
                 }
             }
-            .navigationTitle(invoice.number)
+            .navigationTitle(invoice.number ?? "-")
             .presentationDetents([.medium, .large])
             .presentationDragIndicator(.visible)
             .toolbar {
@@ -61,6 +61,14 @@ struct InvoiceSummaryView: View {
     }
 }
 
-// #Preview {
-//    InvoiceSummaryView()
-// }
+#if DEBUG
+    #Preview {
+        @Previewable @State var tabViewModel = TabViewModel()
+        @Previewable @State var invoiceViewModel = InvoiceViewModel()
+
+        InvoiceSummaryView(invoice: InvoiceN.sampleData[0])
+            .modelContainer(previewContainer)
+            .environment(tabViewModel)
+            .environment(invoiceViewModel)
+    }
+#endif

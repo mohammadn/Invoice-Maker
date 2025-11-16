@@ -11,15 +11,15 @@ import Foundation
 class BusinessDetailsV1 {
     var name: String
     var phone: String
-    var email: String?
-    var website: String?
-    var address: String?
+    var email: String
+    var website: String
+    var address: String
 
     var isInvalid: Bool {
         name.isEmpty || phone.isEmpty
     }
 
-    init(name: String = "", phone: String = "", email: String? = nil, website: String? = nil, address: String? = nil) {
+    init(name: String = "", phone: String = "", email: String = "", website: String = "", address: String = "") {
         self.name = name
         self.phone = phone
         self.email = email
@@ -28,6 +28,10 @@ class BusinessDetailsV1 {
     }
 
     convenience init(from business: SchemaV1.Business) {
-        self.init(name: business.name, phone: business.phone, email: business.email, website: business.website, address: business.address)
+        self.init(name: business.name ?? "",
+                  phone: business.phone ?? "",
+                  email: business.email ?? "",
+                  website: business.website ?? "",
+                  address: business.address ?? "")
     }
 }

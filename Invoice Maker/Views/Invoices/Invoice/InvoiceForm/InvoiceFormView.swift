@@ -71,7 +71,7 @@ struct InvoiceFormView: View {
                         Text("انتخاب کنید")
                             .tag(nil as UUID?)
                         ForEach(customers) { customer in
-                            Text(customer.name)
+                            Text(customer.name ?? "-")
                                 .tag(customer.id as UUID?)
                         }
                     }
@@ -107,18 +107,15 @@ struct InvoiceFormView: View {
 
                 Section {
                     ForEach($invoiceDetails.items) { $item in
-                        Stepper {
+                        InputStepper(value: $item.quantity) {
                             Text(item.productName)
-                            Text(item.quantity.description)
-                        } onIncrement: {
-                            item.quantity += 1
-                        } onDecrement: {
-                            if item.quantity > 0 {
-                                item.quantity -= 1
+                        }
+                        .swipeActions {
+                            Button("حذف", role: .destructive) {
+                                delete(item: item)
                             }
                         }
                     }
-                    .onDelete(perform: deleteProduct)
                 } header: {
                     HStack {
                         Text("محصولات")
@@ -202,16 +199,19 @@ struct InvoiceFormView: View {
             invoice.update(with: invoiceDetails)
 
             invoiceDetails.items.forEach { item in
-                if let existingItem = invoice.items.first(where: { $0.productId == item.productId }) {
+                if let existingItem = invoice.items?.first(where: { $0.productId == item.productId }) {
                     existingItem.update(with: item)
                 } else {
                     let item = InvoiceItem(from: item)
-                    invoice.items.append(item)
+                    if invoice.items == nil {
+                        invoice.items = []
+                    }
+                    invoice.items?.append(item)
                 }
             }
 
-            invoice.items.forEach { item in
-                if (!invoiceDetails.items.contains { $0.productId == item.productId }) {
+            invoice.items?.forEach { item in
+                if !invoiceDetails.items.contains(where: { $0.productId == item.productId }) {
                     modelContext.delete(item)
                 }
             }
@@ -224,7 +224,7 @@ struct InvoiceFormView: View {
 
             invoiceDetails.items.forEach {
                 let item = InvoiceItem(from: $0)
-                invoice.items.append(item)
+                invoice.items?.append(item)
             }
 
             modelContext.insert(invoice)
@@ -233,15 +233,16 @@ struct InvoiceFormView: View {
         try? modelContext.save()
     }
 
-    private func deleteProduct(at indexSet: IndexSet) {
-        indexSet.forEach { index in
-            invoiceDetails.items.remove(at: index)
-        }
+    private func delete(item: ItemDetails) {
+        invoiceDetails.items.removeAll { $0.productId == item.productId }
     }
 }
 
-// #Preview {
-//    InvoiceFormView { _ in }
-//        .modelContainer(previewContainer)
-//        .environment(\.layoutDirection, .rightToLeft)
-// }
+#if DEBUG
+    #Preview {
+        NavigationStack {
+            InvoiceFormView(invoice: InvoiceN.sampleData[0])
+        }
+        .modelContainer(previewContainer)
+    }
+#endif

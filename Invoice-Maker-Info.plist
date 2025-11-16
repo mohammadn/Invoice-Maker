@@ -6,5 +6,9 @@
 	<false/>
 	<key>NSContactsUsageDescription</key>
 	<string>فاکتورساز برای افزودن مشتریان از لیست مخاطبین شما، نیاز به دسترسی دارد.</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 </dict>
 </plist>

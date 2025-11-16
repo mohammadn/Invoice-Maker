@@ -27,7 +27,7 @@ struct InvoiceProductSelection: View {
 
                 Section {
                     ForEach(products) { product in
-                        Text(product.name)
+                        Text(product.name ?? "-")
                             .tag(product)
                     }
                 }
@@ -78,8 +78,12 @@ struct InvoiceProductSelection: View {
     }
 }
 
-// #Preview {
-//    InvoiceProductSelection(items: .constant([]))
-//        .modelContainer(previewContainer)
-//        .environment(\.layoutDirection, .rightToLeft)
-// }
+#if DEBUG
+    #Preview {
+        @Previewable @State var items: [ItemDetails] = []
+        
+        InvoiceProductSelection(items: $items)
+            .modelContainer(previewContainer)
+            .environment(\.layoutDirection, .rightToLeft)
+    }
+#endif

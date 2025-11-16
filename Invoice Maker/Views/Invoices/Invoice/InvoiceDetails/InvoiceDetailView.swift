@@ -37,11 +37,11 @@ struct InvoiceDetailView: View {
             }
 
             ExpandableSectionView {
-                LabeledContent("نام", value: invoice.business?.name ?? "-")
-                LabeledContent("شماره تماس", value: invoice.business?.phone ?? "-")
-                LabeledContent("ایمیل", value: invoice.business?.email ?? "-")
-                LabeledContent("وب سایت", value: invoice.business?.website ?? "-")
-                LabeledContent("آدرس", value: invoice.business?.address ?? "-")
+                LabeledContent("نام", value: invoice.business?.name?.isEmpty == false ? invoice.business!.name! : "-")
+                LabeledContent("شماره تماس", value: invoice.business?.phone?.isEmpty == false ? invoice.business!.phone! : "-")
+                LabeledContent("ایمیل", value: invoice.business?.email?.isEmpty == false ? invoice.business!.email! : "-")
+                LabeledContent("وب سایت", value: invoice.business?.website?.isEmpty == false ? invoice.business!.website! : "-")
+                LabeledContent("آدرس", value: invoice.business?.address?.isEmpty == false ? invoice.business!.address! : "-")
             } header: {
                 Text("کسب و کار")
 
@@ -59,9 +59,9 @@ struct InvoiceDetailView: View {
             } header: {
                 Text("محصولات")
 
-                if hasProductChanges() {
+                if isProductChanged() {
                     ButtonWithPopover(text: "اطلاعات یک یا چند محصول تغییر کرده است. در صورت نیاز می‌توانید اطلاعات را بروزرسانی کنید.") {
-                        for item in invoice.items {
+                        for item in invoice.items ?? [] {
                             if let product = products.first(where: { $0.id == item.productId }) {
                                 item.update(with: product)
                             }
@@ -72,7 +72,7 @@ struct InvoiceDetailView: View {
                 }
             }
         }
-        .navigationTitle(invoice.number)
+        .navigationTitle(invoice.number ?? "فاکتور")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
@@ -100,7 +100,7 @@ struct InvoiceDetailView: View {
             let businessDescriptor = FetchDescriptor<BusinessN>()
             business = (try? modelContext.fetch(businessDescriptor))?.first
 
-            let productIds = invoice.items.map { $0.productId }
+            let productIds = invoice.items?.map { $0.productId } ?? []
             let productDescriptor = FetchDescriptor<Product>(
                 predicate: #Predicate<Product> { productIds.contains($0.id) },
                 sortBy: [SortDescriptor(\.createdDate, order: .reverse)]
@@ -111,13 +111,13 @@ struct InvoiceDetailView: View {
         }
     }
 
-    private func hasProductChanges() -> Bool {
-        invoice.items.contains { item in
+    private func isProductChanged() -> Bool {
+        invoice.items?.contains { item in
             guard let currentProduct = products.first(where: { $0.id == item.productId }) else {
                 return false
             }
             return item.product != currentProduct
-        }
+        } ?? false
     }
 
     private func generatePDF() {
@@ -128,6 +128,13 @@ struct InvoiceDetailView: View {
     }
 }
 
-// #Preview {
-//    InvoiceDetailView()
-// }
+#if DEBUG
+    #Preview {
+        @Previewable @State var isEditing: Bool = false
+
+        NavigationStack {
+            InvoiceDetailView(invoice: InvoiceN.sampleData[0], isEditing: $isEditing)
+        }
+        .modelContainer(previewContainer)
+    }
+#endif

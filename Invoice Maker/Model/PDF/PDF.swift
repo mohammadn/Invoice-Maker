@@ -11,28 +11,28 @@ import UIKit
 
 struct PDF {
     let invoice: InvoiceN
-    let systemGray5 = UIColor(red: 216/255, green: 216/255, blue: 220/255, alpha: 1)
-    let systemGray6 = UIColor(red: 235/255, green: 235/255, blue: 240/255, alpha: 1)
+    let systemGray5 = UIColor(red: 216 / 255, green: 216 / 255, blue: 220 / 255, alpha: 1)
+    let systemGray6 = UIColor(red: 235 / 255, green: 235 / 255, blue: 240 / 255, alpha: 1)
 
     func generatePDF() -> URL? {
         let document = PDFDocument(format: .a4)
         document.layout.margin = EdgeInsets(top: 72, left: 36, bottom: 72, right: 36)
 
         // Document Info
-        document.info.title = "Invoice \(invoice.number)"
+        document.info.title = "Invoice \(invoice.number ?? "")"
         document.info.author = invoice.business?.name ?? "-"
 
         // Title Section
-        let attributedTitle = NSMutableAttributedString(string: invoice.type.label, attributes: [.font: UIFont.systemFont(ofSize: .init(30), weight: .bold)])
-        let attributedNumber = NSMutableAttributedString(string: "شماره فاکتور:  " + invoice.number.toPersian(),
+        let attributedTitle = NSMutableAttributedString(string: invoice.type?.label ?? "-", attributes: [.font: UIFont.systemFont(ofSize: .init(30), weight: .bold)])
+        let attributedNumber = NSMutableAttributedString(string: "شماره فاکتور:  " + (invoice.number?.toPersian() ?? "-"),
                                                          attributes: [
                                                              .font: UIFont.systemFont(ofSize: .init(12)),
                                                          ])
-        let attributedDate = NSMutableAttributedString(string: "تاریخ صدور:  " + formattedDate(invoice.date),
+        let attributedDate = NSMutableAttributedString(string: "تاریخ صدور:  " + formattedDate(invoice.date ?? .now),
                                                        attributes: [
                                                            .font: UIFont.systemFont(ofSize: .init(12)),
                                                        ])
-        let attributedDueDate = NSMutableAttributedString(string: "تاریخ سررسید:  " + formattedDate(invoice.dueDate),
+        let attributedDueDate = NSMutableAttributedString(string: "تاریخ سررسید:  " + formattedDate(invoice.dueDate ?? .now),
                                                           attributes: [
                                                               .font: UIFont.systemFont(ofSize: .init(12)),
                                                           ])
@@ -41,7 +41,7 @@ struct PDF {
 
         document.add(.headerLeft, attributedText: attributedNumber)
         document.add(.headerLeft, attributedText: attributedDate)
-        if invoice.options.contains(.dueDate) {
+        if let options = invoice.options, options.contains(.dueDate) {
             document.add(.headerLeft, attributedText: attributedDueDate)
         }
 
@@ -93,7 +93,7 @@ struct PDF {
 
         // Notes and Terms
         document.add(.contentRight, text: "توضیحات:")
-        document.add(.contentRight, text: invoice.note)
+        document.add(.contentRight, text: invoice.note ?? "")
 
         // Business Details
         let businessDetails = NSMutableAttributedString()
@@ -123,7 +123,7 @@ struct PDF {
 
         // Generate PDF
         let generator = TPPDF.PDFGenerator(document: document)
-        let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(invoice.number).pdf")
+        let tempURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("\(invoice.number ?? "invoice").pdf")
         do {
             try generator.generate(to: tempURL)
             return tempURL
@@ -138,7 +138,7 @@ struct PDF {
         let border = PDFLineStyle(type: .full, color: .lightGray, width: 1)
         let headerStyle = PDFTableCellStyle(colors: colors, borders: PDFTableCellBorders(top: border), font: .systemFont(ofSize: 14))
         let contentStyle = PDFTableCellStyle(borders: PDFTableCellBorders(top: border, right: border), font: .systemFont(ofSize: 12))
-        let rowsCounter = invoice.items.count + 5
+        let rowsCounter = (invoice.items ?? []).count + 5
         let table = PDFTable(rows: rowsCounter, columns: 5)
         table.style = PDFTableStyle(
             outline: PDFLineStyle(type: .full, color: systemGray5, width: 1),
@@ -150,46 +150,46 @@ struct PDF {
         table.padding = 5
 
         // Table Headers
-        table[0, 0].content = try? PDFTableContent(content: "قیمت کل (\(invoice.currency.label))")
-        table[0, 1].content = try? PDFTableContent(content: "قیمت واحد (\(invoice.currency.label))")
+        table[0, 0].content = try? PDFTableContent(content: "قیمت کل (\(invoice.currency?.label ?? "-"))")
+        table[0, 1].content = try? PDFTableContent(content: "قیمت واحد (\(invoice.currency?.label ?? "-"))")
         table[0, 2].content = try? PDFTableContent(content: "تعداد")
         table[0, 3].content = try? PDFTableContent(content: "نام محصول")
         table[0, 4].content = try? PDFTableContent(content: "ردیف")
 
         // Table Content
-        for (index, item) in invoice.items.enumerated() {
+        for (index, item) in (invoice.items ?? []).enumerated() {
             let row = index + 1
-            table[row, 0].content = try? PDFTableContent(content: formattedNumber(item.total(in: invoice.currency)))
-            table[row, 1].content = try? PDFTableContent(content: formattedNumber(item.productPrice(in: invoice.currency)))
-            table[row, 2].content = try? PDFTableContent(content: formattedNumber(item.quantity))
+            table[row, 0].content = try? PDFTableContent(content: formattedNumber(item.total(in: invoice.currency ?? Currency.IRR)))
+            table[row, 1].content = try? PDFTableContent(content: formattedNumber(item.productPrice(in: invoice.currency ?? Currency.IRR)))
+            table[row, 2].content = try? PDFTableContent(content: formattedNumber(item.quantity ?? 0))
             table[row, 3].content = try? PDFTableContent(content: item.productName)
             table[row, 4].content = try? PDFTableContent(content: formattedNumber(row))
         }
 
         // Summary Section
-        let netTotalRow = invoice.items.count + 1
+        let netTotalRow = (invoice.items ?? []).count + 1
         table[netTotalRow, 0].content = try? PDFTableContent(content: "\(formattedNumber(invoice.total))")
-        table[netTotalRow, 1].content = try? PDFTableContent(content: "جمع کل (\(invoice.currency.label))")
+        table[netTotalRow, 1].content = try? PDFTableContent(content: "جمع کل (\(invoice.currency?.label ?? "-"))")
         table[rows: netTotalRow, columns: 1 ... 4].merge()
         table[netTotalRow, 1].style = headerStyle
 
         let discountRow = netTotalRow + 1
-        table[discountRow, 0].content = try? PDFTableContent(content: "-\(formattedNumber(invoice.discountAmount))")
-        table[discountRow, 1].content = try? PDFTableContent(content: formattedNumber(invoice.discount) + " %")
+        table[discountRow, 0].content = try? PDFTableContent(content: "-\(formattedNumber(invoice.discountAmount * 100))")
+        table[discountRow, 1].content = try? PDFTableContent(content: formattedNumber(invoice.discount ?? 0) + " %")
         table[discountRow, 2].content = try? PDFTableContent(content: "تخفیف")
         table[rows: discountRow, columns: 2 ... 4].merge()
         table[discountRow, 2].style = headerStyle
 
         let vatRow = discountRow + 1
-        table[vatRow, 0].content = try? PDFTableContent(content: "+\(formattedNumber(invoice.vatAmount))")
-        table[vatRow, 1].content = try? PDFTableContent(content: formattedNumber(invoice.vat) + " %")
+        table[vatRow, 0].content = try? PDFTableContent(content: "+\(formattedNumber(invoice.vatAmount * 100))")
+        table[vatRow, 1].content = try? PDFTableContent(content: formattedNumber(invoice.vat ?? 0) + " %")
         table[vatRow, 2].content = try? PDFTableContent(content: "ارزش افزوده")
         table[rows: vatRow, columns: 2 ... 4].merge()
         table[vatRow, 2].style = headerStyle
 
         let totalRow = vatRow + 1
         table[totalRow, 0].content = try? PDFTableContent(content: "\(formattedNumber(invoice.totalWithVAT))")
-        table[totalRow, 1].content = try? PDFTableContent(content: "مبلغ نهایی (\(invoice.currency.label))")
+        table[totalRow, 1].content = try? PDFTableContent(content: "مبلغ نهایی (\(invoice.currency?.label ?? "-"))")
         table[rows: totalRow, columns: 1 ... 4].merge()
         table[totalRow, 0].style = PDFTableCellStyle(borders: PDFTableCellBorders(top: border, right: border), font: .systemFont(ofSize: 14, weight: .bold))
         table[totalRow, 1].style = PDFTableCellStyle(colors: colors, borders: PDFTableCellBorders(top: border), font: .systemFont(ofSize: 14, weight: .bold))

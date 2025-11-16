@@ -36,23 +36,19 @@ final class VATDiscountConverter {
 
         for invoice in invoices {
             var needsUpdate = false
-            let originalVAT = invoice.vat
-            let originalDiscount = invoice.discount
 
             // Convert VAT if it's a whole number percentage (> 1.0)
             // This assumes values like 5, 10, 15 should become 0.05, 0.10, 0.15
-            if invoice.vat >= 1.0 {
-                invoice.vat = invoice.vat / 100.0
+            if let vat = invoice.vat, vat >= 1.0 {
+                invoice.vat = vat / 100.0
                 needsUpdate = true
-                print("Converted VAT from \(originalVAT) to \(invoice.vat) for invoice \(invoice.number)")
             }
 
             // Convert Discount if it's a whole number percentage (> 1.0)
             // This assumes values like 5, 10, 15 should become 0.05, 0.10, 0.15
-            if invoice.discount >= 1.0 {
-                invoice.discount = invoice.discount / 100.0
+            if let discount = invoice.discount, discount >= 1.0 {
+                invoice.discount = discount / 100.0
                 needsUpdate = true
-                print("Converted Discount from \(originalDiscount) to \(invoice.discount) for invoice \(invoice.number)")
             }
 
             if needsUpdate {

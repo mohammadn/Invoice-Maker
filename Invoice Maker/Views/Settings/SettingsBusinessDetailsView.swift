@@ -12,7 +12,6 @@ struct SettingsBusinessDetailsView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @State private var businessDetails: BusinessDetails
-//    @State private var logo: String = ""
 
     var business: BusinessN?
 
@@ -34,18 +33,14 @@ struct SettingsBusinessDetailsView: View {
             }
 
             Section {
-                TextField("ایمیل", text: $businessDetails.email ?? "")
-                TextField("وبسایت", text: $businessDetails.website ?? "")
+                TextField("ایمیل", text: $businessDetails.email)
+                TextField("وبسایت", text: $businessDetails.website)
             }
 
             Section {
-                TextField("آدرس", text: $businessDetails.address ?? "", axis: .vertical)
+                TextField("آدرس", text: $businessDetails.address, axis: .vertical)
                     .lineLimit(3 ... 5)
             }
-
-//            Section {
-//                TextField("لوگو", text: $logo)
-//            }
         }
         .navigationTitle("اطلاعات کسب و کار")
         .toolbar {
@@ -67,14 +62,12 @@ struct SettingsBusinessDetailsView: View {
     }
 }
 
-// #Preview {
-//    let configuration = ModelConfiguration(isStoredInMemoryOnly: true)
-//
-//    let container = try! ModelContainer(for: Business.self,
-//                                        configurations: configuration)
-//    NavigationStack {
-//        SettingsBusinessDetailsView(business: Business.sampleData)
-//    }
-//    .modelContainer(container)
-//    .environment(\.layoutDirection, .rightToLeft)
-// }
+#if DEBUG
+    #Preview {
+        NavigationStack {
+            SettingsBusinessDetailsView(business: BusinessN.sampleData)
+        }
+        .modelContainer(previewContainer)
+        .environment(\.layoutDirection, .rightToLeft)
+    }
+#endif

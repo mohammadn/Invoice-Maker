@@ -32,12 +32,12 @@ struct InvoicesView: View {
                         ForEach(invalidInvoices) { invoice in
                             VStack(alignment: .leading) {
                                 HStack {
-                                    Text(invoice.number)
+                                    Text(invoice.number ?? "-")
                                         .lineLimit(1)
 
                                     Spacer()
 
-                                    Text(invoice.totalWithVAT, format: .currencyFormatter(code: invoice.currency))
+                                    Text(invoice.totalWithVAT, format: .currencyFormatter(code: invoice.currency ?? Currency.IRR))
                                         .font(.subheadline)
                                         .foregroundColor(.secondary)
                                         .lineLimit(1)
@@ -47,9 +47,15 @@ struct InvoicesView: View {
                                         .opacity(editMode.isEditing ? 0 : 1)
                                 }
 
-                                Text(invoice.date, style: .date)
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
+                                if let date = invoice.date {
+                                    Text(date, style: .date)
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                } else {
+                                    Text("-")
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                }
                             }
                             .swipeActions {
                                 Button("حذف", role: .destructive) {
@@ -68,12 +74,12 @@ struct InvoicesView: View {
                     ForEach(validInvoices, id: \.self) { invoice in
                         VStack(alignment: .leading) {
                             HStack {
-                                Text(invoice.number)
+                                Text(invoice.number ?? "-")
                                     .lineLimit(1)
 
                                 Spacer()
 
-                                Text(invoice.total, format: .currencyFormatter(code: invoice.currency))
+                                Text(invoice.totalWithVAT, format: .currencyFormatter(code: invoice.currency ?? Currency.IRR))
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
                                     .lineLimit(1)
@@ -84,9 +90,15 @@ struct InvoicesView: View {
                                     .opacity(editMode.isEditing ? 0 : 1)
                             }
 
-                            Text(invoice.date, style: .date)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
+                            if let date = invoice.date {
+                                Text(date, style: .date)
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            } else {
+                                Text("-")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                            }
                         }
                         .swipeActions {
                             Button("حذف", role: .destructive) {
@@ -163,8 +175,13 @@ struct InvoicesView: View {
     }
 }
 
-// #Preview {
-//    InvoicesView()
-//        .modelContainer(previewContainer)
-//        .environment(\.layoutDirection, .rightToLeft)
-// }
+#if DEBUG
+    #Preview {
+        @Previewable @State var invoiceViewModel = InvoiceViewModel()
+
+        InvoicesView()
+            .modelContainer(previewContainer)
+            .environment(\.layoutDirection, .rightToLeft)
+            .environment(invoiceViewModel)
+    }
+#endif

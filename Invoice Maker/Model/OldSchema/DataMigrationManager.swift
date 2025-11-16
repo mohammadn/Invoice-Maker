@@ -164,9 +164,9 @@ final class DataMigrationManager {
                         productPrice: oldItem.productPrice,
                         productCurrency: oldItem.productCurrency,
                         productDetails: oldItem.productDetails,
-                        quantity: oldItem.quantity
+                        quantity: Decimal(oldItem.quantity)
                     )
-                    newInvoice.items.append(newItem)
+                    newInvoice.items?.append(newItem)
                 }
 
                 mainContext.insert(newInvoice)

@@ -30,19 +30,19 @@ struct CustomerFormView: View {
         Form {
             Section {
                 TextField("نام*", text: $customerDetails.name)
-                TextField("شماره تماس", text: $customerDetails.phone ?? "")
+                TextField("شماره تماس", text: $customerDetails.phone)
                     .keyboardType(.phonePad)
             }
 
             Section {
-                TextField("ایمیل", text: $customerDetails.email ?? "")
+                TextField("ایمیل", text: $customerDetails.email)
                     .keyboardType(.emailAddress)
-                TextField("آدرس", text: $customerDetails.address ?? "", axis: .vertical)
+                TextField("آدرس", text: $customerDetails.address, axis: .vertical)
                     .lineLimit(3 ... 5)
             }
 
             Section {
-                TextField("توضیحات", text: $customerDetails.details ?? "", axis: .vertical)
+                TextField("توضیحات", text: $customerDetails.details, axis: .vertical)
                     .lineLimit(2 ... 4)
             }
         }
@@ -67,7 +67,7 @@ struct CustomerFormView: View {
     }
 
     private func save() {
-        customerDetails.details = customerDetails.details?.trimmingCharacters(in: .whitespacesAndNewlines)
+        customerDetails.details = customerDetails.details.trimmingCharacters(in: .whitespacesAndNewlines)
 
         if let customer {
             customer.update(with: customerDetails)
@@ -81,9 +81,12 @@ struct CustomerFormView: View {
     }
 }
 
-//
-// #Preview {
-//    CustomerFormView { _ in }
-//        .modelContainer(previewContainer)
-//        .environment(\.layoutDirection, .rightToLeft)
-// }
+#if DEBUG
+    #Preview {
+        NavigationStack {
+            CustomerFormView(customer: CustomerN.sampleData.first!)
+        }
+        .modelContainer(previewContainer)
+        .environment(\.layoutDirection, .rightToLeft)
+    }
+#endif

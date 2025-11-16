@@ -26,6 +26,9 @@ struct CustomerView: View {
     }
 }
 
-// #Preview {
-//    CustomerView()
-// }
+#if DEBUG
+    #Preview {
+        CustomerView(customer: CustomerN.sampleData.first!)
+            .modelContainer(previewContainer)
+    }
+#endif

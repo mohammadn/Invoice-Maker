@@ -25,7 +25,7 @@ struct CustomersView: View {
             return customers
         } else {
             return customers.filter {
-                $0.name.localizedCaseInsensitiveContains(searchText) ||
+                $0.name?.localizedCaseInsensitiveContains(searchText) == true ||
                     ($0.phone?.localizedCaseInsensitiveContains(searchText) == true) ||
                     ($0.email?.localizedCaseInsensitiveContains(searchText) == true) ||
                     ($0.details?.localizedCaseInsensitiveContains(searchText) == true) ||
@@ -188,8 +188,13 @@ struct CustomersView: View {
     }
 }
 
-// #Preview {
-//    CustomersView()
-//        .modelContainer(previewContainer)
-//        .environment(\.layoutDirection, .rightToLeft)
-// }
+#if DEBUG
+    #Preview {
+        @Previewable @State var storeManager = ContactStoreManager()
+
+        CustomersView()
+            .modelContainer(previewContainer)
+            .environment(\.layoutDirection, .rightToLeft)
+            .environment(storeManager)
+    }
+#endif

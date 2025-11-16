@@ -13,14 +13,14 @@ extension SchemaV1 {
     @Model
     class Customer: Identifiable {
         var id: UUID = UUID()
-        var name: String
+        var name: String?
         var phone: String?
         var email: String?
         var address: String?
         var details: String?
         var createdDate: Date = Date.now
 
-        init(id: UUID = UUID(), name: String, phone: String?, email: String?, address: String?, details: String?) {
+        init(id: UUID = UUID(), name: String?, phone: String?, email: String?, address: String?, details: String?) {
             self.id = id
             self.name = name
             self.address = address
@@ -30,8 +30,7 @@ extension SchemaV1 {
         }
 
         convenience init(from customerDetails: CustomerDetailsV1) {
-            self.init(id: customerDetails.id,
-                      name: customerDetails.name,
+            self.init(name: customerDetails.name,
                       phone: customerDetails.phone,
                       email: customerDetails.email,
                       address: customerDetails.address,

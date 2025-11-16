@@ -26,6 +26,11 @@
 		A60F7BF82E50B3BB00649A24 /* SchemaV1+Invoice+Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BF72E50B3B400649A24 /* SchemaV1+Invoice+Status.swift */; };
 		A60F7BFA2E50B3D700649A24 /* SchemaV1+Invoice+Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7BF92E50B3D200649A24 /* SchemaV1+Invoice+Type.swift */; };
 		A60F7C112E5E51A000649A24 /* VATDiscountConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7C102E5E51A000649A24 /* VATDiscountConverter.swift */; };
+		A60F7C142E5E5DFB00649A24 /* PreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7C132E5E5DFB00649A24 /* PreviewContainer.swift */; };
+		A60F7C152E5E5DFB00649A24 /* Invoice+SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7C122E5E5DFB00649A24 /* Invoice+SampleData.swift */; };
+		A60F7C1A2E5E5E3800649A24 /* StepperButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7C172E5E5E3800649A24 /* StepperButtonStyle.swift */; };
+		A60F7C1B2E5E5E3800649A24 /* StepperButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7C182E5E5E3800649A24 /* StepperButtonView.swift */; };
+		A60F7C1C2E5E5E3800649A24 /* InputStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A60F7C162E5E5E3800649A24 /* InputStepper.swift */; };
 		A61469D22E08B33300713056 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61469D12E08B32900713056 /* Currency.swift */; };
 		A6208EC22E0B4299001B4325 /* CurrencyFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6208EC12E0B4290001B4325 /* CurrencyFormatter.swift */; };
 		A6208EC42E0B4ED6001B4325 /* Decimal+Rounded.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6208EC32E0B4ECE001B4325 /* Decimal+Rounded.swift */; };
@@ -105,6 +110,12 @@
 		A60F7BF72E50B3B400649A24 /* SchemaV1+Invoice+Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SchemaV1+Invoice+Status.swift"; sourceTree = "<group>"; };
 		A60F7BF92E50B3D200649A24 /* SchemaV1+Invoice+Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SchemaV1+Invoice+Type.swift"; sourceTree = "<group>"; };
 		A60F7C102E5E51A000649A24 /* VATDiscountConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VATDiscountConverter.swift; sourceTree = "<group>"; };
+		A60F7C122E5E5DFB00649A24 /* Invoice+SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Invoice+SampleData.swift"; sourceTree = "<group>"; };
+		A60F7C132E5E5DFB00649A24 /* PreviewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainer.swift; sourceTree = "<group>"; };
+		A60F7C162E5E5E3800649A24 /* InputStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputStepper.swift; sourceTree = "<group>"; };
+		A60F7C172E5E5E3800649A24 /* StepperButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperButtonStyle.swift; sourceTree = "<group>"; };
+		A60F7C182E5E5E3800649A24 /* StepperButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperButtonView.swift; sourceTree = "<group>"; };
+		A60F7C1E2E63C24000649A24 /* Invoice Maker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Invoice Maker.entitlements"; sourceTree = "<group>"; };
 		A61469D12E08B32900713056 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		A6208EC12E0B4290001B4325 /* CurrencyFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyFormatter.swift; sourceTree = "<group>"; };
 		A6208EC32E0B4ECE001B4325 /* Decimal+Rounded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Decimal+Rounded.swift"; sourceTree = "<group>"; };
@@ -239,6 +250,16 @@
 			path = OldSchema;
 			sourceTree = "<group>";
 		};
+		A60F7C192E5E5E3800649A24 /* Stepper */ = {
+			isa = PBXGroup;
+			children = (
+				A60F7C162E5E5E3800649A24 /* InputStepper.swift */,
+				A60F7C172E5E5E3800649A24 /* StepperButtonStyle.swift */,
+				A60F7C182E5E5E3800649A24 /* StepperButtonView.swift */,
+			);
+			path = Stepper;
+			sourceTree = "<group>";
+		};
 		A6208EC02E0B4284001B4325 /* Currency */ = {
 			isa = PBXGroup;
 			children = (
@@ -267,6 +288,14 @@
 				A6208ECF2E11F739001B4325 /* InvoiceProductDetailsView.swift */,
 			);
 			path = InvoiceDetails;
+			sourceTree = "<group>";
+		};
+		A62DFE4E2EB7CC9D00367F40 /* String */ = {
+			isa = PBXGroup;
+			children = (
+				A6DAE4FF2D240BBD00205A54 /* String+ToPersian.swift */,
+			);
+			path = String;
 			sourceTree = "<group>";
 		};
 		A6555A922D467033002F6537 /* CNContact */ = {
@@ -301,6 +330,7 @@
 			children = (
 				A69AC0902DDFB1C1001FAFD6 /* ButtonWithPopover.swift */,
 				A675DCFC2E15D50F0040D855 /* ExpandableSectionView.swift */,
+				A60F7C192E5E5E3800649A24 /* Stepper */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -324,6 +354,7 @@
 		A6ACF5722B7945B100D4727B /* Invoice Maker */ = {
 			isa = PBXGroup;
 			children = (
+				A60F7C1E2E63C24000649A24 /* Invoice Maker.entitlements */,
 				A68456092D38622600FBD1E1 /* Invoice-Maker-Info.plist */,
 				A6ACF5732B7945B100D4727B /* Invoice_MakerApp.swift */,
 				A6ACF5792B7945B200D4727B /* Assets.xcassets */,
@@ -339,6 +370,8 @@
 			children = (
 				A6ACF5A02B7ACB9000D4727B /* Business+SampleData.swift */,
 				A6ACF5CC2B7C1C1700D4727B /* Customer+SampleData.swift */,
+				A60F7C122E5E5DFB00649A24 /* Invoice+SampleData.swift */,
+				A60F7C132E5E5DFB00649A24 /* PreviewContainer.swift */,
 				A6ACF5942B798E1900D4727B /* Product+SampleData.swift */,
 				A6ACF57C2B7945B200D4727B /* Preview Assets.xcassets */,
 			);
@@ -383,7 +416,6 @@
 				A6208EC32E0B4ECE001B4325 /* Decimal+Rounded.swift */,
 				A6E205052DEB9554009BEF4A /* MigrationPlan.swift */,
 				A68456052D30577400FBD1E1 /* NullishCoalescingBinding.swift */,
-				A6DAE4FF2D240BBD00205A54 /* String+ToPersian.swift */,
 				A60F7C102E5E51A000649A24 /* VATDiscountConverter.swift */,
 				A60F7BDC2E492C2100649A24 /* Business */,
 				A6208EC02E0B4284001B4325 /* Currency */,
@@ -393,6 +425,7 @@
 				A6E4DFE62B8BBCF70088BCFC /* PDF */,
 				A60F7BDA2E492C0400649A24 /* Product */,
 				A60F7BD62E4929F600649A24 /* SchemaV1 */,
+				A62DFE4E2EB7CC9D00367F40 /* String */,
 				A675DCF12E1208F80040D855 /* TabView */,
 			);
 			path = Model;
@@ -531,7 +564,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1520;
-				LastUpgradeCheck = 1630;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					A6ACF56F2B7945B100D4727B = {
 						CreatedOnToolsVersion = 15.2;
@@ -584,6 +617,9 @@
 				A6E2050C2DF0F064009BEF4A /* CurrentProduct.swift in Sources */,
 				A60F7BF62E50B33C00649A24 /* SchemaV1+Invoice+Option.swift in Sources */,
 				A6F92F922DD12E560029F04D /* CustomerDetailView.swift in Sources */,
+				A60F7C1A2E5E5E3800649A24 /* StepperButtonStyle.swift in Sources */,
+				A60F7C1B2E5E5E3800649A24 /* StepperButtonView.swift in Sources */,
+				A60F7C1C2E5E5E3800649A24 /* InputStepper.swift in Sources */,
 				A6555A912D466936002F6537 /* CustomersContactView.swift in Sources */,
 				A6208ECE2E11F725001B4325 /* InvoiceCustomerDetailsView.swift in Sources */,
 				A6E4DFE52B8BBCEF0088BCFC /* PDF.swift in Sources */,
@@ -648,6 +684,8 @@
 				A684560F2D44501900FBD1E1 /* CNContact+Extension.swift in Sources */,
 				A60F7BBC2E3EAC0D00649A24 /* SchemaV1+Business.swift in Sources */,
 				A60F7BD82E492A0800649A24 /* SchemaV1.swift in Sources */,
+				A60F7C142E5E5DFB00649A24 /* PreviewContainer.swift in Sources */,
+				A60F7C152E5E5DFB00649A24 /* Invoice+SampleData.swift in Sources */,
 				A6ACF5C42B7C141C00D4727B /* CustomersView.swift in Sources */,
 				A6ACF5992B799E2500D4727B /* ProductFormView.swift in Sources */,
 			);
@@ -716,6 +754,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -774,6 +813,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -784,6 +824,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Invoice Maker/Invoice Maker.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Invoice Maker/Preview Content\"";
@@ -791,7 +832,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Invoice-Maker-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Invoice Maker | فاکتور ساز";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
+				INFOPLIST_KEY_NSContactsUsageDescription = "فاکتورساز برای افزودن مشتریان از لیست مخاطبین شما، نیاز به دسترسی دارد.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -802,7 +845,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.40.2;
+				MARKETING_VERSION = 1.41.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "MN.Invoice-Maker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -820,6 +863,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Invoice Maker/Invoice Maker.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Invoice Maker/Preview Content\"";
@@ -827,7 +871,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Invoice-Maker-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Invoice Maker | فاکتور ساز";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.business";
+				INFOPLIST_KEY_NSContactsUsageDescription = "فاکتورساز برای افزودن مشتریان از لیست مخاطبین شما، نیاز به دسترسی دارد.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -838,7 +884,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.40.2;
+				MARKETING_VERSION = 1.41.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "MN.Invoice-Maker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

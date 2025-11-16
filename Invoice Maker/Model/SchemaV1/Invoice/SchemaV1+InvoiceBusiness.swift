@@ -11,14 +11,14 @@ import SwiftData
 extension SchemaV1 {
     @Model
     class InvoiceBusiness {
-        var name: String
-        var phone: String
+        var name: String?
+        var phone: String?
         var email: String?
         var website: String?
         var address: String?
         var invoice: SchemaV1.Invoice?
 
-        init(name: String, phone: String, email: String? = nil, website: String? = nil, address: String? = nil, invoice: SchemaV1.Invoice? = nil) {
+        init(name: String?, phone: String?, email: String?, website: String?, address: String?, invoice: SchemaV1.Invoice? = nil) {
             self.name = name
             self.phone = phone
             self.email = email

@@ -58,7 +58,7 @@ struct ProductFormView: View {
             }
 
             Section {
-                TextField("توضیحات", text: $productDetails.details ?? "", axis: .vertical)
+                TextField("توضیحات", text: $productDetails.details, axis: .vertical)
                     .lineLimit(2 ... 4)
             }
         }
@@ -87,7 +87,7 @@ struct ProductFormView: View {
     }
 
     private func save() {
-        productDetails.details = productDetails.details?.trimmingCharacters(in: .whitespacesAndNewlines)
+        productDetails.details = productDetails.details.trimmingCharacters(in: .whitespacesAndNewlines)
 
         if let product {
             product.update(with: productDetails)
@@ -96,13 +96,17 @@ struct ProductFormView: View {
 
             modelContext.insert(product)
         }
-        
+
         try? modelContext.save()
     }
 }
 
-// #Preview {
-//    ProductFormView { _ in }
-//        .modelContainer(previewContainer)
-//        .environment(\.layoutDirection, .rightToLeft)
-// }
+#if DEBUG
+    #Preview {
+        NavigationStack {
+            ProductFormView(product: Product.sampleData.first!)
+        }
+        .modelContainer(previewContainer)
+        .environment(\.layoutDirection, .rightToLeft)
+    }
+#endif

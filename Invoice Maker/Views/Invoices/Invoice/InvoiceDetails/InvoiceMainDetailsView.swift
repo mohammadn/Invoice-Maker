@@ -12,22 +12,33 @@ struct InvoiceMainDetailsView: View {
 
     var body: some View {
         Section {
-            LabeledContent("شماره فاکتور", value: invoice.number)
-            LabeledContent("نوع فاکتور", value: invoice.type.label)
-            LabeledContent("نوع ارز", value: invoice.currency.label)
-            LabeledContent("تاریخ صدور", value: invoice.date, format: .dateTime)
-            if invoice.options.contains(.dueDate) {
-                LabeledContent("تاریخ سررسید", value: invoice.dueDate, format: .dateTime)
+            LabeledContent("شماره فاکتور", value: invoice.number ?? "-")
+            LabeledContent("نوع فاکتور", value: invoice.type?.label ?? "-")
+            LabeledContent("نوع ارز", value: invoice.currency?.label ?? "-")
+            if let date = invoice.date {
+                LabeledContent("تاریخ صدور", value: date, format: .dateTime)
+            } else {
+                LabeledContent("تاریخ صدور", value: "-")
             }
-            LabeledContent("جمع کل", value: invoice.total, format: .currencyFormatter(code: invoice.currency))
-            LabeledContent("تخفیف", value: invoice.discount, format: .percent)
-            LabeledContent("ارزش افزوده", value: invoice.vat, format: .percent)
-            LabeledContent("مبلغ نهایی", value: invoice.totalWithVAT, format: .currencyFormatter(code: invoice.currency))
-            LabeledContent("توضیحات", value: invoice.note.isEmpty ? "-" : invoice.note)
+            if let options = invoice.options, options.contains(.dueDate), let dueDate = invoice.dueDate {
+                LabeledContent("تاریخ سررسید", value: dueDate, format: .dateTime)
+            } else {
+                LabeledContent("تاریخ سررسید", value: "-")
+            }
+            LabeledContent("جمع کل", value: invoice.total, format: .currencyFormatter(code: invoice.currency ?? Currency.IRR))
+            LabeledContent("تخفیف", value: invoice.discount ?? 0, format: .percent)
+            LabeledContent("ارزش افزوده", value: invoice.vat ?? 0, format: .percent)
+            LabeledContent("مبلغ نهایی", value: invoice.totalWithVAT, format: .currencyFormatter(code: invoice.currency ?? Currency.IRR))
+            LabeledContent("توضیحات", value: invoice.note?.isEmpty == false ? invoice.note! : "-")
         }
     }
 }
 
-// #Preview {
-//    InvoiceMainDetailsView()
-// }
+#if DEBUG
+    #Preview {
+        List {
+            InvoiceMainDetailsView(invoice: InvoiceN.sampleData[0])
+        }
+        .modelContainer(previewContainer)
+    }
+#endif

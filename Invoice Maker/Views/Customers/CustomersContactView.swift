@@ -43,6 +43,15 @@ struct CustomersContactView: View {
     }
 }
 
-// #Preview {
-//    CustomersContactView()
-// }
+#if DEBUG
+    #Preview {
+        @Previewable @State var storeManager = ContactStoreManager()
+        @Previewable @State var searchText: String = ""
+
+        List {
+            CustomersContactView(searchText: $searchText)
+        }
+        .modelContainer(previewContainer)
+        .environment(storeManager)
+    }
+#endif

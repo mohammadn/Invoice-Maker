@@ -21,10 +21,10 @@ struct ProductsView: View {
             return products
         } else {
             return products.filter {
-                $0.code.description.localizedCaseInsensitiveContains(searchText) ||
-                    $0.name.localizedCaseInsensitiveContains(searchText) ||
+                $0.code?.description.localizedCaseInsensitiveContains(searchText) == true ||
+                    $0.name?.localizedCaseInsensitiveContains(searchText) == true ||
                     ($0.details?.localizedCaseInsensitiveContains(searchText) == true) ||
-                    $0.price.description.localizedCaseInsensitiveContains(searchText)
+                    $0.price?.description.localizedCaseInsensitiveContains(searchText) == true
             }
         }
     }
@@ -35,13 +35,13 @@ struct ProductsView: View {
                 ForEach(filteredProducts, id: \.self) { product in
                     VStack(alignment: .leading) {
                         HStack {
-                            Text(product.name)
+                            Text(product.name ?? "-")
                                 .lineLimit(1)
                                 .truncationMode(.tail)
 
                             Spacer()
 
-                            Text(product.price, format: .currencyFormatter(code: product.currency))
+                            Text(product.price ?? 0, format: .currencyFormatter(code: product.currency ?? .IRR))
                                 .font(.subheadline)
                                 .foregroundColor(.secondary)
                                 .lineLimit(1)
@@ -138,8 +138,10 @@ struct ProductsView: View {
     }
 }
 
-// #Preview {
-//    ProductsView()
-//        .modelContainer(previewContainer)
-//        .environment(\.layoutDirection, .rightToLeft)
-// }
+#if DEBUG
+    #Preview {
+        ProductsView()
+            .modelContainer(previewContainer)
+            .environment(\.layoutDirection, .rightToLeft)
+    }
+#endif

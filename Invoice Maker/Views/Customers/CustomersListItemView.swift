@@ -15,7 +15,7 @@ struct CustomersListItemView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(customer.name)
+                Text(customer.name ?? "-")
                     .lineLimit(1)
                     .truncationMode(.tail)
 
@@ -40,6 +40,14 @@ struct CustomersListItemView: View {
     }
 }
 
-// #Preview {
-//    CustomersListItemView()
-// }
+#if DEBUG
+    #Preview {
+        @Previewable @State var editMode: EditMode = .inactive
+
+        NavigationStack {
+            List {
+                CustomersListItemView(customer: CustomerN.sampleData[0], editMode: $editMode)
+            }
+        }
+    }
+#endif

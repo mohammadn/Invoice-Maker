@@ -12,44 +12,33 @@ extension SchemaV1 {
     @Model
     class Invoice: Identifiable {
         var id: UUID = UUID()
-        var number: String
-        var type: InvoiceType
-        var currency: Currency
-        var date: Date
-        var dueDate: Date
-        var vat: Decimal
-        var discount: Decimal
-        var note: String
-        var status: Status
-        var options: [Option]
-        @Relationship(deleteRule: .cascade, inverse: \SchemaV1.InvoiceItem.invoice) var items: [SchemaV1.InvoiceItem]
+        var number: String?
+        var type: InvoiceType?
+        var currency: Currency?
+        var date: Date?
+        var dueDate: Date?
+        var vat: Decimal?
+        var discount: Decimal?
+        var note: String?
+        var status: Status?
+        var options: [Option]?
+        @Relationship(deleteRule: .cascade, inverse: \SchemaV1.InvoiceItem.invoice) var items: [SchemaV1.InvoiceItem]?
         @Relationship(deleteRule: .cascade, inverse: \SchemaV1.InvoiceCustomer.invoice) var customer: SchemaV1.InvoiceCustomer?
         @Relationship(deleteRule: .cascade, inverse: \SchemaV1.InvoiceBusiness.invoice) var business: SchemaV1.InvoiceBusiness?
         var createdDate: Date = Date.now
 
         var isInvalid: Bool {
-            number.isEmpty || customer?.id == nil || items.isEmpty
+            number?.isEmpty == nil || customer?.id == nil || (items ?? []).isEmpty
         }
 
         var total: Decimal {
-            let total: Decimal = items.reduce(0) { result, item in
-                let itemTotal = Decimal(item.quantity) * item.productPrice
-                // Convert item currency to match invoice currency
-                switch (item.productCurrency, currency) {
-                case (.IRR_Toman, .IRR):
-                    return result + (itemTotal * 10)
-                case (.IRR, .IRR_Toman):
-                    return result + (itemTotal / 10)
-                default:
-                    return result + itemTotal
-                }
-            }
+            let total: Decimal = (items ?? []).reduce(0) { result, item in result + item.total(in: currency ?? .IRR) }
 
             return total.rounded()
         }
 
         var discountAmount: Decimal {
-            return (total * discount).rounded()
+            return (total * (discount ?? 0)).rounded()
         }
 
         var totalWithDiscount: Decimal {
@@ -57,7 +46,7 @@ extension SchemaV1 {
         }
 
         var vatAmount: Decimal {
-            return (totalWithDiscount * vat).rounded()
+            return (totalWithDiscount * (vat ?? 0)).rounded()
         }
 
         var totalWithVAT: Decimal {
@@ -65,10 +54,10 @@ extension SchemaV1 {
         }
 
         var getCustomer: SchemaV1.Customer? {
-            guard let customerId = customer?.id, let customerName = customer?.name else { return nil }
+            guard let customerId = customer?.id else { return nil }
 
             return SchemaV1.Customer(id: customerId,
-                                     name: customerName,
+                                     name: customer?.name,
                                      phone: customer?.phone,
                                      email: customer?.email,
                                      address: customer?.address,
@@ -87,17 +76,17 @@ extension SchemaV1 {
             )
         }
 
-        init(number: String,
-             type: InvoiceType,
-             currency: Currency,
-             date: Date,
-             dueDate: Date,
-             vat: Decimal,
-             discount: Decimal,
-             note: String,
-             status: Status,
-             options: [Option],
-             items: [SchemaV1.InvoiceItem],
+        init(number: String?,
+             type: InvoiceType?,
+             currency: Currency?,
+             date: Date?,
+             dueDate: Date?,
+             vat: Decimal?,
+             discount: Decimal?,
+             note: String?,
+             status: Status?,
+             options: [Option]?,
+             items: [SchemaV1.InvoiceItem]?,
              customer: SchemaV1.InvoiceCustomer?,
              business: SchemaV1.InvoiceBusiness?
         ) {
@@ -122,8 +111,8 @@ extension SchemaV1 {
                       currency: invoiceDetails.currency,
                       date: invoiceDetails.date,
                       dueDate: invoiceDetails.dueDate,
-                      vat: invoiceDetails.vat ?? 0,
-                      discount: invoiceDetails.discount ?? 0,
+                      vat: invoiceDetails.vat,
+                      discount: invoiceDetails.discount,
                       note: invoiceDetails.note,
                       status: invoiceDetails.status,
                       options: invoiceDetails.options,

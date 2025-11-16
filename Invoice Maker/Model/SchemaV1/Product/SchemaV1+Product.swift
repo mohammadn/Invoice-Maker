@@ -11,15 +11,15 @@ import SwiftData
 extension SchemaV1 {
     @Model
     class Product: Identifiable {
-        var id: UUID
-        @Attribute(.unique) var code: Int
-        var name: String
-        var price: Decimal
-        var currency: Currency
+        var id: UUID = UUID()
+        var code: Int?
+        var name: String?
+        var price: Decimal?
+        var currency: Currency?
         var details: String?
         var createdDate: Date = Date.now
 
-        init(id: UUID = UUID(), code: Int, name: String, price: Decimal, currency: Currency, details: String?) {
+        init(id: UUID = UUID(), code: Int?, name: String?, price: Decimal?, currency: Currency?, details: String?) {
             self.id = id
             self.code = code
             self.name = name
@@ -29,9 +29,9 @@ extension SchemaV1 {
         }
 
         convenience init(from productDetails: ProductDetailsV1) {
-            self.init(code: productDetails.code ?? 0,
+            self.init(code: productDetails.code,
                       name: productDetails.name,
-                      price: productDetails.price ?? 0,
+                      price: productDetails.price,
                       currency: productDetails.currency,
                       details: productDetails.details
             )
@@ -41,9 +41,9 @@ extension SchemaV1 {
 
 extension SchemaV1.Product {
     func update(with productDetails: ProductDetailsV1) {
-        code = productDetails.code ?? 0
+        code = productDetails.code
         name = productDetails.name
-        price = productDetails.price ?? 0
+        price = productDetails.price
         currency = productDetails.currency
         details = productDetails.details
     }

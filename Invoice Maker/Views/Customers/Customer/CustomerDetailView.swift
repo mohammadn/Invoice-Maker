@@ -30,13 +30,13 @@ struct CustomerDetailView: View {
     var body: some View {
         List {
             Section {
-                LabeledContent("نام", value: customer.name)
-                LabeledContent("شماره تماس", value: customer.phone?.toPersian() ?? "-")
+                LabeledContent("نام", value: customer.name?.isEmpty == false ? customer.name! : "-")
+                LabeledContent("شماره تماس", value: customer.phone?.isEmpty == false ? customer.phone!.toPersian() : "-")
             }
 
             Section {
-                LabeledContent("ایمیل", value: customer.email ?? "-")
-                LabeledContent("آدرس", value: customer.address ?? "-")
+                LabeledContent("ایمیل", value: customer.email?.isEmpty == false ? customer.email! : "-")
+                LabeledContent("آدرس", value: customer.address?.isEmpty == false ? customer.address! : "-")
             }
 
             Section {
@@ -66,7 +66,7 @@ struct CustomerDetailView: View {
                 }
             }
         }
-        .navigationTitle(customer.name)
+        .navigationTitle(customer.name ?? "مشتری")
         .sheet(item: $selectedInvoice) { invoice in
             InvoiceSummaryView(invoice: invoice)
         }
@@ -80,6 +80,13 @@ struct CustomerDetailView: View {
     }
 }
 
-// #Preview {
-//    CustomerDetailView()
-// }
+#if DEBUG
+    #Preview {
+        @Previewable @State var isEditing: Bool = false
+
+        NavigationStack {
+            CustomerDetailView(customer: CustomerN.sampleData.first!, isEditing: $isEditing)
+        }
+        .modelContainer(previewContainer)
+    }
+#endif

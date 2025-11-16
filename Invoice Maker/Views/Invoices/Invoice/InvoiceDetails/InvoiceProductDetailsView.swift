@@ -11,20 +11,20 @@ struct InvoiceProductDetailsView: View {
     let invoice: InvoiceN
 
     var body: some View {
-        ForEach(invoice.items) { item in
+        ForEach(invoice.items ?? []) { item in
             VStack(alignment: .leading) {
                 HStack {
-                    Text(item.productName)
+                    Text(item.productName ?? "-")
                         .lineLimit(1)
 
                     Spacer()
 
-                    Text(item.quantity, format: .number)
+                    Text(item.quantity ?? 1, format: .number)
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
 
-                Text(item.productPrice, format: .currencyFormatter(code: item.productCurrency))
+                Text(item.productPrice ?? 0, format: .currencyFormatter(code: item.productCurrency ?? .IRR))
                     .font(.subheadline)
                     .foregroundStyle(.gray)
                     .lineLimit(1)
@@ -33,6 +33,11 @@ struct InvoiceProductDetailsView: View {
     }
 }
 
-// #Preview {
-//    InvoiceProductDetailsView()
-// }
+#if DEBUG
+    #Preview {
+        List {
+            InvoiceProductDetailsView(invoice: InvoiceN.sampleData.first!)
+        }
+        .modelContainer(previewContainer)
+    }
+#endif

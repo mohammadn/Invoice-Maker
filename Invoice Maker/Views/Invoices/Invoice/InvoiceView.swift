@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct InvoiceView: View {
-    @State var isEditing: Bool = false
+    @State private var isEditing: Bool = false
 
     var invoice: InvoiceN
 
@@ -26,6 +26,9 @@ struct InvoiceView: View {
     }
 }
 
-// #Preview {
-//    InvoiceView()
-// }
+#if DEBUG
+    #Preview {
+        InvoiceView(invoice: InvoiceN.sampleData[0])
+            .modelContainer(previewContainer)
+    }
+#endif
