@@ -5,8 +5,25 @@
 //  Created by Mohammad Najafzadeh on 11/02/2024.
 //
 
+import CloudKit
 import SwiftData
 import SwiftUI
+
+@MainActor
+enum ICloudKVS {
+    static let store = NSUbiquitousKeyValueStore.default
+    static let isWelcomeKey = "isWelcomeSheetShowing"
+
+    static func setIsWelcomeSheetShowing(_ value: Bool) {
+        store.set(value, forKey: isWelcomeKey)
+        store.synchronize() // Push changes to iCloud
+    }
+
+    static func getIsWelcomeSheetShowing() -> Bool {
+        // Provide a sensible default if not present
+        return store.object(forKey: isWelcomeKey) as? Bool ?? true
+    }
+}
 
 struct ContentView: View {
     @AppStorage("isWelcomeSheetShowing") var isWelcomeSheetShowing = true
@@ -42,6 +59,15 @@ struct ContentView: View {
         .environment(invoiceViewModel)
         .sheet(isPresented: $isWelcomeSheetShowing) {
             OnboardingSheetView(business: business.first)
+        }
+        .onAppear {
+            let cloudValue = ICloudKVS.getIsWelcomeSheetShowing()
+            if isWelcomeSheetShowing != cloudValue {
+                isWelcomeSheetShowing = cloudValue
+            }
+        }
+        .onChange(of: isWelcomeSheetShowing) { _, newValue in
+            ICloudKVS.setIsWelcomeSheetShowing(newValue)
         }
     }
 }
