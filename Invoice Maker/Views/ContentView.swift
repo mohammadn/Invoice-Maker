@@ -34,26 +34,21 @@ struct ContentView: View {
 
     var body: some View {
         TabView(selection: $tabViewModel.selectedTab) {
-            SettingsView()
-                .tabItem {
-                    Label("تنظیمات", systemImage: "gearshape")
-                }
-                .tag(TabViewModel.Tabs.settings)
-            ProductsView()
-                .tabItem {
-                    Label("محصولات", systemImage: "list.dash")
-                }
-                .tag(TabViewModel.Tabs.products)
-            CustomersView()
-                .tabItem {
-                    Label("مشتریان", systemImage: "person.2")
-                }
-                .tag(TabViewModel.Tabs.customers)
-            InvoicesView()
-                .tabItem {
-                    Label("فاکتورها", systemImage: "doc.text")
-                }
-                .tag(TabViewModel.Tabs.invoices)
+            Tab("تنظیمات", systemImage: "gearshape", value: .settings) {
+                SettingsView()
+            }
+            Tab("محصولات", systemImage: "list.dash", value: .products) {
+                ProductsView()
+                    .edgesIgnoringSafeArea(.top)
+            }
+            Tab("مشتریان", systemImage: "person.2", value: .customers) {
+                CustomersView()
+                    .edgesIgnoringSafeArea(.top)
+            }
+            Tab("فاکتورها", systemImage: "doc.text", value: .invoices) {
+                InvoicesView()
+                    .edgesIgnoringSafeArea(.top)
+            }
         }
         .environment(tabViewModel)
         .environment(invoiceViewModel)
