@@ -31,6 +31,18 @@ class InvoiceDetailsV1 {
         number.isEmpty || customerId == nil || items.isEmpty
     }
 
+    var isDirty: Bool {
+        !number.isEmpty ||
+            type != .sale ||
+            vat != nil ||
+            discount != nil ||
+            !note.isEmpty ||
+            status != .pending ||
+            !options.isEmpty ||
+            !items.isEmpty ||
+            customerId != nil
+    }
+
     init(number: String = "",
          type: SchemaV1.Invoice.InvoiceType = .sale,
          currency: Currency = .IRR,

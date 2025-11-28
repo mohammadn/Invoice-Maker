@@ -43,7 +43,7 @@ struct InvoiceProductSelection: View {
                 }
 
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("انصراف") {
+                    Button(role: .cancel) {
                         dismiss()
                     }
                 }

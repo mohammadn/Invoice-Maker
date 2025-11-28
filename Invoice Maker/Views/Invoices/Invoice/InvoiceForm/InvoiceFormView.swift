@@ -17,7 +17,7 @@ struct InvoiceFormView: View {
     @State private var showCustomerFormView: Bool = false
     @State private var showOptionSelectionView: Bool = false
     @State private var invoiceDetails: InvoiceDetails
-    @State private var showDismissAlert: Bool = false
+    @State private var showDismissConfirmation: Bool = false
 
     let invoice: InvoiceN?
     var dismissAction: (() -> Void)?
@@ -149,23 +149,17 @@ struct InvoiceFormView: View {
         .interactiveDismissDisabled()
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Button("انصراف") {
-                    guard let invoice else {
-                        showDismissAlert.toggle()
-                        return
-                    }
+                Button(role: .close) {
+                    let hasUnsavedChanges = invoice != nil ? InvoiceDetails(from: invoice!) != invoiceDetails : invoiceDetails.isDirty
 
-                    if InvoiceDetails(from: invoice) != invoiceDetails {
-                        showDismissAlert.toggle()
+                    if hasUnsavedChanges {
+                        showDismissConfirmation.toggle()
                     } else {
                         dismissAction?() ?? dismiss()
                     }
                 }
-                .alert("آیا مطمئن هستید؟", isPresented: $showDismissAlert) {
-                    Button("انصراف", role: .cancel) {
-                        showDismissAlert.toggle()
-                    }
-                    Button("بازگشت") {
+                .confirmationDialog("آیا مطمئن هستید؟", isPresented: $showDismissConfirmation) {
+                    Button("بازگشت", role: .destructive) {
                         dismissAction?() ?? dismiss()
                     }
                 } message: {

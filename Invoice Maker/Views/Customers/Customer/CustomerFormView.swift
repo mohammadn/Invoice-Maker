@@ -11,6 +11,7 @@ struct CustomerFormView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     @State private var customerDetails: CustomerDetails
+    @State private var showDismissConfirmation: Bool = false
 
     var customer: CustomerN?
     var dismissAction: (() -> Void)?
@@ -48,6 +49,7 @@ struct CustomerFormView: View {
         }
         .navigationTitle(customer == nil ? "افزودن مشتری" : "ویرایش مشتری")
         .navigationBarBackButtonHidden(true)
+        .interactiveDismissDisabled()
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("ذخیره") {
@@ -59,8 +61,22 @@ struct CustomerFormView: View {
             }
 
             ToolbarItem(placement: .topBarLeading) {
-                Button("انصراف") {
+                Button(role: .close) {
                     dismissAction?() ?? dismiss()
+                    let hasUnsavedChanges = customer != nil ? CustomerDetails(from: customer!) != customerDetails : customerDetails.isDirty
+                    
+                    if hasUnsavedChanges {
+                        showDismissConfirmation.toggle()
+                    } else {
+                        dismissAction?() ?? dismiss()
+                    }
+                }
+                .confirmationDialog("آیا مطمئن هستید؟", isPresented: $showDismissConfirmation) {
+                    Button("بازگشت", role: .destructive) {
+                        dismissAction?() ?? dismiss()
+                    }
+                } message: {
+                    Text("در صورت بازگشت به صفحه قبل اطلاعات محصول ذخیره نخواهد شد.")
                 }
             }
         }

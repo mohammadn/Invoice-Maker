@@ -15,6 +15,7 @@ struct ProductsView: View {
     @State private var selectedProducts: Set<Product> = []
     @State private var searchText: String = ""
     @State private var editMode: EditMode = .inactive
+    @State private var showDeleteConfirmation: Bool = false
 
     var filteredProducts: [Product] {
         if searchText.isEmpty {
@@ -69,11 +70,18 @@ struct ProductsView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     if editMode.isEditing {
-                        Button("حذف") {
-                            delete(products: selectedProducts)
-                            editMode = .inactive
+                        Button("حذف", systemImage: "trash", role: .destructive) {
+                            showDeleteConfirmation.toggle()
                         }
                         .disabled(selectedProducts.isEmpty)
+                        .confirmationDialog("آیا مطمئن هستید؟", isPresented: $showDeleteConfirmation) {
+                            Button("حذف", role: .destructive) {
+                                delete(products: selectedProducts)
+                                editMode = .inactive
+                            }
+                        } message: {
+                            Text("آیا مطمئن هستید که می خواهید \(selectedProducts.count) محصول را حذف کنید؟")
+                        }
                     } else {
                         Button("افزودن", systemImage: "plus") {
                             showProductFormView.toggle()
@@ -81,10 +89,19 @@ struct ProductsView: View {
                     }
                 }
                 ToolbarItem(placement: .topBarLeading) {
-                    Button(editMode.isEditing ? "پایان" : "ویرایش") {
-                        withAnimation {
-                            editMode = editMode.isEditing ? .inactive : .active
-                            selectedProducts.removeAll()
+                    if editMode.isEditing {
+                        Button(role: .close) {
+                            withAnimation {
+                                editMode = .inactive
+                                selectedProducts.removeAll()
+                            }
+                        }
+                    } else {
+                        Button("ویرایش") {
+                            withAnimation {
+                                editMode = .active
+                                selectedProducts.removeAll()
+                            }
                         }
                     }
                 }

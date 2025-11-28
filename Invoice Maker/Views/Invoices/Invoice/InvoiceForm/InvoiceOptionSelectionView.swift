@@ -35,7 +35,7 @@ struct InvoiceOptionSelectionView: View {
                 }
 
                 ToolbarItem(placement: .topBarLeading) {
-                    Button("انصراف") {
+                    Button(role: .close) {
                         dismiss()
                     }
                 }

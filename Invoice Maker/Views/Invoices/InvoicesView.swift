@@ -14,6 +14,7 @@ struct InvoicesView: View {
     @Query(sort: \InvoiceN.createdDate, order: .reverse) private var invoices: [InvoiceN]
     @State private var showInvoiceFormView: Bool = false
     @State private var editMode: EditMode = .inactive
+    @State private var showDeleteConfirmation: Bool = false
 
     var invalidInvoices: [InvoiceN] {
         invoices.filter { $0.isInvalid }
@@ -113,11 +114,19 @@ struct InvoicesView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     if editMode.isEditing {
-                        Button("حذف") {
+                        Button("حذف", systemImage: "trash", role: .destructive) {
                             delete(invoices: invoiceViewModel.selectedInvoices)
                             editMode = .inactive
                         }
                         .disabled(invoiceViewModel.selectedInvoices.isEmpty)
+                        .confirmationDialog("آیا مطمئن هستید؟", isPresented: $showDeleteConfirmation) {
+                            Button("حذف", role: .destructive) {
+                                delete(invoices: invoiceViewModel.selectedInvoices)
+                                editMode = .inactive
+                            }
+                        } message: {
+                            Text("آیا مطمئن هستید که می خواهید \(invoiceViewModel.selectedInvoices.count) فاکتور را حذف کنید؟")
+                        }
                     } else {
                         Button("افزودن", systemImage: "plus") {
                             showInvoiceFormView.toggle()
@@ -126,10 +135,19 @@ struct InvoicesView: View {
                 }
 
                 ToolbarItem(placement: .topBarLeading) {
-                    Button(editMode.isEditing ? "پایان" : "ویرایش") {
-                        withAnimation {
-                            editMode = editMode.isEditing ? .inactive : .active
-                            invoiceViewModel.selectedInvoices.removeAll()
+                    if editMode.isEditing {
+                        Button(role: .close) {
+                            withAnimation {
+                                editMode = .inactive
+                                invoiceViewModel.selectedInvoices.removeAll()
+                            }
+                        }
+                    } else {
+                        Button("ویرایش") {
+                            withAnimation {
+                                editMode = .active
+                                invoiceViewModel.selectedInvoices.removeAll()
+                            }
                         }
                     }
                 }

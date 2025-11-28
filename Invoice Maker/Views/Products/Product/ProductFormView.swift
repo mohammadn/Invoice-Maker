@@ -13,6 +13,7 @@ struct ProductFormView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var products: [Product]
     @State private var productDetails: ProductDetails
+    @State private var showDismissConfirmation: Bool = false
     @State private var duplicateCode: Bool = false
 
     var product: Product?
@@ -64,6 +65,7 @@ struct ProductFormView: View {
         }
         .navigationTitle(product == nil ? "افزودن محصول" : "ویرایش محصول")
         .navigationBarBackButtonHidden(true)
+        .interactiveDismissDisabled()
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button("ذخیره") {
@@ -75,8 +77,21 @@ struct ProductFormView: View {
             }
 
             ToolbarItem(placement: .topBarLeading) {
-                Button("انصراف") {
-                    dismissAction?() ?? dismiss()
+                Button(role: .close) {
+                    let hasUnsavedChanges = product != nil ? ProductDetails(from: product!) != productDetails : productDetails.isDirty
+                    
+                    if hasUnsavedChanges {
+                        showDismissConfirmation.toggle()
+                    } else {
+                        dismissAction?() ?? dismiss()
+                    }
+                }
+                .confirmationDialog("آیا مطمئن هستید؟", isPresented: $showDismissConfirmation) {
+                    Button("بازگشت", role: .destructive) {
+                        dismissAction?() ?? dismiss()
+                    }
+                } message: {
+                    Text("در صورت بازگشت به صفحه قبل اطلاعات محصول ذخیره نخواهد شد.")
                 }
             }
         }

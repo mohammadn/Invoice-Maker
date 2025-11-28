@@ -19,6 +19,7 @@ struct CustomersView: View {
     @State private var selectedCustomers: Set<CustomerN> = []
     @State private var searchText: String = ""
     @State private var editMode: EditMode = .inactive
+    @State private var showDeleteConfirmation: Bool = false
 
     var filteredCustomers: [CustomerN] {
         if searchText.isEmpty {
@@ -57,11 +58,18 @@ struct CustomersView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     if editMode.isEditing {
-                        Button("حذف") {
-                            delete(customers: selectedCustomers)
-                            editMode = .inactive
+                        Button("حذف", systemImage: "trash", role: .destructive) {
+                            showDeleteConfirmation.toggle()
                         }
                         .disabled(selectedCustomers.isEmpty)
+                        .confirmationDialog("آیا مطمئن هستید؟", isPresented: $showDeleteConfirmation) {
+                            Button("حذف", role: .destructive) {
+                                delete(customers: selectedCustomers)
+                                editMode = .inactive
+                            }
+                        } message: {
+                            Text("آیا مطمئن هستید که می خواهید \(selectedCustomers.count) مشتری را حذف کنید؟")
+                        }
                     } else {
                         Menu {
                             Button("افزودن", systemImage: "plus") {
@@ -78,10 +86,19 @@ struct CustomersView: View {
                 }
 
                 ToolbarItem(placement: .topBarLeading) {
-                    Button(editMode.isEditing ? "پایان" : "ویرایش") {
-                        withAnimation {
-                            editMode = editMode.isEditing ? .inactive : .active
-                            selectedCustomers.removeAll()
+                    if editMode.isEditing {
+                        Button(role: .close) {
+                            withAnimation {
+                                editMode = .inactive
+                                selectedCustomers.removeAll()
+                            }
+                        }
+                    } else {
+                        Button("ویرایش") {
+                            withAnimation {
+                                editMode = .active
+                                selectedCustomers.removeAll()
+                            }
                         }
                     }
                 }

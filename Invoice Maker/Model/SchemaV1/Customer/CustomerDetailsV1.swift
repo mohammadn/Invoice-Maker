@@ -19,6 +19,14 @@ class CustomerDetailsV1 {
         name.isEmpty
     }
 
+    var isDirty: Bool {
+        !name.isEmpty ||
+            !phone.isEmpty ||
+            !email.isEmpty ||
+            !address.isEmpty ||
+            !details.isEmpty
+    }
+
     init(name: String = "", phone: String = "", email: String = "", address: String = "", details: String = "") {
         self.name = name
         self.phone = phone
@@ -34,5 +42,15 @@ class CustomerDetailsV1 {
                   address: customer.address ?? "",
                   details: customer.details ?? ""
         )
+    }
+}
+
+extension CustomerDetailsV1: Equatable {
+    static func == (lhs: CustomerDetailsV1, rhs: CustomerDetailsV1) -> Bool {
+        lhs.name == rhs.name &&
+            lhs.phone == rhs.phone &&
+            lhs.email == rhs.email &&
+            lhs.address == rhs.address &&
+            lhs.details == rhs.details
     }
 }
