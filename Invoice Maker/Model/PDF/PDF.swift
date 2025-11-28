@@ -174,15 +174,15 @@ struct PDF {
         table[netTotalRow, 1].style = headerStyle
 
         let discountRow = netTotalRow + 1
-        table[discountRow, 0].content = try? PDFTableContent(content: "-\(formattedNumber(invoice.discountAmount * 100))")
-        table[discountRow, 1].content = try? PDFTableContent(content: formattedNumber(invoice.discount ?? 0) + " %")
+        table[discountRow, 0].content = try? PDFTableContent(content: "-\(formattedNumber(invoice.discountAmount))")
+        table[discountRow, 1].content = try? PDFTableContent(content: formattedNumber((invoice.discount ?? 0) * 100) + " %")
         table[discountRow, 2].content = try? PDFTableContent(content: "تخفیف")
         table[rows: discountRow, columns: 2 ... 4].merge()
         table[discountRow, 2].style = headerStyle
 
         let vatRow = discountRow + 1
-        table[vatRow, 0].content = try? PDFTableContent(content: "+\(formattedNumber(invoice.vatAmount * 100))")
-        table[vatRow, 1].content = try? PDFTableContent(content: formattedNumber(invoice.vat ?? 0) + " %")
+        table[vatRow, 0].content = try? PDFTableContent(content: "+\(formattedNumber(invoice.vatAmount))")
+        table[vatRow, 1].content = try? PDFTableContent(content: formattedNumber((invoice.vat ?? 0) * 100) + " %")
         table[vatRow, 2].content = try? PDFTableContent(content: "ارزش افزوده")
         table[rows: vatRow, columns: 2 ... 4].merge()
         table[vatRow, 2].style = headerStyle

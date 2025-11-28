@@ -34,23 +34,23 @@ extension SchemaV1 {
         var total: Decimal {
             let total: Decimal = (items ?? []).reduce(0) { result, item in result + item.total(in: currency ?? .IRR) }
 
-            return total.rounded()
+            return total
         }
 
         var discountAmount: Decimal {
-            return (total * (discount ?? 0)).rounded()
+            return (total * (discount ?? 0))
         }
 
         var totalWithDiscount: Decimal {
-            return (total - discountAmount).rounded()
+            return (total - discountAmount)
         }
 
         var vatAmount: Decimal {
-            return (totalWithDiscount * (vat ?? 0)).rounded()
+            return (totalWithDiscount * (vat ?? 0))
         }
 
         var totalWithVAT: Decimal {
-            return (totalWithDiscount + vatAmount).rounded()
+            return (totalWithDiscount + vatAmount)
         }
 
         var getCustomer: SchemaV1.Customer? {
