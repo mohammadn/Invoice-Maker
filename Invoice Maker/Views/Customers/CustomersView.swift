@@ -95,8 +95,16 @@ struct CustomersView: View {
                 fetchContacts(with: identifiers)
             }
             .alert("دسترسی به مخاطبین", isPresented: $showContactsPermissionAlert) {
-                Button("ادامه", role: .cancel) {
+                Button("ادامه") {
                     showContactsPermissionAlert.toggle()
+                }
+                
+                Button("تنظیمات") {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        if UIApplication.shared.canOpenURL(url) {
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        }
+                    }
                 }
             } message: {
                 Text("برای افزودن مشتری از مخاطبین، دسترسی به مخاطبین را از تنظیمات دیوایس خود فعال کنید.")
