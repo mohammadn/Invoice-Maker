@@ -80,7 +80,7 @@ extension SchemaV1.InvoiceItem {
         case (.IRR_Toman, .IRR):
             return (productPrice ?? 0) * 10
         case (.IRR, .IRR_Toman):
-            return ((productPrice ?? 0) / 10).rounded()
+            return ((productPrice ?? 0) / 10)
         default:
             return (productPrice ?? 0)
         }

@@ -5,7 +5,7 @@
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSContactsUsageDescription</key>
-	<string>فاکتورساز برای افزودن مشتریان از لیست مخاطبین شما، نیاز به دسترسی دارد.</string>
+	<string>فاکتورساز برای افزودن مشتری از لیست مخاطبین شما، نیاز به دسترسی دارد.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
