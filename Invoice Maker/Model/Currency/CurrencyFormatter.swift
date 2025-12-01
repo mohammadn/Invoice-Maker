@@ -11,22 +11,27 @@ struct CurrencyFormatStyle: FormatStyle {
     var currency: Currency
 
     func format(_ value: Decimal) -> String {
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 3
+        formatter.minimumFractionDigits = 0
+        formatter.decimalSeparator = "."
+        formatter.groupingSeparator = ","
+        formatter.locale = Locale(identifier: "fa")
+
         switch currency {
         case .IRR_Toman:
-            let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 0
-            formatter.groupingSeparator = ","
-            formatter.locale = Locale(identifier: "fa")
             let formatted = formatter.string(from: NSDecimalNumber(decimal: value)) ?? "0"
             return "تومان \(formatted)"
-        default:
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .currency
-            formatter.currencyCode = currency.rawValue
-            formatter.locale = Locale(identifier: "fa")
+        case .IRR:
+            formatter.numberStyle = .decimal
             let formatted = formatter.string(from: NSDecimalNumber(decimal: value)) ?? "0"
-            return formatted
+            return "ریال \(formatted)"
+//        default:
+//            formatter.numberStyle = .currency
+//            formatter.currencyCode = currency.rawValue
+//            let formatted = formatter.string(from: NSDecimalNumber(decimal: value)) ?? "0"
+//            return formatted
         }
     }
 }
