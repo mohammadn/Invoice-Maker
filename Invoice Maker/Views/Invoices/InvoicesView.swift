@@ -37,7 +37,7 @@ struct InvoicesView: View {
 
                                     Spacer()
 
-                                    Text(invoice.totalWithVAT, format: .currencyFormatter(code: invoice.currency ?? Currency.IRR))
+                                    Text(invoice.totalWithDiscount, format: .currencyFormatter(code: invoice.currency ?? Currency.IRR))
                                         .font(.subheadline)
                                         .foregroundColor(.secondary)
                                         .lineLimit(1)
@@ -79,7 +79,7 @@ struct InvoicesView: View {
 
                                 Spacer()
 
-                                Text(invoice.totalWithVAT, format: .currencyFormatter(code: invoice.currency ?? Currency.IRR))
+                                Text(invoice.totalWithDiscount, format: .currencyFormatter(code: invoice.currency ?? Currency.IRR))
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
                                     .lineLimit(1)

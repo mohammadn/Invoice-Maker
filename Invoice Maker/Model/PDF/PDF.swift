@@ -173,22 +173,22 @@ struct PDF {
         table[rows: netTotalRow, columns: 1 ... 4].merge()
         table[netTotalRow, 1].style = headerStyle
 
-        let discountRow = netTotalRow + 1
-        table[discountRow, 0].content = try? PDFTableContent(content: "-\(formattedNumber(invoice.discountAmount))")
-        table[discountRow, 1].content = try? PDFTableContent(content: formattedNumber((invoice.discount ?? 0) * 100) + " %")
-        table[discountRow, 2].content = try? PDFTableContent(content: "تخفیف")
-        table[rows: discountRow, columns: 2 ... 4].merge()
-        table[discountRow, 2].style = headerStyle
-
-        let vatRow = discountRow + 1
+        let vatRow = netTotalRow + 1
         table[vatRow, 0].content = try? PDFTableContent(content: "+\(formattedNumber(invoice.vatAmount))")
         table[vatRow, 1].content = try? PDFTableContent(content: formattedNumber((invoice.vat ?? 0) * 100) + " %")
         table[vatRow, 2].content = try? PDFTableContent(content: "ارزش افزوده")
         table[rows: vatRow, columns: 2 ... 4].merge()
         table[vatRow, 2].style = headerStyle
 
-        let totalRow = vatRow + 1
-        table[totalRow, 0].content = try? PDFTableContent(content: "\(formattedNumber(invoice.totalWithVAT))")
+        let discountRow = vatRow + 1
+        table[discountRow, 0].content = try? PDFTableContent(content: "-\(formattedNumber(invoice.discountAmount))")
+        table[discountRow, 1].content = try? PDFTableContent(content: formattedNumber((invoice.discount ?? 0) * 100) + " %")
+        table[discountRow, 2].content = try? PDFTableContent(content: "تخفیف")
+        table[rows: discountRow, columns: 2 ... 4].merge()
+        table[discountRow, 2].style = headerStyle
+
+        let totalRow = discountRow + 1
+        table[totalRow, 0].content = try? PDFTableContent(content: "\(formattedNumber(invoice.totalWithDiscount))")
         table[totalRow, 1].content = try? PDFTableContent(content: "مبلغ نهایی (\(invoice.currency?.label ?? "-"))")
         table[rows: totalRow, columns: 1 ... 4].merge()
         table[totalRow, 0].style = PDFTableCellStyle(borders: PDFTableCellBorders(top: border, right: border), font: .systemFont(ofSize: 14, weight: .bold))

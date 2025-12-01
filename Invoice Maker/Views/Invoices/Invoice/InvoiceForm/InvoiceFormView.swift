@@ -61,9 +61,9 @@ struct InvoiceFormView: View {
                         DatePicker("تاریخ سررسید", selection: $invoiceDetails.dueDate)
                     }
 
-                    TextField("تخفیف (٪)", value: $invoiceDetails.discount, format: .percent)
-
                     TextField("ارزش افزوده (٪)", value: $invoiceDetails.vat, format: .percent)
+
+                    TextField("تخفیف (٪)", value: $invoiceDetails.discount, format: .percent)
                 }
 
                 Section {
