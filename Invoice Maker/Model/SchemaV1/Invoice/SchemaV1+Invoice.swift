@@ -37,20 +37,20 @@ extension SchemaV1 {
             return total
         }
 
-        var discountAmount: Decimal {
-            return (total * (discount ?? 0))
-        }
-
-        var totalWithDiscount: Decimal {
-            return (total - discountAmount)
-        }
-
         var vatAmount: Decimal {
-            return (totalWithDiscount * (vat ?? 0))
+            return (total * (vat ?? 0))
         }
 
         var totalWithVAT: Decimal {
-            return (totalWithDiscount + vatAmount)
+            return (total + vatAmount)
+        }
+
+        var discountAmount: Decimal {
+            return (totalWithVAT * (discount ?? 0))
+        }
+
+        var totalWithDiscount: Decimal {
+            return (totalWithVAT - discountAmount)
         }
 
         var getCustomer: SchemaV1.Customer? {
