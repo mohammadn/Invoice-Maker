@@ -95,10 +95,10 @@ struct CustomersView: View {
                 fetchContacts(with: identifiers)
             }
             .alert("دسترسی به مخاطبین", isPresented: $showContactsPermissionAlert) {
-                Button("ادامه") {
+                Button("بازگشت") {
                     showContactsPermissionAlert.toggle()
                 }
-                
+
                 Button("تنظیمات") {
                     if let url = URL(string: UIApplication.openSettingsURLString) {
                         if UIApplication.shared.canOpenURL(url) {
